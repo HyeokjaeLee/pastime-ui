@@ -1,16 +1,20 @@
 {
   "name": "@hyeokjaelee/frontend-library",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
-  "main": "./dist/library/index.js",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "./src/types.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build -o dist/storybook",
+    "deploy": "npm publish --access=public"
   },
   "dependencies": {
     "@storybook/addon-docs": "^7.0.8",
@@ -36,6 +40,7 @@
     "babel-loader": "^9.1.2",
     "eslint": "^8.39.0",
     "prettier": "^2.8.8",
+    "rollup-plugin-generate-package-json": "^3.2.0",
     "sass": "^1.62.1",
     "storybook": "^7.0.8",
     "stylelint": "^15.6.1",
