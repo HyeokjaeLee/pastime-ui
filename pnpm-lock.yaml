@@ -66,6 +66,9 @@ devDependencies:
   prettier:
     specifier: ^2.8.8
     version: 2.8.8
+  sass:
+    specifier: ^1.62.1
+    version: 1.62.1
   storybook:
     specifier: ^7.0.8
     version: 7.0.8
@@ -77,7 +80,7 @@ devDependencies:
     version: 5.0.4
   vite:
     specifier: ^4.3.5
-    version: 4.3.5
+    version: 4.3.5(sass@1.62.1)
 
 packages:
 
@@ -1797,7 +1800,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.0.4)
       typescript: 5.0.4
-      vite: 4.3.5
+      vite: 4.3.5(sass@1.62.1)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -2291,7 +2294,7 @@ packages:
       remark-slug: 6.1.0
       rollup: 3.21.5
       typescript: 5.0.4
-      vite: 4.3.5
+      vite: 4.3.5(sass@1.62.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2646,7 +2649,7 @@ packages:
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0(react@18.2.0)
-      vite: 4.3.5
+      vite: 4.3.5(sass@1.62.1)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - supports-color
@@ -3011,7 +3014,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.0.0
+      '@types/node': 16.18.25
 
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
@@ -3300,7 +3303,7 @@ packages:
       vite: ^4
     dependencies:
       '@swc/core': 1.3.56
-      vite: 4.3.5
+      vite: 4.3.5(sass@1.62.1)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -3316,7 +3319,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6(@babel/core@7.21.8)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.3.5
+      vite: 4.3.5(sass@1.62.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5849,6 +5852,10 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
+  /immutable@4.3.0:
+    resolution: {integrity: sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg==}
+    dev: true
+
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -7740,6 +7747,16 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
+  /sass@1.62.1:
+    resolution: {integrity: sha512-NHpxIzN29MXvWiuswfc1W3I0N8SXBd8UR26WntmDlRYf0bSADnwnOjsyMZ3lMezSlArD33Vs3YFhp7dWvL770A==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.3.0
+      source-map-js: 1.0.2
+    dev: true
+
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
@@ -8667,7 +8684,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite@4.3.5:
+  /vite@4.3.5(sass@1.62.1):
     resolution: {integrity: sha512-0gEnL9wiRFxgz40o/i/eTBwm+NEbpUeTWhzKrZDSdKm6nplj+z4lKz8ANDgildxHm47Vg8EUia0aicKbawUVVA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -8695,6 +8712,7 @@ packages:
       esbuild: 0.17.18
       postcss: 8.4.23
       rollup: 3.21.5
+      sass: 1.62.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
