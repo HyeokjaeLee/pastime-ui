@@ -1,6 +1,6 @@
 {
   "name": "@hyeokjaelee/frontend-library",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./dist/index.js",
   "files": [
@@ -8,20 +8,26 @@
   ],
   "types": "./src/types.d.ts",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o dist/storybook",
-    "deploy": "npm publish --access=public"
+    "version": "npm version",
+    "dev": "storybook dev -p 6006",
+    "build:lib": "tsc && vite build",
+    "build:doc": "storybook build ",
+    "deploy:lib": "npm publish ./dist/library --access=public",
+    "rule:eslint": "eslint 'src/**/*.{js,ts,tsx}'",
+    "rule:eslint:fix": "npm run lint -- --fix",
+    "rule:prettier": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx,css,scss}' --check",
+    "rule:prettier:fix": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx,css,scss}' --write",
+    "rule:stylelint": "stylelint './src/**/*.{scss,css}'",
+    "rule:stylelint:fix": "stylelint './src/**/*.{scss,css}' --fix",
+    "lint:all": "pnpm rule:eslint && pnpm rule:prettier && pnpm rule:stylelint",
+    "lint:all:fix":  "pnpm rule:eslint:fix && pnpm rule:prettier:fix && pnpm rule:stylelint:fix"
   },
   "dependencies": {
-    "@storybook/addon-docs": "^7.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^7.0.8",
     "@babel/core": "^7.21.8",
     "@hyeokjaelee/eslint-config": "^1.3.1",
     "@hyeokjaelee/prettier-config": "^1.3.1",
@@ -48,5 +54,9 @@
     "typescript-plugin-css-modules": "^5.0.1",
     "vite": "^4.3.5",
     "vite-plugin-dts": "^2.3.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
