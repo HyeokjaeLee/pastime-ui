@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/library/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -39,6 +40,8 @@
     "storybook": "^7.0.8",
     "stylelint": "^15.6.1",
     "typescript": "^5.0.4",
-    "vite": "^4.3.5"
+    "typescript-plugin-css-modules": "^5.0.1",
+    "vite": "^4.3.5",
+    "vite-plugin-dts": "^2.3.0"
   }
 }
