@@ -16,4 +16,10 @@ module.exports = {
   docs: {
     autodocs: true,
   },
+  wepackFinal: async (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, '../src'),
+    };
+  },
 };
