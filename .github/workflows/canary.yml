@@ -8,7 +8,7 @@ env:
   NODE_VERSION: '18.13'
 
 jobs:
-  Deploy:
+  deploy canary:
     if: "!contains(github.event.head_commit.message, 'skip canary')"
 
     runs-on: ubuntu-latest
@@ -58,3 +58,5 @@ jobs:
 
       - name: Deploy package(canary)
         run: pnpm run deploy:lib-canary
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
