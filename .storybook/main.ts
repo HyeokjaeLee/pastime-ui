@@ -4,7 +4,6 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm',
   ],
   framework: {
     name: '@storybook/react-vite',
@@ -15,11 +14,5 @@ module.exports = {
   },
   docs: {
     autodocs: true,
-  },
-  wepackFinal: async (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../src'),
-    };
   },
 };
