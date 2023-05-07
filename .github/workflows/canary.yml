@@ -8,7 +8,7 @@ env:
   NODE_VERSION: '18.13'
 
 jobs:
-  deploy canary:
+  deploy_canary:
     if: "!contains(github.event.head_commit.message, 'skip canary')"
 
     runs-on: ubuntu-latest
