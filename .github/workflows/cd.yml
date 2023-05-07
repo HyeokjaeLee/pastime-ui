@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: 'dev/*'
+    branches: 'main'
 
 env:
   NODE_VERSION: '18.13'
@@ -119,7 +119,7 @@ jobs:
           release_name: ${{ steps.get-version.outputs.version }}
 
   deploy:
-    needs: update
+    needs: ['update', 'tag']
     runs-on: ubuntu-latest
 
     steps:

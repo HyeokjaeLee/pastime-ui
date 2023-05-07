@@ -1,0 +1,44 @@
+name: Deploy canary
+
+on:
+  push:
+    branches: 'dev/*'
+
+env:
+  NODE_VERSION: '18.13'
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+
+jobs:
+  Deploy:
+    if: "!contains(github.event.head_commit.message, 'skip canary')"
+
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+    steps:
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.ACCESS_TOKEN}}
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.4
+          run_install: true
+
+      - name: set canary version
+        run: pnpm run version:canary
+
+      - name: Build library
+        run: pnpm run build:lib
+
+      - name: Deploy package(canary)
+        run: pnpm run deploy:lib-canary

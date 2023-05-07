@@ -1,15 +1,17 @@
 {
   "name": "@hyeokjaelee/react-library",
-  "version": "0.0.9",
+  "version": "0.0.8",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./src/types.d.ts",
   "scripts": {
     "version": "npm version",
+    "version:canary": "sh ./scripts/set-canary-version.sh",
     "dev": "storybook dev -p 6006",
     "build:lib": "tsc && vite build",
     "build:doc": "storybook build -o dist/document && touch ./dist/document/.nojekyll",
     "deploy:lib": "npm publish ./dist/library --access=public",
+    "deploy:lib-canary": "deploy:lib --tag canary",
     "deploy:doc": "gh-pages -d dist/document -t true",
     "rule:eslint": "eslint 'src/**/*.{js,ts,tsx}'",
     "rule:eslint:fix": "npm run lint -- --fix",
