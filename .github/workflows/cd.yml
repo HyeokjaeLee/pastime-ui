@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: 'dev/*'
+
+jobs:
+  check_code_convention:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Test eslint
+        run: pnpm rule:eslint
+
+      - name: Test prettier
+        run: pnpm rule:prettier
+
+      - name: Test stylelint
+        run: pnpm rule:stylelint
+
+  test_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Test build library
+        run: pnpm build:lib
+
+      - name: Test build document
+        run: pnpm build:doc
