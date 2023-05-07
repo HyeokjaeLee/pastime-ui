@@ -14,7 +14,7 @@
     "deploy:lib-canary": "pnpm run deploy:lib --tag canary",
     "deploy:doc": "gh-pages -d dist/document -t true",
     "rule:eslint": "eslint 'src/**/*.{js,ts,tsx}'",
-    "rule:eslint:fix": "npm run lint -- --fix",
+    "rule:eslint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "rule:prettier": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx,css,scss}' --check",
     "rule:prettier:fix": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx,css,scss}' --write",
     "rule:stylelint": "stylelint './src/**/*.{scss,css}'",
