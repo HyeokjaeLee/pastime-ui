@@ -1,0 +1,42 @@
+@import '../../../styles/libs';
+
+.input {
+  margin: 10px 0;
+  border: none;
+
+  background-color: inherit;
+  outline: none;
+
+  color: inherit;
+  font-weight: 500;
+  font-size: inherit;
+  text-align: start;
+
+  transition: color 0.3s;
+
+  &::placeholder {
+    color: $BLUISH-GRAY-300;
+  }
+
+  &:disabled {
+    &.read-only {
+      color: $BLUISH-GRAY-700;
+
+      cursor: default;
+    }
+  }
+}
+
+.button {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  &.empty {
+    color: $BLUISH-GRAY-300;
+  }
+}
+
+.default-width {
+  width: 100%;
+}

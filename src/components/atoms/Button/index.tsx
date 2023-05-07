@@ -11,7 +11,7 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 
 export type ButtonProps = Pick<
   HtmlButtonProps,
-  'children' | 'disabled' | 'type'
+  'children' | 'disabled' | 'type' | 'style'
 > & {
   delay?: number;
   size?: 'small' | 'medium' | 'large';
@@ -42,6 +42,7 @@ export const Button = ({
   iconDirection = 'left',
   icon,
   className,
+  style,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -77,6 +78,7 @@ export const Button = ({
           styles[theme]
         } ${className}`,
       )}
+      style={style}
       onClick={onClick}
       disabled={isDisabled}
     >
