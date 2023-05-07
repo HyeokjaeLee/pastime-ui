@@ -39,6 +39,12 @@ jobs:
       - name: Set canary version
         run: pnpm run version:canary
 
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
       - name: Create release & tag
         uses: actions/create-release@v1
         env:
