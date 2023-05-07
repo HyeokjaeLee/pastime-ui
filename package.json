@@ -1,6 +1,6 @@
 {
   "name": "@hyeokjaelee/react-library",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./src/types.d.ts",
