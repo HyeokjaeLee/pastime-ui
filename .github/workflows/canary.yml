@@ -1,0 +1,62 @@
+name: Deploy canary
+
+on:
+  push:
+    branches: 'dev/*'
+
+env:
+  NODE_VERSION: '18.13'
+
+jobs:
+  deploy_canary:
+    if: "!contains(github.event.head_commit.message, 'skip canary')"
+
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+    steps:
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.ACCESS_TOKEN}}
+
+      - name: Regist author
+        run: git config --global user.email "leehyeokjae97@gmail.com" && git config --global user.name "HyeokjaeLee"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.4
+          run_install: true
+
+      - name: Set canary version
+        run: pnpm run version:canary
+
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Create release & tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: ${{ steps.get-version.outputs.version }}
+
+      - name: Build library
+        run: pnpm run build:lib
+
+      - name: Deploy package(canary)
+        run: pnpm run deploy:lib-canary
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

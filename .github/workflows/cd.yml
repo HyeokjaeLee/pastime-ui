@@ -1,0 +1,159 @@
+name: CD
+
+on:
+  push:
+    branches: 'main'
+
+env:
+  NODE_VERSION: '18.13'
+
+jobs:
+  check_code_convention:
+    if: "!contains(github.event.head_commit.message, 'ver: ')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.4
+          run_install: true
+
+      - name: Test eslint
+        run: pnpm rule:eslint
+
+      - name: Test prettier
+        run: pnpm rule:prettier
+
+  test_build:
+    if: "!contains(github.event.head_commit.message, 'ver: ')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.4
+          run_install: true
+
+      - name: Test build library
+        run: pnpm build:lib
+
+      - name: Test build document
+        run: pnpm build:doc
+
+  update:
+    needs: ['check_code_convention', 'test_build']
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: Regist author
+        run: git config --global user.email "leehyeokjae97@gmail.com" && git config --global user.name "HyeokjaeLee"
+
+      - name: Pull branch
+        run: git pull
+
+      - name: Set new patch version
+        if: "!contains(github.event.head_commit.message, '+m')"
+        run: "npm version patch -m 'ver: %s'"
+
+      - name: Set new minor version
+        if: "contains(github.event.head_commit.message, '+minor')"
+        run: "npm version minor -m 'ver: %s'"
+
+      - name: Set new major version
+        if: "contains(github.event.head_commit.message, '+major')"
+        run: "npm version major -m 'ver: %s'"
+
+      - name: Push release branch
+        run: git push
+
+  tag:
+    needs: update
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Pull branch
+        run: git pull
+
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Create release & tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: ${{ steps.get-version.outputs.version }}
+
+  deploy:
+    needs: ['update', 'tag']
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: Pull branch
+        run: git pull
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Build library
+        run: pnpm build:lib
+
+      - name: Build document
+        run: pnpm build:doc
+
+      - name: Deploy library
+        run: pnpm run deploy:lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Deploy document
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: ./dist/document
