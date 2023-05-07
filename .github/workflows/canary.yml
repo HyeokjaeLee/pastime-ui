@@ -36,8 +36,16 @@ jobs:
           version: 8.4
           run_install: true
 
-      - name: set canary version
+      - name: Set canary version
         run: pnpm run version:canary
+
+      - name: Create release & tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: ${{ steps.get-version.outputs.version }}
 
       - name: Build library
         run: pnpm run build:lib

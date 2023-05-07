@@ -11,7 +11,7 @@
     "build:lib": "tsc && vite build",
     "build:doc": "storybook build -o dist/document && touch ./dist/document/.nojekyll",
     "deploy:lib": "npm publish ./dist/library --access=public",
-    "deploy:lib-canary": "deploy:lib --tag canary",
+    "deploy:lib-canary": "pnpm run deploy:lib --tag canary",
     "deploy:doc": "gh-pages -d dist/document -t true",
     "rule:eslint": "eslint 'src/**/*.{js,ts,tsx}'",
     "rule:eslint:fix": "npm run lint -- --fix",
