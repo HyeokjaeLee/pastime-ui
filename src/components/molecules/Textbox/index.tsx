@@ -1,6 +1,5 @@
 import styles from './index.module.scss';
 import { useValidation } from '../../../hooks';
-
 import { InputContainer, Input } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
