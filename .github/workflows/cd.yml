@@ -24,6 +24,9 @@ jobs:
           version: 8.3
           run_install: true
 
+      - nmae: Install dependencies
+        run: pnpm install -D @hyeokjaelee/stylelint-config
+
       - name: Test eslint
         run: pnpm rule:eslint
 
