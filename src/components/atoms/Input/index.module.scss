@@ -15,15 +15,7 @@
   transition: color 0.3s;
 
   &::placeholder {
-    color: $BLUISH-GRAY-300;
-  }
-
-  &:disabled {
-    &.read-only {
-      color: $BLUISH-GRAY-700;
-
-      cursor: default;
-    }
+    color: $GRAY-300;
   }
 }
 
@@ -33,7 +25,7 @@
   text-overflow: ellipsis;
 
   &.empty {
-    color: $BLUISH-GRAY-300;
+    color: $GRAY-300;
   }
 }
 

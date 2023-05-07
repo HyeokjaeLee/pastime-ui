@@ -1,0 +1,16 @@
+@import '../../../styles/libs';
+
+.textbox {
+  height: fit-content;
+}
+
+.unit {
+  padding: 0 0.5em;
+  border-radius: 3px;
+
+  background-color: $GRAY-800;
+
+  color: $WHITE;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}

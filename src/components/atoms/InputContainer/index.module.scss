@@ -5,15 +5,47 @@
   padding: 0 $paddingX;
 }
 
-.input-interaction-wrap {
-  position: relative;
-  z-index: 1;
+@mixin interaction(
+  $color,
+  $backgroundColor,
+  $borderColor,
+  $disabledColor,
+  $disabledBackgroundColor,
+  $disabledBorderColor,
+  $hoverBorderColor,
+  $focusBorderColor
+) {
+  color: $color;
+  @include border($borderColor, 1px);
 
-  width: 100%;
+  &:not(&:has(:disabled)) {
+    background-color: $backgroundColor;
+    &:hover {
+      @include border($hoverBorderColor, 1px);
+    }
+
+    &:has(:focus) {
+      @include border($focusBorderColor, 1px);
+    }
+  }
+
+  &:has(:disabled) {
+    background-color: $disabledBackgroundColor;
+    @include border($disabledBorderColor, 1px);
+    color: $disabledColor;
+    &.readonly {
+      color: $color;
+    }
+  }
 }
 
 .input-container {
   position: relative;
+}
+
+.input-interaction-wrap {
+  position: relative;
+  z-index: 1;
 
   width: 100%;
 }
@@ -28,20 +60,13 @@
 
   box-sizing: border-box;
   width: 100%;
-  border-radius: 8px;
+  border-radius: $BORDER-RADIUS-LG;
 
-  color: $BLUISH-GRAY-700;
   font-size: $NORMAL;
 
   transition: box-shadow 0.3s, background-color 0.3s;
 
-  @include border($BLUISH-GRAY-200, 1px);
-
   //*Size
-  &.size-none {
-    @include size(0, fit-content);
-  }
-
   &.size-small {
     @include size(14px, 32px);
   }
@@ -55,39 +80,23 @@
   }
 
   //* Type
-  &:not(&:has(:disabled)) {
-    background-color: $WHITE;
-    &:hover {
-      @include border($BLUE-300, 2px);
-    }
-
-    &:has(:focus) {
-      @include border($BLUE-500, 2px);
-
-      &.error {
-        @include border($PEACH-500, 2px);
-      }
-    }
-
-    &:has(input[type='button']) {
-      &,
-      > * {
-        cursor: pointer;
-      }
+  &:not(&:has(:disabled)):has(input[type='button']) {
+    &,
+    > * {
+      cursor: pointer;
     }
   }
 
-  &:has(:disabled) {
-    background-color: $BLUISH-GRAY-10;
-    @include border($BLUISH-GRAY-200, 1px);
-    color: $BLUISH-GRAY-400;
-    > * {
-      cursor: not-allowed;
-    }
+  &:has(:disabled) > * {
+    cursor: not-allowed;
+  }
+
+  &.readonly input {
+    cursor: default;
   }
 
   &.error {
-    @include border($PEACH-500, 2px);
+    @include border($PEACH-500, 1px);
   }
 }
 
@@ -108,4 +117,30 @@
 .validation-message,
 .validation-space {
   margin-top: 6px;
+}
+
+.light {
+  @include interaction(
+    $GRAY-700,
+    $WHITE,
+    $GRAY-200,
+    $GRAY-400,
+    $GRAY-10,
+    $GRAY-200,
+    $GRAY-400,
+    $GRAY-500
+  );
+}
+
+.dark {
+  @include interaction(
+    $GRAY-100,
+    $GRAY-900,
+    $GRAY-700,
+    $GRAY-600,
+    $GRAY-700,
+    $GRAY-600,
+    $GRAY-600,
+    $GRAY-500
+  );
 }

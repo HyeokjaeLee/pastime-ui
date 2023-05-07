@@ -20,7 +20,7 @@ export interface InputProps
     | 'password'
     | 'button';
   value?: number | string;
-  disabled?: boolean | 'read-only';
+  disabled?: boolean;
   onChange?: (value: string) => void;
   ref?: Ref<HTMLInputElement>;
   name?: string;
@@ -111,9 +111,9 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
         value={formatedValue}
         style={style}
         className={cleanClassName(
-          `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
-            type === 'button' && styles.button
-          } ${value || styles.empty} ${styles['default-width']} ${className}`,
+          `${styles.input} ${type === 'button' && styles.button} ${
+            value || styles.empty
+          } ${styles['default-width']} ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) =>

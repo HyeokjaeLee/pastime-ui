@@ -41,23 +41,29 @@ const InputContainerMain = ({
 
 export interface InputContainerIntreractionProps extends CommonProps {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
-  size?: 'none' | 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large';
+  theme?: 'light' | 'dark';
+  readonly?: boolean;
 }
 
 const InputContainerIntreraction = ({
   children,
   onClick,
-  size = 'large',
+  size = 'medium',
   className,
   style,
+  theme = 'light',
+  readonly = false,
 }: InputContainerIntreractionProps) => {
   const validationMessage = useContext(InputContainerContext);
   return (
     <div
       style={style}
       className={cleanClassName(
-        `${styles['input-wrap']} ${validationMessage && styles.error} ${
-          size !== 'none' && styles[`size-${size}`]
+        `${styles['input-wrap']} ${styles[theme]} ${
+          readonly && styles.readonly
+        } ${validationMessage && styles.error} ${
+          styles[`size-${size}`]
         } ${className}`,
       )}
       onClick={onClick}
