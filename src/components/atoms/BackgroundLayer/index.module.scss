@@ -1,0 +1,51 @@
+@import '../../../styles/libs';
+
+.fixed-body {
+  overflow: hidden;
+}
+
+.background-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  &.blur {
+    backdrop-filter: blur(4px);
+
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  @include fade-in(0.5s);
+
+  &.closing {
+    @include fade-out(0.3s);
+  }
+
+  &.priority-1 {
+    z-index: 99;
+  }
+  &.priority-2 {
+    z-index: 66;
+  }
+  &.priority-3 {
+    z-index: 33;
+  }
+}
+
+.focus-layer {
+  &.priority-1 {
+    z-index: 100;
+  }
+  &.priority-2 {
+    z-index: 67;
+  }
+  &.priority-3 {
+    z-index: 34;
+  }
+  position: relative;
+
+  width: fit-content;
+  height: fit-content;
+}
