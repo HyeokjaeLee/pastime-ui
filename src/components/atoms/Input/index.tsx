@@ -33,7 +33,7 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
       type = 'text',
       placeholder = '',
       disabled = false,
-      value,
+      value: parentValue,
       onChange,
       onClick,
       id,
@@ -45,13 +45,12 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
     ref,
   ) => {
     const [isFocused, setIsFucused] = useState(false);
+    const value = (() => {
+      if (type === 'button' && !parentValue) return placeholder;
 
-    const formatedValue = (() => {
-      if (type === 'button' && !value) return placeholder;
+      if (parentValue !== 0 && !parentValue) return '';
 
-      if (value !== 0 && !value) return '';
-
-      const valueString = String(value);
+      const valueString = String(parentValue);
 
       if (isFocused) return valueString;
 
@@ -74,16 +73,18 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
 
     const convertChangeHandlerParam = useMemo((): ((
       value: string,
-    ) => string) => {
-      const leftOnlyNumber = (value: string) => value.replace(/[^0-9]/g, '');
+    ) => string | null) => {
       switch (type) {
         case 'number':
         case 'large-number':
-          return (value) => value && leftOnlyNumber(value);
+          return (value) => {
+            const isValidNumber = value === '-' || !Number.isNaN(Number(value));
+            return value && (isValidNumber ? value : null);
+          };
 
         case 'phone-number':
           return (value) => {
-            let numberString = leftOnlyNumber(value);
+            let numberString = value.replace(/[^0-9]/g, '');
             if (numberString.length > 11)
               numberString = numberString.slice(0, 11);
 
@@ -108,17 +109,19 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
         type={type}
         placeholder={placeholder}
         onClick={onClick}
-        value={formatedValue}
+        value={value}
         style={style}
         className={cleanClassName(
           `${styles.input} ${type === 'button' && styles.button} ${
-            value || styles.empty
+            parentValue || styles.empty
           } ${styles['default-width']} ${className}`,
         )}
         disabled={!!disabled}
-        onChange={({ target: { value } }) =>
-          onChange?.(convertChangeHandlerParam(value))
-        }
+        onChange={({ target: { value } }) => {
+          const convertedValue = convertChangeHandlerParam(value);
+
+          if (convertedValue !== null) onChange?.(convertedValue);
+        }}
       />
     );
   },

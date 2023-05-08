@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { InputContainer, Input } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
@@ -20,7 +20,7 @@ export interface TextboxProps
 }
 
 export const Textbox = ({
-  value,
+  value: parentValue,
   unit,
   onChange,
   size,
@@ -31,6 +31,7 @@ export const Textbox = ({
   theme,
   ...inputProps
 }: TextboxProps) => {
+  const [value, setValue] = useSubscribedState(parentValue);
   const { validationMessage, checkValidation } = useValidation(
     value,
     validation,
@@ -52,6 +53,7 @@ export const Textbox = ({
           id={id}
           onChange={(value) => {
             checkValidation?.(value);
+            setValue(value);
             onChange?.(value);
           }}
         />
