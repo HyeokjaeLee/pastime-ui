@@ -82,9 +82,11 @@
 
   box-sizing: border-box;
 
-  -webkit-text-size-adjust: none;
+  font-weight: 300;
 
   transition: background-color 0.3s, color 0.3s;
+
+  -webkit-text-size-adjust: none;
 
   &:disabled {
     cursor: not-allowed;

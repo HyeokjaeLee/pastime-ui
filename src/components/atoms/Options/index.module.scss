@@ -1,0 +1,142 @@
+@import '../../../styles/libs';
+
+@mixin theme(
+  $color,
+  $backgroundColor,
+  $hoverColor,
+  $hoverBackgroundColor,
+  $selectColor,
+  $selectBackgroundColor,
+  $boxShadow
+) {
+  background-color: $backgroundColor;
+  box-shadow: $boxShadow;
+  .mouse-hover-enabled > li > .option-item {
+    &:hover {
+      background-color: $hoverBackgroundColor;
+
+      color: $hoverColor;
+    }
+  }
+
+  .option-item {
+    color: $color;
+
+    &.selected {
+      background-color: $selectBackgroundColor;
+
+      color: $selectColor;
+    }
+
+    &.hovered {
+      background-color: $hoverBackgroundColor;
+
+      color: $hoverColor;
+    }
+  }
+}
+
+.options {
+  position: absolute;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  border-radius: $BORDER-RADIUS-MD;
+
+  &.closing,
+  &.opening {
+    cursor: default;
+  }
+
+  &.top {
+    bottom: 100%;
+
+    margin-bottom: 0.5rem;
+    &.opening {
+      @include fade-in-bottom;
+    }
+    &.closing {
+      @include fade-out-bottom;
+    }
+  }
+
+  &.bottom {
+    top: 100%;
+
+    margin-top: 0.5rem;
+    &.opening {
+      @include fade-in-top;
+    }
+    &.closing {
+      @include fade-out-top;
+    }
+  }
+}
+
+.option-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  overflow-y: auto;
+
+  max-height: 300px;
+  scroll-snap-type: y mandatory;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > li {
+    scroll-snap-align: start;
+
+    width: 100%;
+  }
+}
+
+.option-item {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+
+  min-width: 100%;
+  max-width: 100%;
+  padding: 0.3em 0.7em;
+  border-radius: $BORDER-RADIUS-MD;
+
+  outline: none;
+
+  font-weight: 300;
+  text-align: start;
+  white-space: pre-wrap;
+
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.check-icon-wrap {
+  width: 24px;
+  height: 24px;
+}
+
+.light {
+  @include theme(
+    $GRAY-700,
+    $WHITE,
+    $GRAY-900,
+    $GRAY-10,
+    $WHITE,
+    $ORANGE-500,
+    $LIGHT_BOX_SHADOW
+  );
+}
+
+.dark {
+  @include theme(
+    $GRAY-100,
+    $GRAY-900,
+    $GRAY-10,
+    $GRAY-800,
+    $WHITE,
+    $ORANGE-500,
+    $DARK_BOX_SHADOW
+  );
+}

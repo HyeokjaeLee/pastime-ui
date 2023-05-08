@@ -16,22 +16,22 @@
   $focusBorderColor
 ) {
   color: $color;
-  @include border($borderColor, 1px);
+  @include border($borderColor, 2px);
 
   &:not(&:has(:disabled)) {
     background-color: $backgroundColor;
     &:hover {
-      @include border($hoverBorderColor, 1px);
+      @include border($hoverBorderColor, 2px);
     }
 
     &:has(:focus) {
-      @include border($focusBorderColor, 1px);
+      @include border($focusBorderColor, 2px);
     }
   }
 
   &:has(:disabled) {
     background-color: $disabledBackgroundColor;
-    @include border($disabledBorderColor, 1px);
+    @include border($disabledBorderColor, 2px);
     color: $disabledColor;
     &.readonly {
       color: $color;
@@ -60,7 +60,7 @@
 
   box-sizing: border-box;
   width: 100%;
-  border-radius: $BORDER-RADIUS-LG;
+  border-radius: $BORDER-RADIUS-MD;
 
   font-size: $NORMAL;
 
@@ -136,7 +136,7 @@
   @include interaction(
     $GRAY-100,
     $GRAY-900,
-    $GRAY-700,
+    $GRAY-800,
     $GRAY-600,
     $GRAY-700,
     $GRAY-600,
