@@ -10,6 +10,12 @@ const meta: Meta<typeof Textbox> = {
   component: Textbox,
   args: {
     placeholder: 'placeholder',
+    value: '',
+  },
+  argTypes: {
+    value: {
+      control: 'text',
+    },
   },
   decorators: [
     (Story) => (
@@ -30,6 +36,7 @@ export const Unit: Story = {
   args: {
     unit: '원',
     type: 'large-number',
+    value: '-10000.95',
   },
   render: (args) => (
     <>

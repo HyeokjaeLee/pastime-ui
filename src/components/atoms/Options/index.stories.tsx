@@ -3,7 +3,6 @@ import React, { useState as createState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Options } from '..';
-import { Textbox } from '../../molecules/Textbox';
 
 import type { Option } from '..';
 
@@ -71,18 +70,14 @@ type Story = StoryObj<typeof Options>;
 export const Default: Story = {
   render: (props) => {
     const [value, setValue] = createState<Option | Option[]>();
-
     return (
-      <>
-        <Textbox value={JSON.stringify(value)} theme={props.theme} />
-        <Options
-          {...props}
-          value={value}
-          onSelect={(option) => {
-            setValue(option as Option | Option[] | undefined);
-          }}
-        />
-      </>
+      <Options
+        {...props}
+        value={value}
+        onSelect={(option) => {
+          setValue(option as Option | Option[] | undefined);
+        }}
+      />
     );
   },
 };
@@ -93,18 +88,14 @@ export const Multiple: Story = {
   },
   render: (props) => {
     const [value, setValue] = createState<Option | Option[]>();
-
     return (
-      <>
-        <Textbox value={JSON.stringify(value)} />
-        <Options
-          {...props}
-          value={value}
-          onSelect={(option) => {
-            setValue(option as Option | Option[] | undefined);
-          }}
-        />
-      </>
+      <Options
+        {...props}
+        value={value}
+        onSelect={(option) => {
+          setValue(option as Option | Option[] | undefined);
+        }}
+      />
     );
   },
 };
