@@ -5,7 +5,7 @@ on:
     branches: 'main'
 
 jobs:
-  check_code_convention:
+  test_code_convention:
     runs-on: ubuntu-latest
 
     steps:
