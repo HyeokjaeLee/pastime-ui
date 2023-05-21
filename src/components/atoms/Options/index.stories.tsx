@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Options } from '..';
 
-import type { Option } from '..';
+import type { ValidOptionValue } from '..';
 
 const meta: Meta<typeof Options> = {
   title: 'atoms/Options',
@@ -28,7 +28,7 @@ const meta: Meta<typeof Options> = {
   },
 
   args: {
-    opened: true,
+    opened: false,
     options: Array.from({ length: 100 }, (_, index) => ({
       label: `Test label ${index}${
         index % 7 === 0
@@ -69,16 +69,10 @@ type Story = StoryObj<typeof Options>;
 
 export const Default: Story = {
   render: (props) => {
-    const [value, setValue] = createState<Option | Option[]>();
-    return (
-      <Options
-        {...props}
-        value={value}
-        onSelect={(option) => {
-          setValue(option as Option | Option[] | undefined);
-        }}
-      />
-    );
+    const [value, setValue] = createState<
+      ValidOptionValue | ValidOptionValue[]
+    >();
+    return <Options {...props} value={value} onChange={setValue} />;
   },
 };
 
@@ -87,15 +81,9 @@ export const Multiple: Story = {
     multiple: true,
   },
   render: (props) => {
-    const [value, setValue] = createState<Option | Option[]>();
-    return (
-      <Options
-        {...props}
-        value={value}
-        onSelect={(option) => {
-          setValue(option as Option | Option[] | undefined);
-        }}
-      />
-    );
+    const [value, setValue] = createState<
+      ValidOptionValue | ValidOptionValue[]
+    >();
+    return <Options {...props} value={value} onChange={setValue} />;
   },
 };

@@ -4,9 +4,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { InputContainer } from '..';
 
-const meta: Meta<typeof InputContainer.Intreraction> = {
+const meta: Meta<typeof InputContainer.Interaction> = {
   title: 'atoms/InputContainer/Interaction',
-  component: InputContainer.Intreraction,
+  component: InputContainer.Interaction,
 
   args: {
     theme: 'light',
@@ -42,12 +42,12 @@ const meta: Meta<typeof InputContainer.Intreraction> = {
 
 export default meta;
 
-type Story = StoryObj<typeof InputContainer.Intreraction>;
+type Story = StoryObj<typeof InputContainer.Interaction>;
 
 export const Default: Story = {
   render: (args) => (
     <InputContainer>
-      <InputContainer.Intreraction {...args} />
+      <InputContainer.Interaction {...args} />
     </InputContainer>
   ),
 };
@@ -56,10 +56,10 @@ export const Disabled: Story = {
   render: (args) => (
     <>
       <InputContainer>
-        <InputContainer.Intreraction {...args} />
+        <InputContainer.Interaction {...args} />
       </InputContainer>
       <InputContainer>
-        <InputContainer.Intreraction {...args} readonly />
+        <InputContainer.Interaction {...args} readonly />
       </InputContainer>
     </>
   ),
@@ -69,10 +69,10 @@ export const Theme: Story = {
   render: (args) => (
     <>
       <InputContainer>
-        <InputContainer.Intreraction {...args} theme="light" />
+        <InputContainer.Interaction {...args} theme="light" />
       </InputContainer>
       <InputContainer>
-        <InputContainer.Intreraction {...args} theme="dark" />
+        <InputContainer.Interaction {...args} theme="dark" />
       </InputContainer>
     </>
   ),
@@ -82,13 +82,13 @@ export const Size: Story = {
   render: (args) => (
     <>
       <InputContainer>
-        <InputContainer.Intreraction {...args} size="small" />
+        <InputContainer.Interaction {...args} size="small" />
       </InputContainer>
       <InputContainer>
-        <InputContainer.Intreraction {...args} size="medium" />
+        <InputContainer.Interaction {...args} size="medium" />
       </InputContainer>
       <InputContainer>
-        <InputContainer.Intreraction {...args} size="large" />
+        <InputContainer.Interaction {...args} size="large" />
       </InputContainer>
     </>
   ),

@@ -14,7 +14,7 @@ const meta: Meta<typeof InputContainer> = {
   },
   args: {
     children: (
-      <InputContainer.Intreraction
+      <InputContainer.Interaction
         style={{
           width: '150px',
         }}

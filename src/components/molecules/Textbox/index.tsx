@@ -6,12 +6,12 @@ import type { Validation } from '../../../hooks';
 import type {
   InputProps,
   InputContainerProps,
-  InputContainerIntreractionProps,
+  InputContainerInteractionProps,
 } from '../../atoms';
 
 export interface TextboxProps
   extends Omit<
-    InputProps & InputContainerProps & InputContainerIntreractionProps,
+    InputProps & InputContainerProps & InputContainerInteractionProps,
     'validationMessage' | 'children' | 'disabled' | 'readonly'
   > {
   unit?: React.ReactNode;
@@ -40,7 +40,7 @@ export const Textbox = ({
 
   return (
     <InputContainer validationMessage={validationMessage}>
-      <InputContainer.Intreraction
+      <InputContainer.Interaction
         size={size}
         readonly={disabled === 'readonly'}
         theme={theme}
@@ -62,7 +62,7 @@ export const Textbox = ({
         ) : (
           unit
         )}
-      </InputContainer.Intreraction>
+      </InputContainer.Interaction>
     </InputContainer>
   );
 };
