@@ -62,8 +62,6 @@
   width: 100%;
   border-radius: $BORDER-RADIUS-MD;
 
-  font-size: $NORMAL;
-
   transition: box-shadow 0.3s, background-color 0.3s;
 
   //*Size
@@ -96,7 +94,7 @@
   }
 
   &.error {
-    @include border($PEACH-500, 1px);
+    @include border($PINK-500, 1px);
   }
 }
 
@@ -106,7 +104,7 @@
 
   padding-left: $SMALL3X;
 
-  color: $PEACH-500;
+  color: $PINK-500;
   font-size: $SMALL;
 }
 
@@ -122,10 +120,10 @@
 .light {
   @include interaction(
     $GRAY-700,
-    $WHITE,
+    white,
     $GRAY-200,
     $GRAY-400,
-    $GRAY-10,
+    $GRAY-50,
     $GRAY-200,
     $GRAY-400,
     $GRAY-500

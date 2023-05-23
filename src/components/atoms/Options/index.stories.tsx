@@ -28,7 +28,7 @@ const meta: Meta<typeof Options> = {
   },
 
   args: {
-    opened: false,
+    opened: true,
     options: Array.from({ length: 100 }, (_, index) => ({
       label: `Test label ${index}${
         index % 7 === 0
@@ -72,11 +72,17 @@ export const Default: Story = {
     const [value, setValue] = createState<
       ValidOptionValue | ValidOptionValue[]
     >();
-    return <Options {...props} value={value} onChange={setValue} />;
+    return (
+      <>
+        <input />
+        <Options {...props} value={value} onChange={setValue} />
+      </>
+    );
   },
 };
 
-export const Multiple: Story = {
+/**
+ * export const Multiple: Story = {
   args: {
     multiple: true,
   },
@@ -87,3 +93,4 @@ export const Multiple: Story = {
     return <Options {...props} value={value} onChange={setValue} />;
   },
 };
+ */
