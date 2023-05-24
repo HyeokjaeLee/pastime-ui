@@ -1,12 +1,22 @@
 import styles from './index.module.scss';
 import { useSubscribedState, useValidation } from '../../../hooks';
+import { cleanClassName } from '../../../utils';
 import { Input } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
 import type { InputProps, InputWrapProps, InputType } from '../../atoms';
 
 export interface TextboxProps
-  extends Pick<InputProps, 'value' | 'id' | 'onChange' | 'disabled'>,
+  extends Pick<
+      InputProps,
+      | 'value'
+      | 'id'
+      | 'onChange'
+      | 'disabled'
+      | 'placeholder'
+      | 'onFocus'
+      | 'onClick'
+    >,
     Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
   unit?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
@@ -22,8 +32,11 @@ export const Textbox = ({
   validation,
   className,
   disabled,
-  theme,
+  theme = 'light',
   type,
+  onClick,
+  onFocus,
+  placeholder,
 }: TextboxProps) => {
   const [value, setValue] = useSubscribedState(parentValue);
   const { validationMessage, checkValidation } = useValidation(
@@ -36,6 +49,9 @@ export const Textbox = ({
     <Input.Container validationMessage={validationMessage}>
       <Input.Wrap size={size} theme={theme} className={className}>
         <Input
+          onClick={onClick}
+          onFocus={onFocus}
+          placeholder={placeholder}
           type={type}
           disabled={!!disabled}
           value={value}
@@ -47,7 +63,9 @@ export const Textbox = ({
           }}
         />
         {typeof unit === 'string' ? (
-          <div className={styles.unit}>{unit}</div>
+          <div className={cleanClassName(`${styles.unit} ${styles[theme]}`)}>
+            {unit}
+          </div>
         ) : (
           unit
         )}

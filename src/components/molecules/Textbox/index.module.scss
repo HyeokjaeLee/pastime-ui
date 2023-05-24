@@ -1,16 +1,22 @@
 @import '../../../styles/libs';
 
-.textbox {
-  height: fit-content;
+.unit {
+  padding: 0.1em 0.5em;
+  border-radius: $BORDER-RADIUS-SM;
+
+  font-weight: 500;
+  font-size: 0.7em;
+  white-space: nowrap;
 }
 
-.unit {
-  padding: 0 0.5em;
-  border-radius: 3px;
+.light {
+  border: 1px solid $GRAY-700;
 
-  background-color: $GRAY-800;
+  color: $GRAY-700;
+}
 
-  color: white;
-  font-size: 0.9rem;
-  white-space: nowrap;
+.dark {
+  border: 1px solid $GRAY-50;
+
+  color: $GRAY-50;
 }
