@@ -1,6 +1,8 @@
 @import '../../../styles/libs';
 
-@mixin default-theme($color, $backgroundColor, $boxShadow) {
+@mixin default-theme($color, $backgroundColor, $boxShadow, $borderColor) {
+  border: 1px solid $borderColor;
+
   background-color: $backgroundColor;
   box-shadow: $boxShadow;
 
@@ -8,11 +10,11 @@
 }
 
 .light {
-  @include default-theme($GRAY-700, white, $LIGHT_BOX_SHADOW);
+  @include default-theme($GRAY-700, white, $LIGHT_BOX_SHADOW, $COOL-GRAY-100);
 }
 
 .dark {
-  @include default-theme(white, $GRAY-700, $DARK_BOX_SHADOW);
+  @include default-theme($GRAY-50, $GRAY-700, $DARK_BOX_SHADOW, $COOL-GRAY-700);
 }
 
 .options {
@@ -21,7 +23,6 @@
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
-  border: 1px solid $COOL-GRAY-200;
   border-radius: $BORDER-RADIUS-LG;
 
   box-shadow: $LIGHT_BOX_SHADOW;

@@ -72,12 +72,7 @@ export const Default: Story = {
     const [value, setValue] = createState<
       ValidOptionValue | ValidOptionValue[]
     >();
-    return (
-      <>
-        <input />
-        <Options {...props} value={value} onChange={setValue} />
-      </>
-    );
+    return <Options {...props} value={value} onChange={setValue} />;
   },
 };
 

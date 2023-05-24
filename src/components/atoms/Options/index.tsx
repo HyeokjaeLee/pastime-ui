@@ -64,7 +64,7 @@ export const Options = <OptionValue, Multiple>({
     }
   }, [isChangeOpenState, openState, options, selectedValue]);
 
-  const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     if (openState === true && options) {
@@ -76,7 +76,7 @@ export const Options = <OptionValue, Multiple>({
             return setIndexForSelect((prevIndex) => {
               if (prevIndex > 0) {
                 const nextIndex = prevIndex - 1;
-                refs.current[nextIndex]?.focus();
+                optionRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -87,7 +87,7 @@ export const Options = <OptionValue, Multiple>({
             return setIndexForSelect((prevIndex) => {
               if (prevIndex < options.length - 1) {
                 const nextIndex = prevIndex + 1;
-                refs.current[nextIndex]?.focus();
+                optionRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -95,7 +95,7 @@ export const Options = <OptionValue, Multiple>({
           case 'Enter':
             event.preventDefault();
             return setIndexForSelect((index) => {
-              if (index >= 0) refs.current[index]?.click();
+              if (index >= 0) optionRefs.current[index]?.click();
               return index;
             });
           default:
@@ -133,12 +133,10 @@ export const Options = <OptionValue, Multiple>({
               <button
                 type="button"
                 ref={(element) => {
-                  refs.current[index] = element;
+                  optionRefs.current[index] = element;
                 }}
                 className={cleanClassName(
-                  `${styles['option-item']} ${isHovered && styles.hovered} ${
-                    isSelected && styles.selected
-                  }`,
+                  `${styles['option-item']} ${isHovered && styles.hovered}`,
                 )}
                 onClick={() => {
                   if (multiple) {

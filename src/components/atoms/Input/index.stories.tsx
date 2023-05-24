@@ -3,6 +3,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Input } from '..';
+import { useSubscribedState } from '../../../hooks';
 
 const meta: Meta<typeof Input> = {
   title: 'atoms/Input',
@@ -24,8 +25,11 @@ const meta: Meta<typeof Input> = {
     type: {
       control: 'select',
     },
+    value: {
+      control: 'text',
+    },
     disabled: {
-      options: ['read-only', true, false],
+      options: ['readonly', true, false],
       control: {
         type: 'radio',
       },
@@ -36,5 +40,26 @@ const meta: Meta<typeof Input> = {
 export default meta;
 
 type Story = StoryObj<typeof Input>;
+
+export const InputConfiguration: Story = {
+  render: ({ value, onChange, ...args }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [inputValue, setInputValue] = useSubscribedState(value);
+    return (
+      <Input.Container>
+        <Input.Wrap>
+          <Input
+            {...args}
+            value={inputValue}
+            onChange={(value) => {
+              setInputValue(value);
+              onChange?.(value);
+            }}
+          />
+        </Input.Wrap>
+      </Input.Container>
+    );
+  },
+};
 
 export const Default: Story = {};

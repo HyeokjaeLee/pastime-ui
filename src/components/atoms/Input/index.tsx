@@ -1,33 +1,144 @@
-import type { Ref } from 'react';
-import { useState, useMemo, forwardRef } from 'react';
+import {
+  Ref,
+  useRef,
+  useState,
+  useMemo,
+  forwardRef,
+  createContext,
+  useContext,
+  useEffect,
+} from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
+type HTMLInputProps = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
+
+type CommonProps = Pick<HTMLInputProps, 'className' | 'style'>;
+
+export interface InputContainerProps extends CommonProps {
+  validationMessage?: string | null;
+  children?: React.ReactNode;
+}
+
+const InputContext = createContext<
+  Pick<InputContainerProps, 'validationMessage'> & {
+    readonly?: boolean;
+    setReadonly?: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+>({});
+
+const InputContainer = ({
+  children,
+  className,
+  validationMessage,
+  style,
+}: InputContainerProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [messageWrapHeight, setMessageWrapHeight] =
+    useState<React.CSSProperties>();
+
+  const [readonly, setReadonly] = useState(false);
+
+  useEffect(
+    () =>
+      setMessageWrapHeight({
+        height: ref.current?.clientHeight ?? 0,
+      }),
+    [ref, validationMessage],
+  );
+
+  const inputContextValue = useMemo(
+    () => ({
+      validationMessage,
+      readonly,
+      setReadonly,
+    }),
+    [validationMessage, readonly, setReadonly],
+  );
+
+  return (
+    <div
+      style={style}
+      className={cleanClassName(
+        `${styles['input-container-wrap']} ${className}`,
+      )}
+    >
+      <InputContext.Provider value={inputContextValue}>
+        <div className={styles['input-container']}>{children}</div>
+      </InputContext.Provider>
+      <div
+        className={styles['validation-message-wrap']}
+        style={messageWrapHeight}
+      >
+        {validationMessage ? (
+          <p ref={ref} className={styles['validation-message']}>
+            {validationMessage}
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
+export interface InputWrapProps
+  extends CommonProps,
+    Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  size?: 'small' | 'medium' | 'large';
+  theme?: 'light' | 'dark';
+  children?: React.ReactNode;
+}
+
+const InputWrap = ({
+  children,
+  onClick,
+  size = 'medium',
+  className,
+  style,
+  theme = 'light',
+}: InputWrapProps) => {
+  const { validationMessage, readonly } = useContext(InputContext);
+
+  return (
+    <div
+      style={style}
+      className={cleanClassName(
+        `${styles['input-wrap']} ${styles[theme]} ${
+          readonly && styles.readonly
+        } ${validationMessage && styles.error} ${
+          styles[`size-${size}`]
+        } ${className}`,
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+};
+
+export type InputType =
+  | 'text'
+  | 'number'
+  | 'large-number'
+  | 'phone-number'
+  | 'password'
+  | 'button';
+
 export interface InputProps
-  extends Pick<
-    React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    >,
-    'placeholder' | 'onFocus' | 'id' | 'onClick' | 'style'
-  > {
-  type?:
-    | 'text'
-    | 'number'
-    | 'large-number'
-    | 'phone-number'
-    | 'password'
-    | 'button';
+  extends Pick<HTMLInputProps, 'placeholder' | 'onFocus' | 'id' | 'onClick'>,
+    CommonProps {
+  type?: InputType;
   value?: number | string;
-  disabled?: boolean;
+  disabled?: boolean | 'readonly';
   onChange?: (value: string) => void;
   ref?: Ref<HTMLInputElement>;
   name?: string;
-  className?: string;
 }
 
-export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
+const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
   (
     {
       type = 'text',
@@ -45,6 +156,13 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
     ref,
   ) => {
     const [isFocused, setIsFucused] = useState(false);
+
+    const { setReadonly } = useContext(InputContext);
+
+    const isReadonly = disabled === 'readonly';
+
+    useEffect(() => setReadonly?.(isReadonly), [setReadonly, isReadonly]);
+
     const value = (() => {
       if (type === 'button' && !parentValue) return placeholder;
 
@@ -114,7 +232,7 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
         className={cleanClassName(
           `${styles.input} ${type === 'button' && styles.button} ${
             parentValue || styles.empty
-          } ${styles['default-width']} ${className}`,
+          } ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) => {
@@ -126,3 +244,8 @@ export const Input: (props: InputProps) => JSX.Element | null = forwardRef(
     );
   },
 );
+
+export const Input = Object.assign(InputMain, {
+  Container: InputContainer,
+  Wrap: InputWrap,
+});

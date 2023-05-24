@@ -1,22 +1,16 @@
 import styles from './index.module.scss';
 import { useSubscribedState, useValidation } from '../../../hooks';
-import { InputContainer, Input } from '../../atoms';
+import { Input } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type {
-  InputProps,
-  InputContainerProps,
-  InputContainerInteractionProps,
-} from '../../atoms';
+import type { InputProps, InputWrapProps, InputType } from '../../atoms';
 
 export interface TextboxProps
-  extends Omit<
-    InputProps & InputContainerProps & InputContainerInteractionProps,
-    'validationMessage' | 'children' | 'disabled' | 'readonly'
-  > {
+  extends Pick<InputProps, 'value' | 'id' | 'onChange' | 'disabled'>,
+    Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
   unit?: React.ReactNode;
+  type?: Exclude<InputType, 'button'>;
   validation?: Validation<TextboxProps['value']>;
-  disabled?: boolean | 'readonly';
 }
 
 export const Textbox = ({
@@ -29,7 +23,7 @@ export const Textbox = ({
   className,
   disabled,
   theme,
-  ...inputProps
+  type,
 }: TextboxProps) => {
   const [value, setValue] = useSubscribedState(parentValue);
   const { validationMessage, checkValidation } = useValidation(
@@ -39,15 +33,10 @@ export const Textbox = ({
   );
 
   return (
-    <InputContainer validationMessage={validationMessage}>
-      <InputContainer.Interaction
-        size={size}
-        readonly={disabled === 'readonly'}
-        theme={theme}
-        className={className}
-      >
+    <Input.Container validationMessage={validationMessage}>
+      <Input.Wrap size={size} theme={theme} className={className}>
         <Input
-          {...inputProps}
+          type={type}
           disabled={!!disabled}
           value={value}
           id={id}
@@ -62,7 +51,7 @@ export const Textbox = ({
         ) : (
           unit
         )}
-      </InputContainer.Interaction>
-    </InputContainer>
+      </Input.Wrap>
+    </Input.Container>
   );
 };
