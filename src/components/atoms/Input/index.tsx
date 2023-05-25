@@ -17,11 +17,13 @@ type HTMLInputProps = React.DetailedHTMLProps<
   HTMLInputElement
 >;
 
-type CommonProps = Pick<HTMLInputProps, 'className' | 'style'>;
+type HTMLDivProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
-export interface InputContainerProps extends CommonProps {
+export interface InputContainerProps extends HTMLDivProps {
   validationMessage?: string | null;
-  children?: React.ReactNode;
 }
 
 const InputContext = createContext<
@@ -35,7 +37,7 @@ const InputContainer = ({
   children,
   className,
   validationMessage,
-  style,
+  ...restDivProps
 }: InputContainerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [messageWrapHeight, setMessageWrapHeight] =
@@ -62,7 +64,7 @@ const InputContainer = ({
 
   return (
     <div
-      style={style}
+      {...restDivProps}
       className={cleanClassName(
         `${styles['input-container-wrap']} ${className}`,
       )}
@@ -84,27 +86,22 @@ const InputContainer = ({
   );
 };
 
-export interface InputWrapProps
-  extends CommonProps,
-    Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+export interface InputWrapProps extends HTMLDivProps {
   size?: 'small' | 'medium' | 'large';
   theme?: 'light' | 'dark';
-  children?: React.ReactNode;
 }
 
 const InputWrap = ({
-  children,
-  onClick,
   size = 'medium',
   className,
-  style,
   theme = 'light',
+  ...restDivProps
 }: InputWrapProps) => {
   const { validationMessage, readonly } = useContext(InputContext);
 
   return (
     <div
-      style={style}
+      {...restDivProps}
       className={cleanClassName(
         `${styles['input-wrap']} ${styles[theme]} ${
           readonly && styles.readonly
@@ -112,10 +109,7 @@ const InputWrap = ({
           styles[`size-${size}`]
         } ${className}`,
       )}
-      onClick={onClick}
-    >
-      {children}
-    </div>
+    />
   );
 };
 
@@ -128,14 +122,12 @@ export type InputType =
   | 'button';
 
 export interface InputProps
-  extends Pick<HTMLInputProps, 'placeholder' | 'onFocus' | 'id' | 'onClick'>,
-    CommonProps {
+  extends Omit<HTMLInputProps, 'type' | 'value' | 'disabled' | 'onChange'> {
   type?: InputType;
   value?: number | string;
   disabled?: boolean | 'readonly';
   onChange?: (value: string) => void;
   ref?: Ref<HTMLInputElement>;
-  name?: string;
 }
 
 const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
@@ -146,12 +138,10 @@ const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
       disabled = false,
       value: parentValue,
       onChange,
-      onClick,
-      id,
-      onFocus,
-      name,
       className,
-      style,
+      onFocus,
+      ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
+      ...restInputProps
     },
     ref,
   ) => {
@@ -216,8 +206,7 @@ const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
 
     return (
       <input
-        id={id}
-        name={name}
+        {...restInputProps}
         ref={ref}
         onFocus={(e) => {
           setIsFucused(true);
@@ -226,9 +215,7 @@ const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
         onBlur={() => setIsFucused(false)}
         type={type}
         placeholder={placeholder}
-        onClick={onClick}
         value={value}
-        style={style}
         className={cleanClassName(
           `${styles.input} ${type === 'button' && styles.button} ${
             parentValue || styles.empty

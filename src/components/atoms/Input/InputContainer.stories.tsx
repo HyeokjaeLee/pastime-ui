@@ -32,7 +32,11 @@ export const InputConfiguration: Story = {
     return (
       <Input.Container {...args}>
         <Input.Wrap>
-          <Input value={inputValue} onChange={setInputValue} />
+          <Input
+            value={inputValue}
+            onChange={setInputValue}
+            placeholder="placeholder"
+          />
         </Input.Wrap>
       </Input.Container>
     );

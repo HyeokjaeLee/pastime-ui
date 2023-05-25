@@ -9,10 +9,7 @@ type HtmlButtonProps = React.DetailedHTMLProps<
   HTMLButtonElement
 >;
 
-export type ButtonProps = Pick<
-  HtmlButtonProps,
-  'children' | 'disabled' | 'type' | 'style'
-> & {
+export interface ButtonProps extends HtmlButtonProps {
   delay?: number;
   size?: 'small' | 'medium' | 'large';
   theme?:
@@ -26,9 +23,7 @@ export type ButtonProps = Pick<
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
   shape?: 'round' | 'default';
-  className?: string;
-  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
 export const Button = ({
   delay,
@@ -36,13 +31,12 @@ export const Button = ({
   children,
   size = 'medium',
   theme = 'primary',
-  onClick,
   disabled,
   shape = 'default',
   iconDirection = 'left',
   icon,
   className,
-  style,
+  ...restButtonProps
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -68,6 +62,7 @@ export const Button = ({
 
   return (
     <button
+      {...restButtonProps}
       type={type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
@@ -78,8 +73,6 @@ export const Button = ({
           styles[theme]
         } ${className}`,
       )}
-      style={style}
-      onClick={onClick}
       disabled={isDisabled}
     >
       {delay && isDelayButton ? (

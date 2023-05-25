@@ -7,16 +7,7 @@ import type { Validation } from '../../../hooks';
 import type { InputProps, InputWrapProps, InputType } from '../../atoms';
 
 export interface TextboxProps
-  extends Pick<
-      InputProps,
-      | 'value'
-      | 'id'
-      | 'onChange'
-      | 'disabled'
-      | 'placeholder'
-      | 'onFocus'
-      | 'onClick'
-    >,
+  extends Omit<InputProps, 'className' | 'size'>,
     Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
   unit?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
@@ -28,15 +19,12 @@ export const Textbox = ({
   unit,
   onChange,
   size,
-  id,
   validation,
   className,
-  disabled,
   theme = 'light',
   type,
-  onClick,
-  onFocus,
-  placeholder,
+  id,
+  ...restInputProps
 }: TextboxProps) => {
   const [value, setValue] = useSubscribedState(parentValue);
   const { validationMessage, checkValidation } = useValidation(
@@ -49,11 +37,8 @@ export const Textbox = ({
     <Input.Container validationMessage={validationMessage}>
       <Input.Wrap size={size} theme={theme} className={className}>
         <Input
-          onClick={onClick}
-          onFocus={onFocus}
-          placeholder={placeholder}
+          {...restInputProps}
           type={type}
-          disabled={!!disabled}
           value={value}
           id={id}
           onChange={(value) => {
