@@ -5,49 +5,113 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from '..';
 import { useSubscribedState } from '../../../hooks';
 
-const meta: Meta<typeof Input> = {
+import type { InputProps, InputContainerProps, InputWrapProps } from '.';
+
+type MetaProps = InputProps &
+  Pick<InputWrapProps, 'size' | 'theme'> &
+  Pick<InputContainerProps, 'validationMessage'>;
+
+const GROUPS = {
+  INPUT: {
+    table: {
+      category: 'Input',
+    },
+  },
+  CONTAINER: {
+    table: {
+      category: 'Input.Container',
+    },
+  },
+  WRAP: {
+    table: {
+      category: 'Input.Wrap',
+    },
+  },
+};
+
+const HIDDEN = {
+  table: {
+    disable: true,
+  },
+};
+
+export default {
   title: 'atoms/Input',
   component: Input,
+  parameters: {
+    subtitle: 'Input2',
+  },
   args: {
     placeholder: 'placeholder',
+    validationMessage: '',
   },
-  decorators: [
-    (Story) => (
-      <article className="story-container">
-        <Story />
-      </article>
-    ),
-  ],
   argTypes: {
+    //* Input.Container
+    ref: HIDDEN,
+    onChange: HIDDEN,
+    validationMessage: {
+      ...GROUPS.CONTAINER,
+    },
+
+    //* Input.Wrap
+    size: {
+      ...GROUPS.WRAP,
+      control: {
+        type: 'radio',
+      },
+      options: ['small', 'medium', 'large'],
+    },
+    theme: {
+      ...GROUPS.WRAP,
+      control: {
+        type: 'radio',
+      },
+      options: ['light', 'dark'],
+    },
+
+    //* Input
     placeholder: {
+      ...GROUPS.INPUT,
       control: 'text',
+      description: 'placeholder',
     },
     type: {
+      ...GROUPS.INPUT,
       control: 'select',
     },
     value: {
+      ...GROUPS.INPUT,
       control: 'text',
     },
     disabled: {
+      ...GROUPS.INPUT,
       options: ['readonly', true, false],
       control: {
         type: 'radio',
       },
     },
   },
-};
+} satisfies Meta<MetaProps>;
 
-export default meta;
+type Story = StoryObj<MetaProps>;
 
-type Story = StoryObj<typeof Input>;
-
-export const InputConfiguration: Story = {
-  render: ({ value, onChange, ...args }) => {
+export const Default: Story = {
+  render: ({
+    //* Input.Container
+    validationMessage,
+    //* Input.Wrap
+    size,
+    theme,
+    //* Input
+    value,
+    onChange,
+    ...args
+  }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Container>
-        <Input.Wrap>
+      <Input.Container validationMessage={validationMessage}>
+        <Input.Wrap size={size} theme={theme}>
           <Input
             {...args}
             value={inputValue}
@@ -61,5 +125,3 @@ export const InputConfiguration: Story = {
     );
   },
 };
-
-export const Default: Story = {};
