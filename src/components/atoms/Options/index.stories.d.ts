@@ -4,4 +4,3 @@ declare const meta: Meta<typeof Options>;
 export default meta;
 type Story = StoryObj<typeof Options>;
 export declare const Default: Story;
-export declare const Multiple: Story;

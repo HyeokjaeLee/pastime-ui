@@ -1,9 +1,9 @@
 /// <reference types="react" />
 import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, InputContainerIntreractionProps } from '../../atoms';
-export interface TextboxProps extends Omit<InputProps & InputContainerProps & InputContainerIntreractionProps, 'validationMessage' | 'children' | 'disabled' | 'readonly'> {
+import type { InputProps, InputWrapProps, InputType } from '../../atoms';
+export interface TextboxProps extends Omit<InputProps, 'className' | 'size'>, Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
     unit?: React.ReactNode;
+    type?: Exclude<InputType, 'button'>;
     validation?: Validation<TextboxProps['value']>;
-    disabled?: boolean | 'readonly';
 }
-export declare const Textbox: ({ value, unit, onChange, size, id, validation, className, disabled, theme, ...inputProps }: TextboxProps) => JSX.Element;
+export declare const Textbox: ({ value: parentValue, unit, onChange, size, validation, className, theme, type, id, ...restInputProps }: TextboxProps) => JSX.Element;
