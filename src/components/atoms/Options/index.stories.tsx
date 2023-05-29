@@ -25,11 +25,17 @@ const meta: Meta<typeof Options> = {
       options: ['light', 'dark'],
       control: 'radio',
     },
+    multiple: {
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: false },
+      },
+    },
   },
 
   args: {
     opened: true,
-    options: Array.from({ length: 100 }, (_, index) => ({
+    options: Array.from({ length: 10 }, (_, index) => ({
       label: `Test label ${index}${
         index % 7 === 0
           ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
@@ -75,17 +81,3 @@ export const Default: Story = {
     return <Options {...props} value={value} onChange={setValue} />;
   },
 };
-
-/**
- * export const Multiple: Story = {
-  args: {
-    multiple: true,
-  },
-  render: (props) => {
-    const [value, setValue] = createState<
-      ValidOptionValue | ValidOptionValue[]
-    >();
-    return <Options {...props} value={value} onChange={setValue} />;
-  },
-};
- */

@@ -47,13 +47,11 @@ export const Textbox = ({
             onChange?.(value);
           }}
         />
-        {typeof unit === 'string' ? (
+        {unit ? (
           <div className={cleanClassName(`${styles.unit} ${styles[theme]}`)}>
             {unit}
           </div>
-        ) : (
-          unit
-        )}
+        ) : null}
       </Input.Wrap>
     </Input.Container>
   );

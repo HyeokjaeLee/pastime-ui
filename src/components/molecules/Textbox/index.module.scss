@@ -1,22 +1,35 @@
 @import '../../../styles/libs';
 
 .unit {
-  padding: 0.1em 0.5em;
-  border-radius: $BORDER-RADIUS-SM;
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
 
-  font-weight: 500;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 1em;
+  border-top-right-radius: $BORDER-RADIUS-MD;
+  border-bottom-right-radius: $BORDER-RADIUS-MD;
+
+  color: $GRAY-400;
+  font-weight: 700;
   font-size: 0.7em;
   white-space: nowrap;
 }
 
 .light {
-  border: 1px solid $GRAY-700;
-
-  color: $GRAY-700;
+  background: linear-gradient(
+    to right,
+    rgba($GRAY-300, 0.01) 5%,
+    rgba($GRAY-300, 0.2) 60%
+  );
 }
 
 .dark {
-  border: 1px solid $GRAY-50;
-
-  color: $GRAY-50;
+  background: linear-gradient(
+    to right,
+    rgba($GRAY-100, 0.01) 5%,
+    rgba($GRAY-100, 0.2) 60%
+  );
 }

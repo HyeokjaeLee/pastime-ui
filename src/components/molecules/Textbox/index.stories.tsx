@@ -16,6 +16,9 @@ const meta: Meta<typeof Textbox> = {
     value: {
       control: 'text',
     },
+    unit: {
+      control: 'text',
+    },
   },
   decorators: [
     (Story) => (
@@ -41,7 +44,7 @@ export const Unit: Story = {
   render: (args) => (
     <>
       <Textbox {...args} />
-      <Textbox {...args} unit={<Percent />} />
+      <Textbox {...args} unit={<Percent size="1.2em" />} />
     </>
   ),
 };

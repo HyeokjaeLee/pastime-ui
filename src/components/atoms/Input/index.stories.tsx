@@ -38,9 +38,6 @@ const HIDDEN = {
 export default {
   title: 'atoms/Input',
   component: Input,
-  parameters: {
-    subtitle: 'Input2',
-  },
   args: {
     placeholder: 'placeholder',
     validationMessage: '',
@@ -60,6 +57,7 @@ export default {
         type: 'radio',
       },
       options: ['small', 'medium', 'large'],
+      defaultValue: 'medium',
     },
     theme: {
       ...GROUPS.WRAP,
@@ -67,6 +65,7 @@ export default {
         type: 'radio',
       },
       options: ['light', 'dark'],
+      defaultValue: 'light',
     },
 
     //* Input

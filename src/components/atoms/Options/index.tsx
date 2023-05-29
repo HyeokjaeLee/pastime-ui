@@ -6,12 +6,16 @@ import { cleanClassName } from '../../../utils';
 
 export type ValidOptionValue = string | number;
 
+type HtmlSectionProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
+>;
+
 export interface OptionsProps<
   OptionValue = ValidOptionValue,
   Multiple = boolean,
-> {
+> extends Omit<HtmlSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
   opened?: boolean;
-  style?: React.CSSProperties;
   options?: {
     label: string;
     value: OptionValue;
@@ -21,7 +25,6 @@ export interface OptionsProps<
   onChange?: (value: OptionsProps['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  className?: string;
   theme?: 'light' | 'dark';
 }
 
@@ -34,8 +37,8 @@ export const Options = <OptionValue, Multiple>({
   onKeyDown,
   float = 'bottom',
   className,
-  style,
   theme = 'light',
+  ...restSectionProps
 }: OptionsProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     opened,
@@ -109,7 +112,7 @@ export const Options = <OptionValue, Multiple>({
 
   return openState && options?.length ? (
     <section
-      style={style}
+      {...restSectionProps}
       className={cleanClassName(
         `${styles.options} ${styles[theme]} ${styles[float]} ${
           isChangeOpenState && styles[openState]
