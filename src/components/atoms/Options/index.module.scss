@@ -1,39 +1,20 @@
 @import '../../../styles/libs';
 
-@mixin theme(
-  $color,
-  $backgroundColor,
-  $hoverColor,
-  $hoverBackgroundColor,
-  $selectColor,
-  $selectBackgroundColor,
-  $boxShadow
-) {
+@mixin default-theme($color, $backgroundColor, $boxShadow, $borderColor) {
+  border: 1px solid $borderColor;
+
   background-color: $backgroundColor;
   box-shadow: $boxShadow;
-  .mouse-hover-enabled > li > .option-item {
-    &:hover {
-      background-color: $hoverBackgroundColor;
 
-      color: $hoverColor;
-    }
-  }
+  color: $color;
+}
 
-  .option-item {
-    color: $color;
+.light {
+  @include default-theme($GRAY-700, white, $LIGHT_BOX_SHADOW, $COOL-GRAY-100);
+}
 
-    &.selected {
-      background-color: $selectBackgroundColor;
-
-      color: $selectColor;
-    }
-
-    &.hovered {
-      background-color: $hoverBackgroundColor;
-
-      color: $hoverColor;
-    }
-  }
+.dark {
+  @include default-theme($GRAY-50, $GRAY-700, $DARK_BOX_SHADOW, $COOL-GRAY-700);
 }
 
 .options {
@@ -41,8 +22,10 @@
 
   box-sizing: border-box;
   width: 100%;
-  padding: 5px;
-  border-radius: $BORDER-RADIUS-MD;
+  padding: 10px;
+  border-radius: $BORDER-RADIUS-LG;
+
+  box-shadow: $LIGHT_BOX_SHADOW;
 
   &.closing,
   &.opening {
@@ -77,20 +60,23 @@
 .option-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
   overflow-y: auto;
 
   max-height: 300px;
-  scroll-snap-type: y mandatory;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  > li {
-    scroll-snap-align: start;
+.option-wrap {
+  scroll-snap-align: start;
 
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .option-item {
@@ -100,43 +86,30 @@
 
   min-width: 100%;
   max-width: 100%;
-  padding: 0.3em 0.7em;
+  padding: 0.8em 0.6em;
+  border: 0;
   border-radius: $BORDER-RADIUS-MD;
 
+  background-color: transparent;
   outline: none;
 
+  color: inherit;
   font-weight: 300;
   text-align: start;
   white-space: pre-wrap;
 
-  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
 }
 
-.check-icon-wrap {
-  width: 24px;
-  height: 24px;
+.hovered {
+  background-color: $INDIGO-600;
+
+  color: white;
 }
 
-.light {
-  @include theme(
-    $GRAY-700,
-    $WHITE,
-    $GRAY-900,
-    $GRAY-10,
-    $WHITE,
-    $ORANGE-500,
-    $LIGHT_BOX_SHADOW
-  );
-}
-
-.dark {
-  @include theme(
-    $GRAY-100,
-    $GRAY-900,
-    $GRAY-10,
-    $GRAY-800,
-    $WHITE,
-    $ORANGE-500,
-    $DARK_BOX_SHADOW
-  );
+.icon-wrap {
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+  }
 }

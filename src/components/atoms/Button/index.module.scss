@@ -67,8 +67,12 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 2px);
+    @include border($border, 1px);
   }
+}
+
+.button {
+  cursor: pointer;
 }
 
 .button,
@@ -81,8 +85,9 @@
   overflow: hidden;
 
   box-sizing: border-box;
+  border: 0;
 
-  font-weight: 300;
+  outline: none;
 
   transition: background-color 0.3s, color 0.3s;
 
@@ -128,7 +133,7 @@
 
   //* Shape
   &.shape-default {
-    border-radius: $BORDER-RADIUS-LG;
+    border-radius: $BORDER-RADIUS-MD;
   }
 
   &.shape-round {
@@ -173,50 +178,58 @@
 
 //* Theme
 .primary {
-  @include default-theme($WHITE, $PURPLE-600);
-  @include disable-theme($PURPLE-10, $PURPLE-300);
-  @include hover-theme($WHITE, $PURPLE-550);
-  @include active-theme($WHITE, $PURPLE-700, $BLUE-500);
+  @include default-theme($GRAY-50, $INDIGO-600);
+  @include disable-theme(rgba($GRAY-50, 0.6), $INDIGO-300);
+  @include hover-theme(white, $INDIGO-500);
+  @include active-theme(white, $INDIGO-700, $INDIGO-500);
 }
 
 .secondary {
-  @include default-theme($WHITE, $BLUISH-GRAY-700);
-  @include disable-theme($BLUISH-GRAY-10, $BLUISH-GRAY-300);
-  @include hover-theme($WHITE, $BLUISH-GRAY-600);
-  @include active-theme($WHITE, $BLUISH-GRAY-800, $BLUISH-GRAY-400);
+  @include default-theme($GRAY-50, $BLUE-GRAY-700);
+  @include disable-theme(rgba($GRAY-50, 0.6), $BLUE-GRAY-300);
+  @include hover-theme(white, $BLUE-GRAY-600);
+  @include active-theme(white, $BLUE-GRAY-800, $BLUE-GRAY-400);
 }
 
 .success {
-  @include default-theme($WHITE, $GREEN-600);
-  @include disable-theme($GREEN-50, $GREEN-200);
-  @include hover-theme($WHITE, $GREEN-500);
-  @include active-theme($WHITE, $GREEN-700, $GREEN-300);
+  @include default-theme($GRAY-50, $LIME-500);
+  @include disable-theme(white, $LIME-200);
+  @include hover-theme(white, $LIME-400);
+  @include active-theme(white, $LIME-600, $LIME-300);
 }
 
 .warning {
-  @include default-theme($WHITE, $ORANGE-500);
-  @include disable-theme($ORANGE-50, $ORANGE-100);
-  @include hover-theme($WHITE, $ORANGE-400);
-  @include active-theme($WHITE, $ORANGE-600, $ORANGE-300);
+  @include default-theme($GRAY-50, $ORANGE-400);
+  @include disable-theme(rgba($GRAY-50, 0.6), $ORANGE-200);
+  @include hover-theme(white, $ORANGE-300);
+  @include active-theme(white, $ORANGE-600, $ORANGE-300);
 }
 
 .danger {
-  @include default-theme($WHITE, $PEACH-500);
-  @include disable-theme($ORANGE-50, $PEACH-100);
-  @include hover-theme($WHITE, $PEACH-400);
-  @include active-theme($WHITE, $PEACH-600, $PEACH-300);
-}
-
-.text-dark {
-  @include default-theme($BLUISH-GRAY-800, transparent);
-  @include disable-theme($BLUISH-GRAY-100, transparen);
-  @include hover-theme($BLUISH-GRAY-800, $BLUISH-GRAY-50);
-  @include active-theme($BLUISH-GRAY-800, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include default-theme($GRAY-50, $ROSE-500);
+  @include disable-theme(white, $ROSE-100);
+  @include hover-theme(white, $ROSE-400);
+  @include active-theme(white, $ROSE-600, $ROSE-300);
 }
 
 .text-light {
-  @include default-theme($BLUISH-GRAY-10, transparent);
-  @include disable-theme($GRAY-500, transparen);
-  @include hover-theme($BLUISH-GRAY-10, $GRAY-700);
-  @include active-theme($BLUISH-GRAY-10, $GRAY-700, $GRAY-500);
+  @include default-theme($BLUE-GRAY-800, transparent);
+  @include disable-theme(rgba($BLUE-GRAY-800, 0.6), transparen);
+  @include hover-theme($BLUE-GRAY-800, rgba($BLUE-GRAY-200, 0.3));
+  @include active-theme(
+    $BLUE-GRAY-800,
+    rgba($BLUE-GRAY-200, 0.5),
+    rgba($COOL-GRAY-100, 0.5)
+  );
+}
+
+.text-dark {
+  @include default-theme($GRAY-100, transparent);
+  @include disable-theme(rgba($GRAY-100, 0.5), transparen);
+  @include hover-theme($BLUE-GRAY-50, rgba($GRAY-700, 0.3));
+  @include active-theme(
+    $BLUE-GRAY-50,
+    rgba($BLUE-GRAY-200, 0.5),
+    rgba($COOL-GRAY-700, 0.5)
+  );
 }

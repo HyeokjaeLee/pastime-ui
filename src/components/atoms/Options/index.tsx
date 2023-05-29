@@ -1,86 +1,45 @@
-import { createRef, useMemo, useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-type ValidOptionValue = string | number | undefined;
+export type ValidOptionValue = string | number;
 
-export interface Option<
-  _OptionValue extends ValidOptionValue = ValidOptionValue,
-> {
-  label: string;
-  value: _OptionValue;
-}
-
-type OptionsValue<_Option, _Multiple> = _Multiple extends true
-  ? _Option[]
-  : _Option;
+type HtmlSectionProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
+>;
 
 export interface OptionsProps<
-  _Option extends Option = Option,
-  _Multiple extends boolean = false,
-> {
+  OptionValue = ValidOptionValue,
+  Multiple = boolean,
+> extends Omit<HtmlSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
   opened?: boolean;
-  style?: React.CSSProperties;
-  options?: _Option[];
-  multiple?: _Multiple;
-  value?: OptionsValue<_Option, _Multiple>;
-  onSelect?: (option?: OptionsValue<_Option, _Multiple>) => void;
+  options?: {
+    label: string;
+    value: OptionValue;
+  }[];
+  multiple: Multiple;
+  value?: Multiple extends true ? OptionValue[] : OptionValue;
+  onChange?: (value: OptionsProps['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  className?: string;
   theme?: 'light' | 'dark';
 }
 
-export const Options = <
-  _Option extends Option = Option,
-  _Multiple extends boolean = false,
->({
+export const Options = <OptionValue, Multiple>({
   opened = false,
   options,
-  multiple,
-  value,
-  onSelect,
+  multiple = false as Multiple,
+  value: selectedValue,
+  onChange,
   onKeyDown,
   float = 'bottom',
   className,
-  style,
   theme = 'light',
-}: OptionsProps<_Option, _Multiple>) => {
-  const refList = useMemo(
-    () => options?.map(() => createRef<HTMLButtonElement>()),
-    [options],
-  );
-
-  const optionData = useMemo(
-    () =>
-      refList &&
-      options?.map((option, index) => {
-        let isAlreadySelected = false;
-
-        if (value) {
-          isAlreadySelected =
-            value instanceof Array
-              ? value.some(
-                  (selectedOption) =>
-                    option.value === selectedOption.value &&
-                    option.label === selectedOption.label,
-                )
-              : value.value === option.value && value.label === option.label;
-        }
-
-        return {
-          option,
-          ref: refList[index],
-          isAlreadySelected,
-        };
-      }),
-    [options, refList, value],
-  );
-
-  const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
-
+  ...restSectionProps
+}: OptionsProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     opened,
   );
@@ -88,175 +47,137 @@ export const Options = <
   useEffect(() => {
     setOpenState((prevOpenState) => {
       if (prevOpenState !== opened) return opened ? 'opening' : 'closing';
-
       return prevOpenState;
     });
   }, [opened]);
 
   const isChangeOpenState = typeof openState === 'string';
+  const [indexForSelect, setIndexForSelect] = useState(-1);
 
   useEffect(() => {
     if (isChangeOpenState) {
       const nextOpenState = openState === 'opening';
-      if (nextOpenState) {
-        setOptionIndexForSelect(-1);
 
-        const firstSelectedOptionRef = optionData?.find(
-          ({ isAlreadySelected }) => isAlreadySelected,
-        )?.ref;
+      setIndexForSelect(
+        options?.findIndex(({ value }) => value === selectedValue) ?? -1,
+      );
 
-        if (firstSelectedOptionRef) {
-          firstSelectedOptionRef.current?.scrollIntoView({
-            block: 'start',
-          });
-        }
-      }
       const timeout = setTimeout(() => setOpenState(nextOpenState), 250);
       return () => clearTimeout(timeout);
     }
-  }, [openState, isChangeOpenState, optionData]);
+  }, [isChangeOpenState, openState, options, selectedValue]);
 
-  const optionDataForSelect = optionData?.[optionIndexForSelect];
-
-  const handleSelect = useMemo(
-    () =>
-      onSelect &&
-      ((multiple
-        ? (value, optionForSelect, isAlreadySelected) => {
-            const selectedOptions = value as _Option[] | undefined;
-            const handleSelect = onSelect as (option?: _Option[]) => void;
-
-            if (!selectedOptions) return handleSelect([optionForSelect]);
-
-            return handleSelect(
-              isAlreadySelected
-                ? selectedOptions.filter(
-                    ({ label, value }) =>
-                      label !== optionForSelect.label ||
-                      value !== optionForSelect.value,
-                  )
-                : [...selectedOptions, optionForSelect],
-            );
-          }
-        : (value, optionForSelect, isAlreadySelected) => {
-            const selectedOption = value as _Option | undefined;
-            const handleSelect = onSelect as (option?: _Option) => void;
-
-            if (!selectedOption) return handleSelect(optionForSelect);
-
-            return handleSelect(
-              isAlreadySelected ? undefined : optionForSelect,
-            );
-          }) satisfies (
-        _value: typeof value,
-        _optionForSelect: _Option,
-        _isAlreadySelected: boolean,
-      ) => void),
-    [multiple, onSelect],
-  );
-
-  const [mouseHoverLock, setMouseHoverLock] = useState(false);
-  const [keyboardEventLock, setKeyboardEventLock] = useState(true);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    if (openState === true && !keyboardEventLock && optionData) {
+    if (openState === true && options) {
       const keyboardEvent = (event: KeyboardEvent) => {
-        const { key } = event;
-        switch (key) {
-          case 'Enter':
-            event.preventDefault();
-            return (
-              optionDataForSelect &&
-              handleSelect?.(
-                value,
-                optionDataForSelect.option,
-                optionDataForSelect.isAlreadySelected,
-              )
-            );
-
+        onKeyDown?.(event);
+        switch (event.key) {
           case 'ArrowUp':
-          case 'ArrowDown':
-            setMouseHoverLock(true);
             event.preventDefault();
-
-            return setOptionIndexForSelect((prevIndex) => {
-              if (key === 'ArrowDown') {
-                prevIndex =
-                  prevIndex < optionData.length - 1 ? prevIndex + 1 : prevIndex;
-              } else prevIndex = prevIndex > 0 ? prevIndex - 1 : 0;
-
-              optionData[prevIndex].ref.current?.scrollIntoView({
-                block: 'start',
-              });
-
+            return setIndexForSelect((prevIndex) => {
+              if (prevIndex > 0) {
+                const nextIndex = prevIndex - 1;
+                optionRefs.current[nextIndex]?.focus();
+                return nextIndex;
+              }
               return prevIndex;
             });
 
+          case 'ArrowDown':
+            event.preventDefault();
+            return setIndexForSelect((prevIndex) => {
+              if (prevIndex < options.length - 1) {
+                const nextIndex = prevIndex + 1;
+                optionRefs.current[nextIndex]?.focus();
+                return nextIndex;
+              }
+              return prevIndex;
+            });
+          case 'Enter':
+            event.preventDefault();
+            return setIndexForSelect((index) => {
+              if (index >= 0) optionRefs.current[index]?.click();
+              return index;
+            });
           default:
-            return onKeyDown?.(event);
         }
       };
 
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [
-    handleSelect,
-    onKeyDown,
-    openState,
-    optionData,
-    optionDataForSelect,
-    value,
-    keyboardEventLock,
-  ]);
+  }, [openState, options, onKeyDown]);
 
-  return openState && optionData?.length ? (
+  return openState && options?.length ? (
     <section
-      style={style}
+      {...restSectionProps}
       className={cleanClassName(
         `${styles.options} ${styles[theme]} ${styles[float]} ${
           isChangeOpenState && styles[openState]
         } ${className}`,
       )}
-      onMouseEnter={() => setKeyboardEventLock(false)}
-      onMouseLeave={() => setKeyboardEventLock(true)}
     >
-      <ul
-        className={cleanClassName(
-          `${styles['option-container']} ${
-            !mouseHoverLock && styles['mouse-hover-enabled']
-          }`,
-        )}
-      >
-        {optionData.map(({ option, ref, isAlreadySelected }, index) => (
-          <li key={index}>
-            <button
-              type="button"
-              ref={ref}
-              className={cleanClassName(
-                `${styles['option-item']} ${
-                  mouseHoverLock &&
-                  optionIndexForSelect === index &&
-                  styles.hovered
-                } ${isAlreadySelected && styles.selected}`,
-              )}
-              onClick={() => handleSelect?.(value, option, isAlreadySelected)}
-              onMouseEnter={() =>
-                openState === true &&
-                !mouseHoverLock &&
-                setOptionIndexForSelect(index)
-              }
-              onMouseMove={() => setMouseHoverLock(false)}
-            >
-              <div>{option.label}</div>
-              {multiple ? (
-                <div className={styles['check-icon-wrap']}>
-                  {isAlreadySelected ? <Check /> : null}
+      <ul className={cleanClassName(styles['option-container'])}>
+        {options?.map(({ label, value }, index) => {
+          const isHovered = index === indexForSelect;
+          const isSelected = (() => {
+            if (selectedValue === undefined) return false;
+
+            if (multiple && selectedValue instanceof Array)
+              return selectedValue.includes(value);
+
+            return selectedValue === value;
+          })();
+
+          return (
+            <li key={index} className={styles['option-wrap']}>
+              <button
+                type="button"
+                ref={(element) => {
+                  optionRefs.current[index] = element;
+                }}
+                className={cleanClassName(
+                  `${styles['option-item']} ${isHovered && styles.hovered}`,
+                )}
+                onClick={() => {
+                  if (multiple) {
+                    const selectedValues = (selectedValue ??
+                      []) as OptionValue[];
+                    const handleChange = onChange as
+                      | ((values: OptionValue[]) => void)
+                      | undefined;
+                    handleChange?.(
+                      isSelected
+                        ? selectedValues.filter(
+                            (selectedValue) => selectedValue !== value,
+                          )
+                        : [...selectedValues, value],
+                    );
+                  } else {
+                    const handleChange = onChange as
+                      | ((value?: OptionValue) => void)
+                      | undefined;
+                    handleChange?.(isSelected ? undefined : value);
+                  }
+                }}
+                onMouseEnter={() => {
+                  setIndexForSelect(index);
+                }}
+              >
+                <div>{label}</div>
+                <div
+                  className={cleanClassName(
+                    `${styles['icon-wrap']} ${isSelected && styles.show}`,
+                  )}
+                >
+                  {<Check size="1em" />}
                 </div>
-              ) : null}
-            </button>
-          </li>
-        ))}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </section>
   ) : (

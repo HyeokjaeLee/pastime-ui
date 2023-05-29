@@ -89,6 +89,7 @@ export const Delay: Story = {
   render: (args) => (
     <>
       <Button {...args} />
+      <Button {...args} theme="text-light" />
       <Button {...args} theme="text-dark" />
     </>
   ),

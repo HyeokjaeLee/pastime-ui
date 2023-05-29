@@ -3,9 +3,8 @@ import React, { useState as createState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Options } from '..';
-import { Textbox } from '../../molecules/Textbox';
 
-import type { Option } from '..';
+import type { ValidOptionValue } from '..';
 
 const meta: Meta<typeof Options> = {
   title: 'atoms/Options',
@@ -26,11 +25,17 @@ const meta: Meta<typeof Options> = {
       options: ['light', 'dark'],
       control: 'radio',
     },
+    multiple: {
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: false },
+      },
+    },
   },
 
   args: {
     opened: true,
-    options: Array.from({ length: 100 }, (_, index) => ({
+    options: Array.from({ length: 10 }, (_, index) => ({
       label: `Test label ${index}${
         index % 7 === 0
           ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
@@ -70,41 +75,9 @@ type Story = StoryObj<typeof Options>;
 
 export const Default: Story = {
   render: (props) => {
-    const [value, setValue] = createState<Option | Option[]>();
-
-    return (
-      <>
-        <Textbox value={JSON.stringify(value)} theme={props.theme} />
-        <Options
-          {...props}
-          value={value}
-          onSelect={(option) => {
-            setValue(option as Option | Option[] | undefined);
-          }}
-        />
-      </>
-    );
-  },
-};
-
-export const Multiple: Story = {
-  args: {
-    multiple: true,
-  },
-  render: (props) => {
-    const [value, setValue] = createState<Option | Option[]>();
-
-    return (
-      <>
-        <Textbox value={JSON.stringify(value)} />
-        <Options
-          {...props}
-          value={value}
-          onSelect={(option) => {
-            setValue(option as Option | Option[] | undefined);
-          }}
-        />
-      </>
-    );
+    const [value, setValue] = createState<
+      ValidOptionValue | ValidOptionValue[]
+    >();
+    return <Options {...props} value={value} onChange={setValue} />;
   },
 };

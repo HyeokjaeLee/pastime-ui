@@ -1,36 +1,32 @@
 import styles from './index.module.scss';
-import { useValidation } from '../../../hooks';
-import { InputContainer, Input } from '../../atoms';
+import { useSubscribedState, useValidation } from '../../../hooks';
+import { cleanClassName } from '../../../utils';
+import { Input } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type {
-  InputProps,
-  InputContainerProps,
-  InputContainerIntreractionProps,
-} from '../../atoms';
+import type { InputProps, InputWrapProps, InputType } from '../../atoms';
 
 export interface TextboxProps
-  extends Omit<
-    InputProps & InputContainerProps & InputContainerIntreractionProps,
-    'validationMessage' | 'children' | 'disabled' | 'readonly'
-  > {
+  extends Omit<InputProps, 'className' | 'size'>,
+    Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
   unit?: React.ReactNode;
+  type?: Exclude<InputType, 'button'>;
   validation?: Validation<TextboxProps['value']>;
-  disabled?: boolean | 'readonly';
 }
 
 export const Textbox = ({
-  value,
+  value: parentValue,
   unit,
   onChange,
   size,
-  id,
   validation,
   className,
-  disabled,
-  theme,
-  ...inputProps
+  theme = 'light',
+  type,
+  id,
+  ...restInputProps
 }: TextboxProps) => {
+  const [value, setValue] = useSubscribedState(parentValue);
   const { validationMessage, checkValidation } = useValidation(
     value,
     validation,
@@ -38,29 +34,25 @@ export const Textbox = ({
   );
 
   return (
-    <InputContainer validationMessage={validationMessage}>
-      <InputContainer.Intreraction
-        size={size}
-        readonly={disabled === 'readonly'}
-        theme={theme}
-        className={className}
-      >
+    <Input.Container validationMessage={validationMessage}>
+      <Input.Wrap size={size} theme={theme} className={className}>
         <Input
-          {...inputProps}
-          disabled={!!disabled}
+          {...restInputProps}
+          type={type}
           value={value}
           id={id}
           onChange={(value) => {
             checkValidation?.(value);
+            setValue(value);
             onChange?.(value);
           }}
         />
-        {typeof unit === 'string' ? (
-          <div className={styles.unit}>{unit}</div>
-        ) : (
-          unit
-        )}
-      </InputContainer.Intreraction>
-    </InputContainer>
+        {unit ? (
+          <div className={cleanClassName(`${styles.unit} ${styles[theme]}`)}>
+            {unit}
+          </div>
+        ) : null}
+      </Input.Wrap>
+    </Input.Container>
   );
 };
