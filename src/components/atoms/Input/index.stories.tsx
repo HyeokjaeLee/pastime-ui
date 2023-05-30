@@ -2,7 +2,8 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Input } from '..';
+import { Input } from '.';
+import { HIDDEN, THEME, SIZE } from '../../../constants';
 import { useSubscribedState } from '../../../hooks';
 
 import type { InputProps, InputContainerProps, InputWrapProps } from '.';
@@ -29,12 +30,6 @@ const GROUPS = {
   },
 };
 
-const HIDDEN = {
-  table: {
-    disable: true,
-  },
-};
-
 export default {
   title: 'atoms/Input',
   component: Input,
@@ -52,20 +47,18 @@ export default {
 
     //* Input.Wrap
     size: {
-      ...GROUPS.WRAP,
-      control: {
-        type: 'radio',
+      ...SIZE,
+      table: {
+        ...SIZE.table,
+        ...GROUPS.WRAP.table,
       },
-      options: ['small', 'medium', 'large'],
-      defaultValue: 'medium',
     },
     theme: {
-      ...GROUPS.WRAP,
-      control: {
-        type: 'radio',
+      ...THEME,
+      table: {
+        ...THEME.table,
+        ...GROUPS.WRAP.table,
       },
-      options: ['light', 'dark'],
-      defaultValue: 'light',
     },
 
     //* Input

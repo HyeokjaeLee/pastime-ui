@@ -121,7 +121,7 @@
   }
 
   &.error {
-    @include border($PINK-500, 1px);
+    @include border($ROSE-500, 2.2px);
   }
 }
 
@@ -133,7 +133,7 @@
   padding: 0;
   padding-left: 0.4em;
 
-  color: $PINK-500;
+  color: $ROSE-500;
   font-size: $SMALL;
 }
 

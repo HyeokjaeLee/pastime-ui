@@ -4,6 +4,7 @@ import { Percent } from 'react-feather';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Textbox } from '..';
+import { HIDDEN, SIZE, THEME, VALIDATION } from '../../../constants';
 
 const meta: Meta<typeof Textbox> = {
   title: 'molecules/Textbox',
@@ -19,6 +20,11 @@ const meta: Meta<typeof Textbox> = {
     unit: {
       control: 'text',
     },
+    ref: HIDDEN,
+    onChange: HIDDEN,
+    size: SIZE,
+    theme: THEME,
+    validation: VALIDATION,
   },
   decorators: [
     (Story) => (
@@ -35,7 +41,7 @@ type Story = StoryObj<typeof Textbox>;
 
 export const Default: Story = {};
 
-export const Unit: Story = {
+export const WithUnit: Story = {
   args: {
     unit: '원',
     type: 'large-number',
@@ -49,13 +55,9 @@ export const Unit: Story = {
   ),
 };
 
-export const Validation: Story = {
+export const WithValidation: Story = {
   args: {
-    validation: (value) => {
-      if (value === '') return '값을 입력해주세요';
-
-      if (Number(value) < 1000) return '1,000원 이상 입력해주세요';
-    },
+    validation: (value) => String(value),
     unit: '원',
     type: 'large-number',
   },

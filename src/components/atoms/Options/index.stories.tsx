@@ -2,7 +2,8 @@ import React, { useState as createState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Options } from '..';
+import { Options } from '.';
+import { HIDDEN, THEME, OPTIONS_FLOAT } from '../../../constants';
 
 import type { ValidOptionValue } from '..';
 
@@ -14,23 +15,19 @@ const meta: Meta<typeof Options> = {
     opened: {
       control: 'boolean',
     },
-    float: {
-      options: ['top', 'bottom'],
-      control: 'radio',
-    },
+    float: OPTIONS_FLOAT,
     options: {
       control: 'object',
     },
-    theme: {
-      options: ['light', 'dark'],
-      control: 'radio',
-    },
+    theme: THEME,
     multiple: {
       control: 'boolean',
       table: {
         defaultValue: { summary: false },
       },
     },
+    onChange: HIDDEN,
+    onKeyDown: HIDDEN,
   },
 
   args: {
@@ -44,6 +41,7 @@ const meta: Meta<typeof Options> = {
       value: `${index}번 옵션이 선택`,
     })),
     float: 'bottom',
+    multiple: false,
   },
 
   decorators: [

@@ -12,23 +12,27 @@ type HtmlSectionProps = React.DetailedHTMLProps<
 >;
 
 export interface OptionsProps<
-  OptionValue = ValidOptionValue,
-  Multiple = boolean,
+  OptionValue extends ValidOptionValue = ValidOptionValue,
+  Multiple extends boolean = false,
 > extends Omit<HtmlSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
   opened?: boolean;
   options?: {
     label: string;
     value: OptionValue;
   }[];
-  multiple: Multiple;
+  multiple?: Multiple;
   value?: Multiple extends true ? OptionValue[] : OptionValue;
-  onChange?: (value: OptionsProps['value']) => void;
+  onChange?: (value: OptionsProps<OptionValue, Multiple>['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   theme?: 'light' | 'dark';
 }
 
-export const Options = <OptionValue, Multiple>({
+export const Options = <
+  OptionValue extends ValidOptionValue = ValidOptionValue,
+  Multiple extends boolean = false,
+>({
+  //* Options props
   opened = false,
   options,
   multiple = false as Multiple,
@@ -36,8 +40,10 @@ export const Options = <OptionValue, Multiple>({
   onChange,
   onKeyDown,
   float = 'bottom',
-  className,
   theme = 'light',
+
+  //* HTML section props
+  className,
   ...restSectionProps
 }: OptionsProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(

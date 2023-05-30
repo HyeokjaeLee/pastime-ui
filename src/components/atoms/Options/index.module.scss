@@ -27,6 +27,8 @@
 
   box-shadow: $LIGHT_BOX_SHADOW;
 
+  font-size: inherit;
+
   &.closing,
   &.opening {
     cursor: default;
@@ -86,7 +88,7 @@
 
   min-width: 100%;
   max-width: 100%;
-  padding: 0.8em 0.6em;
+  padding: 0.7em 0.8em;
   border: 0;
   border-radius: $BORDER-RADIUS-MD;
 
@@ -95,6 +97,7 @@
 
   color: inherit;
   font-weight: 300;
+  font-size: 0.8em;
   text-align: start;
   white-space: pre-wrap;
 

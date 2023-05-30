@@ -17,13 +17,16 @@ export interface FocusLayerProps extends Omit<HTMLDivProps, 'style'> {
 }
 
 export const FocusLayer = ({
-  children,
-  onClick,
+  //* FocusLayer props
   focused,
-  blur,
-  className,
+  blur = false,
   backgroundScroll = false,
   style,
+
+  //* HTML div props
+  onClick,
+  className,
+  children,
   ...restDivProps
 }: FocusLayerProps) => {
   const [focusStatus] = useClosingState(focused);

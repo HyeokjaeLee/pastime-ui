@@ -1,49 +1,64 @@
 import styles from './index.module.scss';
 import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { Input } from '../../atoms';
+import { Input, InputContainerProps } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
 import type { InputProps, InputWrapProps, InputType } from '../../atoms';
 
 export interface TextboxProps
-  extends Omit<InputProps, 'className' | 'size'>,
-    Pick<InputWrapProps, 'size' | 'theme' | 'className'> {
+  extends Omit<InputProps, 'className' | 'size' | 'style'>,
+    Pick<InputContainerProps, 'className' | 'style'>,
+    Pick<InputWrapProps, 'size' | 'theme'> {
   unit?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
   validation?: Validation<TextboxProps['value']>;
 }
 
 export const Textbox = ({
-  value: parentValue,
+  //* Textbox props
   unit,
-  onChange,
-  size,
   validation,
-  className,
-  theme = 'light',
   type,
+
+  //* Input.Container props
+  className,
+  style,
+
+  //* Input.Wrap props
+  size,
+  theme = 'light',
+
+  //* Input props
+  onChange,
+  value,
   id,
+  name,
   ...restInputProps
 }: TextboxProps) => {
-  const [value, setValue] = useSubscribedState(parentValue);
+  const [inputValue, setInputValue] = useSubscribedState(value);
   const { validationMessage, checkValidation } = useValidation(
-    value,
+    inputValue,
     validation,
-    id,
+    id || name,
   );
 
   return (
-    <Input.Container validationMessage={validationMessage}>
-      <Input.Wrap size={size} theme={theme} className={className}>
+    <Input.Container
+      validationMessage={validationMessage}
+      className={className}
+      style={style}
+    >
+      <Input.Wrap size={size} theme={theme}>
         <Input
           {...restInputProps}
           type={type}
-          value={value}
+          value={inputValue}
           id={id}
+          name={name}
           onChange={(value) => {
             checkValidation?.(value);
-            setValue(value);
+            setInputValue(value);
             onChange?.(value);
           }}
         />

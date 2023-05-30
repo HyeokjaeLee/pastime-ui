@@ -34,9 +34,12 @@ const InputContext = createContext<
 >({});
 
 const InputContainer = ({
+  //* Input.Container props
+  validationMessage,
+
+  //* HTML div props
   children,
   className,
-  validationMessage,
   ...restDivProps
 }: InputContainerProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,9 +95,12 @@ export interface InputWrapProps extends HTMLDivProps {
 }
 
 const InputWrap = ({
+  //* Input.Wrap props
   size = 'medium',
-  className,
   theme = 'light',
+
+  //* HTML div props
+  className,
   ...restDivProps
 }: InputWrapProps) => {
   const { validationMessage, readonly } = useContext(InputContext);
@@ -133,11 +139,13 @@ export interface InputProps
 const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
   (
     {
+      //* Input props
       type = 'text',
-      placeholder = '',
-      disabled = false,
       value: parentValue,
+      disabled = false,
       onChange,
+      //* HTML input props
+      placeholder = '',
       className,
       onFocus,
       ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
