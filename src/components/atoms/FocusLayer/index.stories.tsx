@@ -38,7 +38,7 @@ const meta: Meta<typeof FocusLayer> = {
       description: 'focused 상태일때 배경 스크롤을 허용할지 여부입니다.',
     },
     children: {
-      description: 'FocusLayer 내부에 표시할 컨텐츠입니다.',
+      description: 'FocusLayer 내부에 표시할 컨텐츠입니다.\n\n`ReactNode`',
       control: {
         type: 'text',
       },

@@ -217,17 +217,17 @@
 }
 
 .dark {
-  @include default-theme($BLUE-GRAY-100, $GRAY-500);
-  @include disable-theme(rgba($BLUE-GRAY-100, 0.6), rgba($GRAY-500, 0.6));
-  @include hover-theme($BLUE-GRAY-50, $GRAY-600);
-  @include active-theme($BLUE-GRAY-50, $GRAY-800, $GRAY-500);
+  @include default-theme($BLUE-GRAY-100, transparent);
+  @include disable-theme(rgba($BLUE-GRAY-100, 0.2), transparent);
+  @include hover-theme($BLUE-GRAY-50, rgba($GRAY-600, 0.3));
+  @include active-theme($BLUE-GRAY-50, rgba($GRAY-600, 0.8));
 }
 
 .light {
-  @include default-theme($GRAY-700, $GRAY-50);
-  @include disable-theme(rgba($GRAY-700, 0.2), rgba($GRAY-50, 0.8));
-  @include hover-theme($BLUE-GRAY-800, $GRAY-100);
-  @include active-theme($BLUE-GRAY-800, $GRAY-200, $GRAY-50);
+  @include default-theme($GRAY-700, transparent);
+  @include disable-theme(rgba($GRAY-700, 0.2), transparent);
+  @include hover-theme($BLUE-GRAY-800, rgba($GRAY-300, 0.3));
+  @include active-theme($BLUE-GRAY-800, rgba($GRAY-300, 0.8));
 }
 
 .ghost {

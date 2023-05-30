@@ -5,7 +5,9 @@ import { Trash2 } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from './index';
+import { Button } from '.';
+
+import type { ButtonProps } from '.';
 
 const meta: Meta<typeof Button> = {
   title: 'atoms/Button',
@@ -18,6 +20,10 @@ const meta: Meta<typeof Button> = {
     ),
   ],
   argTypes: {
+    delay: {
+      control: 'number',
+      description: '렌더링 후 버튼을 비활성화하는 시간(ms)입니다.',
+    },
     disabled: {
       control: 'boolean',
     },
@@ -39,14 +45,22 @@ export const Default: Story = {};
 export const Theme: Story = {
   render: (args) => (
     <>
-      <Button {...args} theme="primary" />
-      <Button {...args} theme="secondary" />
-      <Button {...args} theme="success" />
-      <Button {...args} theme="warning" />
-      <Button {...args} theme="danger" />
-      <Button {...args} theme="dark" />
-      <Button {...args} theme="light" />
-      <Button {...args} theme="ghost" />
+      {(
+        [
+          'primary',
+          'secondary',
+          'success',
+          'warning',
+          'danger',
+          'dark',
+          'light',
+          'ghost',
+        ] satisfies ButtonProps['theme'][]
+      ).map((theme) => (
+        <Button {...args} theme={theme}>
+          {theme} button
+        </Button>
+      ))}
     </>
   ),
 };
@@ -54,9 +68,13 @@ export const Theme: Story = {
 export const Size: Story = {
   render: (args) => (
     <>
-      <Button {...args} size="small" />
-      <Button {...args} size="medium" />
-      <Button {...args} size="large" />
+      {(['small', 'medium', 'large'] satisfies ButtonProps['size'][]).map(
+        (size) => (
+          <Button {...args} size={size}>
+            {size} button
+          </Button>
+        ),
+      )}
     </>
   ),
 };
@@ -64,9 +82,13 @@ export const Size: Story = {
 export const Shape: Story = {
   render: (args) => (
     <>
-      <Button {...args} shape="pill" />
-      <Button {...args} shape="rounded" />
-      <Button {...args} shape="sharp-corner" />
+      {(
+        ['pill', 'rounded', 'sharp-corner'] satisfies ButtonProps['shape'][]
+      ).map((shape) => (
+        <Button {...args} shape={shape}>
+          {shape} button
+        </Button>
+      ))}
     </>
   ),
 };
