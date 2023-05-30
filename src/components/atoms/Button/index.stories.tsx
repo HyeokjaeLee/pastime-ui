@@ -57,7 +57,7 @@ export const Theme: Story = {
           'ghost',
         ] satisfies ButtonProps['theme'][]
       ).map((theme) => (
-        <Button {...args} theme={theme}>
+        <Button {...args} theme={theme} key={theme}>
           {theme} button
         </Button>
       ))}
@@ -70,7 +70,7 @@ export const Size: Story = {
     <>
       {(['small', 'medium', 'large'] satisfies ButtonProps['size'][]).map(
         (size) => (
-          <Button {...args} size={size}>
+          <Button {...args} size={size} key={size}>
             {size} button
           </Button>
         ),
@@ -85,7 +85,7 @@ export const Shape: Story = {
       {(
         ['pill', 'rounded', 'sharp-corner'] satisfies ButtonProps['shape'][]
       ).map((shape) => (
-        <Button {...args} shape={shape}>
+        <Button {...args} shape={shape} key={shape}>
           {shape} button
         </Button>
       ))}
