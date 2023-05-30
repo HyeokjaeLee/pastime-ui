@@ -9,6 +9,7 @@ import {
   SIZE,
   OPTIONS_FLOAT,
   VALIDATION,
+  INPUT_WIDTH,
 } from '../../../constants';
 
 const meta: Meta<typeof Searchbox> = {
@@ -30,7 +31,9 @@ const meta: Meta<typeof Searchbox> = {
   args: {
     placeholder: 'Searchbox',
     filterByKeyword: true,
-
+    style: {
+      width: INPUT_WIDTH,
+    },
     options: Array.from(
       { length: 10 },
       (_, index) =>

@@ -3,7 +3,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Input } from '.';
-import { HIDDEN, THEME, SIZE } from '../../../constants';
+import { HIDDEN, THEME, SIZE, INPUT_WIDTH } from '../../../constants';
 import { useSubscribedState } from '../../../hooks';
 
 import type { InputProps, InputContainerProps, InputWrapProps } from '.';
@@ -102,7 +102,12 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Container validationMessage={validationMessage}>
+      <Input.Container
+        validationMessage={validationMessage}
+        style={{
+          width: INPUT_WIDTH,
+        }}
+      >
         <Input.Wrap size={size} theme={theme}>
           <Input
             {...args}

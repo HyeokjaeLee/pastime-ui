@@ -132,11 +132,15 @@
   }
 
   //* Shape
-  &.shape-default {
+  &.shape-sharp-corner {
+    border-radius: 0;
+  }
+
+  &.shape-rounded {
     border-radius: $BORDER-RADIUS-MD;
   }
 
-  &.shape-round {
+  &.shape-pill {
     border-radius: 99999px;
   }
 
@@ -212,24 +216,31 @@
   @include active-theme(white, $ROSE-600, $ROSE-300);
 }
 
-.text-light {
-  @include default-theme($BLUE-GRAY-800, transparent);
-  @include disable-theme(rgba($BLUE-GRAY-800, 0.6), transparen);
-  @include hover-theme($BLUE-GRAY-800, rgba($BLUE-GRAY-200, 0.3));
-  @include active-theme(
-    $BLUE-GRAY-800,
-    rgba($BLUE-GRAY-200, 0.5),
-    rgba($COOL-GRAY-100, 0.5)
-  );
+.dark {
+  @include default-theme($BLUE-GRAY-100, $GRAY-500);
+  @include disable-theme(rgba($BLUE-GRAY-100, 0.6), rgba($GRAY-500, 0.6));
+  @include hover-theme($BLUE-GRAY-50, $GRAY-600);
+  @include active-theme($BLUE-GRAY-50, $GRAY-800, $GRAY-500);
 }
 
-.text-dark {
-  @include default-theme($GRAY-100, transparent);
-  @include disable-theme(rgba($GRAY-100, 0.5), transparen);
-  @include hover-theme($BLUE-GRAY-50, rgba($GRAY-700, 0.3));
-  @include active-theme(
-    $BLUE-GRAY-50,
-    rgba($BLUE-GRAY-200, 0.5),
-    rgba($COOL-GRAY-700, 0.5)
+.light {
+  @include default-theme($GRAY-700, $GRAY-50);
+  @include disable-theme(rgba($GRAY-700, 0.2), rgba($GRAY-50, 0.8));
+  @include hover-theme($BLUE-GRAY-800, $GRAY-100);
+  @include active-theme($BLUE-GRAY-800, $GRAY-200, $GRAY-50);
+}
+
+.ghost {
+  @include default-theme(
+    rgba($GRAY-400, 0.5),
+    transparent,
+    rgba($GRAY-400, 0.5)
   );
+  @include disable-theme(
+    rgba($GRAY-400, 0.2),
+    transparent,
+    rgba($GRAY-400, 0.2)
+  );
+  @include hover-theme(rgba($GRAY-400, 0.7), rgba($GRAY-400, 0.1));
+  @include active-theme(rgba($GRAY-400, 0.8), rgba($GRAY-400, 0.2));
 }

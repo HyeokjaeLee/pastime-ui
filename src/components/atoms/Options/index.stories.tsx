@@ -3,7 +3,7 @@ import React, { useState as createState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Options } from '.';
-import { HIDDEN, THEME, OPTIONS_FLOAT } from '../../../constants';
+import { HIDDEN, THEME, OPTIONS_FLOAT, LONG_TEXT } from '../../../constants';
 
 import type { ValidOptionValue } from '..';
 
@@ -34,9 +34,7 @@ const meta: Meta<typeof Options> = {
     opened: true,
     options: Array.from({ length: 10 }, (_, index) => ({
       label: `Test label ${index}${
-        index % 7 === 0
-          ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
-          : ''
+        index % 7 === 0 ? ` is long text: ${LONG_TEXT}` : ''
       }`,
       value: `${index}번 옵션이 선택`,
     })),

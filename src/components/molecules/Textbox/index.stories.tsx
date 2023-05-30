@@ -4,7 +4,13 @@ import { Percent } from 'react-feather';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Textbox } from '..';
-import { HIDDEN, SIZE, THEME, VALIDATION } from '../../../constants';
+import {
+  HIDDEN,
+  INPUT_WIDTH,
+  SIZE,
+  THEME,
+  VALIDATION,
+} from '../../../constants';
 
 const meta: Meta<typeof Textbox> = {
   title: 'molecules/Textbox',
@@ -12,6 +18,9 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'placeholder',
     value: '',
+    style: {
+      width: INPUT_WIDTH,
+    },
   },
   argTypes: {
     value: {

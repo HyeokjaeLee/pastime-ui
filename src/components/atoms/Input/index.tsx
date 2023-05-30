@@ -128,7 +128,10 @@ export type InputType =
   | 'button';
 
 export interface InputProps
-  extends Omit<HTMLInputProps, 'type' | 'value' | 'disabled' | 'onChange'> {
+  extends Omit<
+    HTMLInputProps,
+    'type' | 'value' | 'disabled' | 'onChange' | 'width' | 'height'
+  > {
   type?: InputType;
   value?: number | string;
   disabled?: boolean | 'readonly';

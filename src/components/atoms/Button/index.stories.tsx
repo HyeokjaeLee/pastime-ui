@@ -44,8 +44,9 @@ export const Theme: Story = {
       <Button {...args} theme="success" />
       <Button {...args} theme="warning" />
       <Button {...args} theme="danger" />
-      <Button {...args} theme="text-dark" />
-      <Button {...args} theme="text-light" />
+      <Button {...args} theme="dark" />
+      <Button {...args} theme="light" />
+      <Button {...args} theme="ghost" />
     </>
   ),
 };
@@ -63,8 +64,9 @@ export const Size: Story = {
 export const Shape: Story = {
   render: (args) => (
     <>
-      <Button {...args} shape="default" />
-      <Button {...args} shape="round" />
+      <Button {...args} shape="pill" />
+      <Button {...args} shape="rounded" />
+      <Button {...args} shape="sharp-corner" />
     </>
   ),
 };
@@ -89,8 +91,8 @@ export const Delay: Story = {
   render: (args) => (
     <>
       <Button {...args} />
-      <Button {...args} theme="text-light" />
-      <Button {...args} theme="text-dark" />
+      <Button {...args} theme="light" />
+      <Button {...args} theme="dark" />
     </>
   ),
 };

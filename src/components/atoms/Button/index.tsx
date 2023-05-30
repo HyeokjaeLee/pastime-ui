@@ -18,11 +18,12 @@ export interface ButtonProps extends HtmlButtonProps {
     | 'success'
     | 'warning'
     | 'danger'
-    | 'text-dark'
-    | 'text-light';
+    | 'dark'
+    | 'light'
+    | 'ghost';
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
-  shape?: 'round' | 'default';
+  shape?: 'sharp-corner' | 'rounded' | 'pill';
 }
 
 export const Button = ({
@@ -32,7 +33,7 @@ export const Button = ({
   size = 'medium',
   theme = 'primary',
   disabled,
-  shape = 'default',
+  shape = 'rounded',
   iconDirection = 'left',
   icon,
   className,
