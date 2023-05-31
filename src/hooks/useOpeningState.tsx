@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useClosingState = (opened = false, closingDuration = 300) => {
+export const useOpeningState = (opened = false, closingDuration = 300) => {
   const state = useState<boolean | 'closing'>(opened);
   const [status, setStatus] = state;
 

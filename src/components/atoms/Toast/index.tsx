@@ -1,29 +1,41 @@
 import { useEffect, useState, useRef } from 'react';
-import type { CSSProperties, MouseEventHandler } from 'react';
+import type { CSSProperties } from 'react';
 
 import styles from './index.module.scss';
-import { useClosingState } from '../../../hooks';
+import { useOpeningState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
 export interface ToastProps {
   children?: React.ReactNode;
-  floatDirection?: 'from-top' | 'from-bottom';
-  opened?: boolean;
+  float?: 'from-top' | 'from-bottom';
   className?: string;
-  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
-  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
+  icon?: React.ReactNode;
+  theme?: 'light' | 'dark';
+  holdingTime?: number;
 }
 
 export const Toast = ({
   children,
-  opened = true,
-  floatDirection = 'from-top',
+  float = 'from-top',
   className,
-  onMouseEnter,
-  onMouseLeave,
+  icon,
+  theme = 'light',
+  holdingTime = 5000,
 }: ToastProps) => {
-  const [openStatus] = useClosingState(opened, 500);
-  const isOpened = openStatus === true;
+  const [openingState, setOpeningState] = useOpeningState(true, 500);
+  const [isLooking, setIsLooking] = useState(false);
+
+  useEffect(() => {
+    if (!isLooking && openingState === true) {
+      const closingTimer = setTimeout(
+        () => setOpeningState('closing'),
+        holdingTime,
+      );
+      return () => clearTimeout(closingTimer);
+    }
+  }, [holdingTime, setOpeningState, openingState, isLooking]);
+
+  const isOpened = openingState === true;
   const ref = useRef<HTMLDivElement>(null);
   const [style, setStyle] = useState<CSSProperties>();
 
@@ -32,38 +44,38 @@ export const Toast = ({
     if (height) {
       setStyle({
         height,
+        margin: '0.7em 0',
       });
     }
   }, [ref]);
 
-  return (
+  return openingState ? (
     <div
       ref={ref}
       style={
         isOpened
           ? style
           : {
+              margin: 0,
               height: 0,
             }
       }
-      className={cleanClassName(
-        `${styles['toast-wrap']} ${
-          isOpened && styles['has-space']
-        } ${className}`,
-      )}
+      className={cleanClassName(`${styles['toast-wrap']} ${className}`)}
+      onMouseEnter={() => setIsLooking(true)}
+      onMouseLeave={() => setIsLooking(false)}
     >
       <div
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
         className={cleanClassName(
-          `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
-            isOpened ? styles.opened : styles.closing
-          }`,
+          `${styles.toast} ${styles[`float-direction-${float}`]} ${
+            styles[theme]
+          } ${isOpened ? styles.opened : styles.closing}`,
         )}
       >
-        <>icon</>
+        {icon}
         <div className={styles['toast-contents-wrap']}>{children}</div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };

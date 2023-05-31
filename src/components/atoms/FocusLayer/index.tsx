@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import styles from './index.module.scss';
-import { useClosingState } from '../../../hooks';
+import { useOpeningState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
 type HTMLDivProps = React.DetailedHTMLProps<
@@ -29,7 +29,7 @@ export const FocusLayer = ({
   children,
   ...restDivProps
 }: FocusLayerProps) => {
-  const [focusStatus] = useClosingState(focused);
+  const [focusStatus] = useOpeningState(focused);
   const isClosing = focusStatus === 'closing';
 
   const [focusLayerStyle, backgroundLayerStyle] = useMemo(() => {

@@ -22,6 +22,7 @@ const meta: Meta<typeof Options> = {
     theme: THEME,
     multiple: {
       control: 'boolean',
+      description: '다중 선택 가능 여부',
       table: {
         defaultValue: { summary: false },
       },

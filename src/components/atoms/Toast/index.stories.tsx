@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -9,8 +10,7 @@ const meta: Meta<typeof Toast> = {
   component: Toast,
   args: {
     children: 'Toast message',
-    type: 'success',
-    opened: true,
+    icon: <CheckCircle size="1.2em" />,
   },
 };
 
@@ -19,12 +19,3 @@ export default meta;
 type Story = StoryObj<typeof Toast>;
 
 export const Default: Story = {};
-
-export const Type: Story = {
-  render: (args) => (
-    <>
-      <Toast {...args} type="success" />
-      <Toast {...args} type="fail" />
-    </>
-  ),
-};
