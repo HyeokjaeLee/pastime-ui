@@ -54,6 +54,9 @@
     background-color: $backgroundColor;
 
     color: $textColor;
+
+    transition: background-color 0.5s, color 0.5s;
+
     @include border($border, 1px);
   }
 }
@@ -90,8 +93,6 @@
   outline: none;
 
   font-weight: inherit;
-
-  transition: background-color 0.3s, color 0.3s;
 
   -webkit-text-size-adjust: none;
 

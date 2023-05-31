@@ -1,0 +1,111 @@
+@import '../../../styles/libs';
+
+.accordian-container {
+  overflow: hidden;
+
+  border: 1px solid rgba($GRAY-400, 0.4);
+  border-radius: $BORDER-RADIUS-MD;
+
+  background-color: unset;
+}
+
+.title-contaienr {
+  display: flex;
+}
+
+.accordian-title-wrap {
+  width: 100%;
+}
+
+.accordian-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  border: none;
+
+  background-color: unset;
+
+  color: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+}
+
+.title-contents {
+  flex: 1;
+  overflow: hidden;
+
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.divider {
+  margin: 0;
+  padding: 0;
+  border-color: rgba($GRAY-400, 0.1);
+  &.opened {
+    @include fade-in(0.3s, 0.2s);
+  }
+  &.closed {
+    @include fade-out(0.2s);
+  }
+}
+
+.accordian-contents-wrap {
+  overflow: hidden;
+
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+
+  transition: height 0.3s;
+}
+
+.accordian-contents {
+  box-sizing: border-box;
+  width: 100%;
+
+  font-size: inherit;
+  padding: {
+    top: 10px;
+    bottom: 10px;
+  }
+  @include fade-out-top(0.3s);
+  &.opened {
+    @include fade-in-top(0.3s);
+  }
+}
+
+.chevron-down-icon {
+  width: 1.2em;
+
+  color: rgba($GRAY-400, 0.4);
+
+  transition: transform 0.3s ease-in-out;
+  stroke-width: 2;
+  &.opened {
+    transform: rotate(180deg);
+  }
+}
+
+@mixin size($paddingX, $height) {
+  height: $height;
+  padding-right: $paddingX;
+  padding-left: $paddingX;
+}
+
+//*Size
+.size-small {
+  @include size(14px, 32px);
+}
+
+.size-medium {
+  @include size(16px, 40px);
+}
+
+.size-large {
+  @include size(18px, 48px);
+}

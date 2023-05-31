@@ -12,6 +12,7 @@
 
   list-style: none;
 
+  font-weight: 600;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -32,14 +33,10 @@ $SHADOW-COLOR: rgba($GRAY-300, 0.5);
 .tab-item {
   padding-bottom: 0.5em;
   border-bottom: transparent 3px solid;
-
-  font-weight: 100;
 }
 
-.tab-item-selected {
+.tab-item-active {
   border-color: $ORANGE-400;
-
-  font-weight: 700;
 }
 
 .item-content {

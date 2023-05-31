@@ -18,7 +18,7 @@ type HTMLUListProps = React.DetailedHTMLProps<
   HTMLUListElement
 >;
 
-interface TabProps
+export interface TabProps
   extends Omit<HTMLUListProps, 'size' | 'ref'>,
     Pick<ButtonProps, 'size'> {
   theme?: Extract<ButtonProps['theme'], 'dark' | 'light'>;
@@ -71,18 +71,23 @@ type HTMLLIProps = React.DetailedHTMLProps<
 
 export interface TabItemProps
   extends Omit<HTMLLIProps, 'children' | 'onClick'>,
-    Pick<ButtonProps, 'disabled' | 'children' | 'onClick'> {
-  selected?: boolean;
+    Pick<
+      ButtonProps,
+      'disabled' | 'children' | 'onClick' | 'icon' | 'iconDirection'
+    > {
+  active?: boolean;
 }
 
 const TabItem = ({
   //* TabItem props
-  selected = false,
+  active = false,
 
   //* Button props
   children,
   disabled,
   onClick,
+  icon,
+  iconDirection,
 
   //* HTML li props
   className,
@@ -94,7 +99,7 @@ const TabItem = ({
       {...restLiProps}
       className={cleanClassName(
         `${styles['tab-item']} ${
-          selected && styles['tab-item-selected']
+          active && styles['tab-item-active']
         } ${className}`,
       )}
     >
@@ -104,6 +109,8 @@ const TabItem = ({
         onClick={onClick}
         theme={theme}
         className={styles['item-content']}
+        icon={icon}
+        iconDirection={iconDirection}
       >
         {children}
       </Button>
