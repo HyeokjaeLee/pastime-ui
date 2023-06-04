@@ -24,9 +24,12 @@
   }
 }
 
-.focus-layer {
-  position: relative;
+@layer default {
+  .focus-layer {
+    position: relative;
+    display: inline-block;
 
-  width: fit-content;
-  height: fit-content;
+    width: fit-content;
+    height: fit-content;
+  }
 }

@@ -115,6 +115,7 @@ export const Searchbox = ({
           <Search className={styles['search-icon']} />
         </Input.Wrap>
         <Options
+          theme={theme}
           opened={opened}
           options={filteredOptions}
           value={inputValue}

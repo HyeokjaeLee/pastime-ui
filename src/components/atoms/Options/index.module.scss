@@ -23,7 +23,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
-  border-radius: $BORDER-RADIUS-LG;
+  border-radius: $BORDER-RADIUS-MD;
 
   box-shadow: $LIGHT_BOX_SHADOW;
 
@@ -90,7 +90,7 @@
   max-width: 100%;
   padding: 0.7em 0.8em;
   border: 0;
-  border-radius: $BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-SM;
 
   background-color: transparent;
   outline: none;
@@ -102,12 +102,12 @@
   white-space: pre-wrap;
 
   cursor: pointer;
-}
 
-.hovered {
-  background-color: $INDIGO-600;
+  &.hovered {
+    background-color: $INDIGO-600;
 
-  color: white;
+    color: white;
+  }
 }
 
 .icon-wrap {
