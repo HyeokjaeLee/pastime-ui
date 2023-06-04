@@ -48,13 +48,15 @@ const InputContainer = ({
 
   const [readonly, setReadonly] = useState(false);
 
-  useEffect(
-    () =>
-      setMessageWrapHeight({
-        height: ref.current?.clientHeight ?? 0,
-      }),
-    [ref, validationMessage],
-  );
+  useEffect(() => {
+    const { current } = ref;
+    if (current && validationMessage) {
+      return setMessageWrapHeight({
+        height: current.clientHeight,
+      });
+    }
+    return setMessageWrapHeight(undefined);
+  }, [ref, validationMessage]);
 
   const inputContextValue = useMemo(
     () => ({
@@ -76,7 +78,11 @@ const InputContainer = ({
         <div className={styles['input-container']}>{children}</div>
       </InputContext.Provider>
       <div
-        className={styles['validation-message-wrap']}
+        className={cleanClassName(
+          `${styles['validation-message-wrap']} ${
+            messageWrapHeight && styles.show
+          }`,
+        )}
         style={messageWrapHeight}
       >
         {validationMessage ? (

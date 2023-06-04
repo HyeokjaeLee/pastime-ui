@@ -68,6 +68,8 @@
 
 .input-container-wrap {
   position: relative;
+
+  height: fit-content;
 }
 
 .input-container {
@@ -136,9 +138,14 @@
 }
 
 .validation-message-wrap {
-  padding-top: 6px;
+  height: 0;
+  padding-top: 0;
 
-  transition: height 0.5s;
+  transition: height 0.3s, padding-top 0.3s;
+
+  &.show {
+    padding-top: 6px;
+  }
 }
 
 .light {
