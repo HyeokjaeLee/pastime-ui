@@ -9,11 +9,13 @@ type HTMLDivProps = React.DetailedHTMLProps<
   HTMLDivElement
 >;
 
-export interface FocusLayerProps extends Omit<HTMLDivProps, 'style'> {
+export interface FocusLayerProps
+  extends Omit<HTMLDivProps, 'style' | 'onBlur'> {
   focused?: boolean;
   blur?: boolean;
   backgroundScroll?: boolean;
   style?: Omit<React.CSSProperties, 'zIndex'> & { zIndex?: number };
+  onBlur?: HTMLDivProps['onClick'];
 }
 
 export const FocusLayer = ({
@@ -22,9 +24,9 @@ export const FocusLayer = ({
   blur = false,
   backgroundScroll = false,
   style,
+  onBlur,
 
   //* HTML div props
-  onClick,
   className,
   children,
   ...restDivProps
@@ -56,7 +58,7 @@ export const FocusLayer = ({
       </div>
       {focusStatus ? (
         <div
-          onClick={onClick}
+          onClick={onBlur}
           style={backgroundLayerStyle}
           className={cleanClassName(
             `${styles['background-layer']} ${isClosing && styles.closing} ${

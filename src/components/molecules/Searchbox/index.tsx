@@ -18,8 +18,9 @@ export interface SearchboxProps
       | 'style'
       | 'type'
       | 'onSelect'
+      | 'onBlur'
     >,
-    Pick<FocusLayerProps, 'className' | 'style'>,
+    Pick<FocusLayerProps, 'className' | 'style' | 'onBlur'>,
     Pick<InputWrapProps, 'size' | 'theme'>,
     Pick<OptionsProps<string, false>, 'float'> {
   filterByKeyword?: boolean;
@@ -38,9 +39,10 @@ export const Searchbox = ({
   value,
   onSelect,
 
-  //* Input.Container props
+  //* FocusLayer props
   className,
   style,
+  onBlur,
 
   //* Input.Wrap props
   size,
@@ -96,7 +98,10 @@ export const Searchbox = ({
 
   return (
     <FocusLayer
-      onClick={() => setOpened(false)}
+      onBlur={(e) => {
+        setOpened(false);
+        onBlur?.(e);
+      }}
       focused={opened}
       className={className}
       style={style}
@@ -127,7 +132,7 @@ export const Searchbox = ({
           value={inputValue}
           onChange={(value) => {
             setOpened(false);
-            if (value) handleChange(value);
+            handleChange(value ?? '');
             onSelect?.(value ?? inputValue ?? '');
           }}
           float={float}
