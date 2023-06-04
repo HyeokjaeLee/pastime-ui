@@ -11,7 +11,13 @@ import type { InputProps, InputWrapProps, OptionsProps } from '../../atoms';
 export interface SearchboxProps
   extends Omit<
       InputProps,
-      'size' | 'value' | 'onChange' | 'className' | 'style' | 'type'
+      | 'size'
+      | 'value'
+      | 'onChange'
+      | 'className'
+      | 'style'
+      | 'type'
+      | 'onSelect'
     >,
     Pick<FocusLayerProps, 'className' | 'style'>,
     Pick<InputWrapProps, 'size' | 'theme'>,
@@ -21,6 +27,7 @@ export interface SearchboxProps
   options?: string[];
   value?: string;
   onChange?: (value: string) => void;
+  onSelect?: (value: string) => void;
 }
 
 export const Searchbox = ({
@@ -29,6 +36,7 @@ export const Searchbox = ({
   validation,
   options,
   value,
+  onSelect,
 
   //* Input.Container props
   className,
@@ -119,7 +127,8 @@ export const Searchbox = ({
           value={inputValue}
           onChange={(value) => {
             setOpened(false);
-            handleChange(value ?? '');
+            if (value) handleChange(value);
+            onSelect?.(value ?? inputValue ?? '');
           }}
           float={float}
         />
