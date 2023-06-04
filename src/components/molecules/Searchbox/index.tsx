@@ -118,10 +118,8 @@ export const Searchbox = ({
           options={filteredOptions}
           value={inputValue}
           onChange={(value) => {
-            if (value) {
-              setOpened(false);
-              handleChange(value);
-            }
+            setOpened(false);
+            handleChange(value ?? '');
           }}
           float={float}
         />
