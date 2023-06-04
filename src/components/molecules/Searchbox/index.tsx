@@ -43,7 +43,6 @@ export const Searchbox = ({
 
   //* Input props
   onChange,
-  onFocus,
   onClick,
   id,
   name,
@@ -109,7 +108,6 @@ export const Searchbox = ({
               setOpened(true);
               onClick?.(e);
             }}
-            onFocus={onFocus}
             value={inputValue}
           />
           <Search className={styles['search-icon']} />

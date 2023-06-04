@@ -157,6 +157,7 @@ const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
       placeholder = '',
       className,
       onFocus,
+      onBlur,
       ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
       ...restInputProps
     },
@@ -229,7 +230,10 @@ const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
           setIsFucused(true);
           onFocus?.(e);
         }}
-        onBlur={() => setIsFucused(false)}
+        onBlur={(e) => {
+          setIsFucused(false);
+          onBlur?.(e);
+        }}
         type={type}
         placeholder={placeholder}
         value={value}
