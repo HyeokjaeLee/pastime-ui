@@ -6,6 +6,7 @@ env:
   NODE_VERSION: '18.13'
   ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   NPM_REGISTRY_URL: 'https://registry.npmjs.org/'
+  PNPM_VERSION: 8.6
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
@@ -49,7 +50,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.4
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Test eslint
@@ -74,7 +75,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.4
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Test build library
@@ -156,7 +157,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.4
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Build library
@@ -217,7 +218,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.4
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Set canary version

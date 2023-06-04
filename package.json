@@ -4,6 +4,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./src/types.d.ts",
+  "packageManager": "pnpm@8.6.0",
   "scripts": {
     "version": "npm version",
     "version:canary": "sh ./scripts/set-canary-version.sh",
