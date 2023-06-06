@@ -18,13 +18,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["./src/types/scss.d.ts"],
+    "types": ["./src/types"],
     "paths": {
       "@components/*": ["components/*"],
       "@utils": ["utils"],
       "@hooks": ["hooks"],
       "@contexts": ["contexts"],
-      "@types": ["types"]
+      "@constants": ["constants"]
     }
   },
   "files": ["./src/index.tsx"],

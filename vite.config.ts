@@ -6,6 +6,8 @@ import dts from 'vite-plugin-dts';
 
 import react from '@vitejs/plugin-react-swc';
 
+export const ALIAS = ['components', 'utils', 'hooks', 'contexts', 'constants'];
+
 export default defineConfig({
   plugins: [
     react(),
@@ -46,8 +48,9 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+    alias: ALIAS.reduce((alias, name) => {
+      alias[`@${name}`] = `/src/${name}`;
+      return alias;
+    }, {}),
   },
 });

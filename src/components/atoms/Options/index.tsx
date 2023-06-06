@@ -6,10 +6,10 @@ import { cleanClassName } from '../../../utils';
 
 export type ValidOptionValue = string | number;
 
-export interface OptionsProps<
+export type OptionsProps<
   OptionValue extends ValidOptionValue = ValidOptionValue,
   Multiple extends boolean = false,
-> extends Omit<HTMLSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
+> = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
   opened?: boolean;
   options?: {
     label: string;
@@ -20,8 +20,8 @@ export interface OptionsProps<
   onChange?: (value: OptionsProps<OptionValue, Multiple>['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  theme?: 'light' | 'dark';
-}
+  theme?: Theme;
+};
 
 export const Options = <
   OptionValue extends ValidOptionValue = ValidOptionValue,

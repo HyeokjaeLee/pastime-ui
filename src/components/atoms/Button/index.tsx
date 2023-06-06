@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
-import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
+import { cleanClassName } from '@utils';
 
-export interface ButtonProps extends HtmlButtonProps {
+import styles from './index.module.scss';
+
+export type ButtonProps = HTMLTagProps<'button'> & {
   delay?: number;
   size?: 'small' | 'medium' | 'large';
   theme?:
@@ -19,7 +20,7 @@ export interface ButtonProps extends HtmlButtonProps {
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
   shape?: 'sharp-corner' | 'rounded' | 'pill';
-}
+};
 
 export const Button = ({
   delay,

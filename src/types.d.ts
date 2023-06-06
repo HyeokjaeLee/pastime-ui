@@ -1,7 +1,7 @@
-type HTMLElementProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLElement>,
-  HTMLElement
->;
+declare module '*.scss' {
+  const content: Record<string, string>;
+  export default content;
+}
 
 type HTMLTags =
   | 'section'
@@ -13,7 +13,12 @@ type HTMLTags =
   | 'div'
   | 'input';
 
-export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
+type HTMLElementProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLElement>,
+  HTMLElement
+>;
+
+type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
   ? React.DetailedHTMLProps<
       React.HTMLAttributes<HTMLDListElement>,
       HTMLDListElement
@@ -39,3 +44,5 @@ export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
       HTMLInputElement
     >
   : HTMLElementProps;
+
+type Theme = 'light' | 'dark';

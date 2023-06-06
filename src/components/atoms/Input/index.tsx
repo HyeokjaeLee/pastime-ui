@@ -12,11 +12,9 @@ import {
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-import type { HTMLTagProps } from '../../../types';
-
-export interface InputContainerProps extends HTMLTagProps<'div'> {
+export type InputContainerProps = HTMLTagProps<'div'> & {
   validationMessage?: string | null;
-}
+};
 
 const InputContext = createContext<
   Pick<InputContainerProps, 'validationMessage'> & {
@@ -87,10 +85,10 @@ const InputContainer = ({
   );
 };
 
-export interface InputWrapProps extends HTMLTagProps<'div'> {
+export type InputWrapProps = HTMLTagProps<'div'> & {
   size?: 'small' | 'medium' | 'large';
-  theme?: 'light' | 'dark';
-}
+  theme?: Theme;
+};
 
 const InputWrap = ({
   //* Input.Wrap props

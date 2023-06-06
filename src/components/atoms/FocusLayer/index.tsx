@@ -1,17 +1,17 @@
 import { useEffect, useMemo } from 'react';
 
-import styles from './index.module.scss';
-import { useOpeningState } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
+import { useOpeningState } from '@hooks';
+import { cleanClassName } from '@utils';
 
-export interface FocusLayerProps
-  extends Omit<HTMLDivProps, 'style' | 'onBlur'> {
+import styles from './index.module.scss';
+
+export type FocusLayerProps = HTMLTagProps<'div'> & {
   focused?: boolean;
   blur?: boolean;
   backgroundScroll?: boolean;
   style?: Omit<React.CSSProperties, 'zIndex'> & { zIndex?: number };
-  onBlur?: HTMLDivProps['onClick'];
-}
+  onBlur?: HTMLTagProps<'div'>['onClick'];
+};
 
 export const FocusLayer = ({
   //* FocusLayer props
