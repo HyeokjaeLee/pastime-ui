@@ -18,7 +18,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["./src/types.d.ts"]
+    "types": ["./src/types/scss.d.ts"],
+    "paths": {
+      "@components/*": ["components/*"],
+      "@utils": ["utils"],
+      "@hooks": ["hooks"],
+      "@contexts": ["contexts"],
+      "@types": ["types"]
+    }
   },
   "files": ["./src/index.tsx"],
   "exclude": ["node_modules", "dist"],

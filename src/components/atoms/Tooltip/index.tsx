@@ -1,42 +1,17 @@
 import { throttle } from 'lodash-es';
 
-import { useState, createContext, useMemo, useContext } from 'react';
-import type { MouseEventHandler } from 'react';
+import { useState, useMemo, useContext } from 'react';
 
 import styles from './index.module.scss';
+import { TooltipContext } from '../../../contexts';
 import { useMountedEffect } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
-type HandleMouse = MouseEventHandler<HTMLDivElement> | undefined;
-
-type Displayed = boolean | 'closing';
-interface Coordinates {
-  left: number;
-  top: number;
-}
-
-interface TooltipContextType {
-  displayed: Displayed;
-  coordinates?: Coordinates;
-  handleMouseMove?: HandleMouse;
-  handleMouseEnterLeave?: {
-    onMouseEnter: HandleMouse;
-    onMouseLeave: HandleMouse;
-  };
-}
-
-const TooltipContext = createContext<TooltipContextType>({
-  displayed: false,
-  coordinates: {
-    left: 0,
-    top: 0,
-  },
-});
-
-interface CommonProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+import type {
+  TooltipDisplay,
+  TooltipLocation,
+  TooltipContextValue,
+} from '../../../contexts';
 
 export interface TooltipProps {
   children?: React.ReactNode;
@@ -45,28 +20,28 @@ export interface TooltipProps {
 
 const TooltipMain = ({ children, mouseEnterDelay = 200 }: TooltipProps) => {
   const [hovered, setHovered] = useState(false);
-  const [displayed, setDisplayed] = useState<Displayed>(false);
-  const [coordinates, setCoordinates] = useState<Coordinates>();
+  const [display, setDisplay] = useState<TooltipDisplay>(false);
+  const [location, setLocation] = useState<TooltipLocation>();
 
   useMountedEffect(() => {
-    if (displayed === 'closing') {
-      const closeTimer = setTimeout(() => setDisplayed(false), 100);
+    if (display === 'closing') {
+      const closeTimer = setTimeout(() => setDisplay(false), 100);
       return () => clearTimeout(closeTimer);
     }
-  }, [displayed]);
+  }, [display]);
 
   useMountedEffect(() => {
     if (hovered) {
-      const openTimer = setTimeout(() => setDisplayed(true), mouseEnterDelay);
+      const openTimer = setTimeout(() => setDisplay(true), mouseEnterDelay);
       return () => clearTimeout(openTimer);
     }
-    setDisplayed((prev) => (prev === true ? 'closing' : prev));
+    setDisplay((prev) => (prev === true ? 'closing' : prev));
   }, [hovered]);
 
   const throttledSetCoordinates = useMemo(
     () =>
       throttle((e) => {
-        setCoordinates({
+        setLocation({
           left: e.clientX,
           top: e.clientY + 10,
         });
@@ -74,17 +49,17 @@ const TooltipMain = ({ children, mouseEnterDelay = 200 }: TooltipProps) => {
     [],
   );
 
-  const tooltipContext = useMemo(
+  const tooltipContext: TooltipContextValue = useMemo(
     () => ({
-      displayed,
-      coordinates,
+      display,
+      location,
       handleMouseMove: throttledSetCoordinates,
       handleMouseEnterLeave: {
         onMouseEnter: () => setHovered(true),
         onMouseLeave: () => setHovered(false),
       },
     }),
-    [coordinates, displayed, throttledSetCoordinates],
+    [location, display, throttledSetCoordinates],
   );
 
   return (
@@ -94,13 +69,28 @@ const TooltipMain = ({ children, mouseEnterDelay = 200 }: TooltipProps) => {
   );
 };
 
-export type TooltipAreaProps = CommonProps;
+export type TooltipAreaProps = HTMLDivProps;
 
-const TooltipArea = ({ children, className }: TooltipAreaProps) => {
+const TooltipArea = ({
+  children,
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  ...restDivProps
+}: TooltipAreaProps) => {
   const { handleMouseMove, handleMouseEnterLeave } = useContext(TooltipContext);
+
   return (
     <div
-      {...handleMouseEnterLeave}
+      {...restDivProps}
+      onMouseEnter={(e) => {
+        handleMouseEnterLeave?.onMouseEnter?.(e);
+        onMouseEnter?.(e);
+      }}
+      onMouseLeave={(e) => {
+        handleMouseEnterLeave?.onMouseLeave?.(e);
+        onMouseLeave?.(e);
+      }}
       className={cleanClassName(`${styles.tooltip} ${className}`)}
       onMouseMove={handleMouseMove}
     >
@@ -109,24 +99,49 @@ const TooltipArea = ({ children, className }: TooltipAreaProps) => {
   );
 };
 
-export type TooltipContentProps = CommonProps;
+export interface TooltipContentProps extends Omit<HTMLDivProps, 'theme'> {
+  theme?: 'light' | 'dark';
+}
 
-const TooltipContent = ({ children, className }: TooltipContentProps) => {
-  const { displayed, coordinates, handleMouseEnterLeave } =
+const TooltipContent = ({
+  //* TooltipContent props
+  theme = 'light',
+
+  //* HTML div props
+  children,
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  style,
+  ...restDivProps
+}: TooltipContentProps) => {
+  const { display, location, handleMouseEnterLeave } =
     useContext(TooltipContext);
 
-  return displayed ? (
+  return display ? (
     <div
-      {...handleMouseEnterLeave}
+      {...restDivProps}
+      onMouseEnter={(e) => {
+        handleMouseEnterLeave?.onMouseEnter?.(e);
+        onMouseEnter?.(e);
+      }}
+      onMouseLeave={(e) => {
+        handleMouseEnterLeave?.onMouseLeave?.(e);
+        onMouseLeave?.(e);
+      }}
       className={`${styles['tooltip-message-container']} ${
-        displayed === 'closing' && styles.closing
+        display === 'closing' && styles.closing
       }`}
-      style={coordinates}
+      style={{
+        ...style,
+        left: location?.left,
+        top: location?.top,
+      }}
     >
-      <div className={styles.triangle} />
+      <div className={`${styles.triangle} ${styles[theme]}`} />
       <div
         className={cleanClassName(
-          `${styles['tooltip-message-wrap']} ${className}`,
+          `${styles['tooltip-message-wrap']} ${styles[theme]} ${className}`,
         )}
       >
         {children}

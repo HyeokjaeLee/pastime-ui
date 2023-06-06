@@ -12,7 +12,9 @@ import {
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-export interface InputContainerProps extends HTMLDivProps {
+import type { HTMLTagProps } from '../../../types';
+
+export interface InputContainerProps extends HTMLTagProps<'div'> {
   validationMessage?: string | null;
 }
 
@@ -85,7 +87,7 @@ const InputContainer = ({
   );
 };
 
-export interface InputWrapProps extends HTMLDivProps {
+export interface InputWrapProps extends HTMLTagProps<'div'> {
   size?: 'small' | 'medium' | 'large';
   theme?: 'light' | 'dark';
 }
@@ -125,7 +127,7 @@ export type InputType =
 
 export interface InputProps
   extends Omit<
-    HTMLInputProps,
+    HTMLTagProps<'input'>,
     'type' | 'value' | 'disabled' | 'onChange' | 'width' | 'height'
   > {
   type?: InputType;

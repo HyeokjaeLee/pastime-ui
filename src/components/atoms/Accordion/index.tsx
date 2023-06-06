@@ -1,14 +1,15 @@
 import { useContext, useRef, useMemo } from 'react';
 import { ChevronDown } from 'react-feather';
 
+import { AccordionContext } from '@contexts';
+import type { AccordionContextValue } from '@contexts';
+import { useSubscribedState } from '@hooks';
+import type { HTMLTagProps } from '@types';
+import { cleanClassName } from '@utils';
+
 import styles from './index.module.scss';
-import { AccordionContext } from '../../../contexts';
-import { useSubscribedState } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
 
-import type { AccordionContextValue } from '../../../contexts';
-
-export type AccordionProps = HTMLDListProps & AccordionContextValue;
+export type AccordionProps = HTMLTagProps<'dl'> & AccordionContextValue;
 
 const AccordionMain = ({
   //* Accordion props
@@ -43,7 +44,7 @@ const AccordionMain = ({
   );
 };
 
-export type AccordionTitleProps = HTMLDtProps;
+export type AccordionTitleProps = HTMLTagProps<'dt'>;
 
 const AccordionTitle = ({
   children,
@@ -74,7 +75,8 @@ const AccordionTitle = ({
   );
 };
 
-export interface AccordionContentsProps extends Omit<HTMLDdProps, 'style'> {
+export interface AccordionContentsProps
+  extends Omit<HTMLTagProps<'dd'>, 'style'> {
   style?: Omit<React.CSSProperties, 'height'>;
 }
 const AccordionContents = ({

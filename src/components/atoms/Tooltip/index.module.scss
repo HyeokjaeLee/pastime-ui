@@ -4,19 +4,41 @@
   position: absolute;
   z-index: 2;
 
-  width: fit-content;
-  margin: 4px 0;
-  padding: 8px 10px;
-  border-radius: 8px;
+  margin-top: 4px;
+  border-radius: $BORDER-RADIUS-MD;
 
-  background-color: $PURPLE-600;
+  background-color: $GRAY-800;
 
-  color: $WHITE;
-  font-size: $SMALL3X;
+  color: white;
+
+  &.light {
+    background-color: $GRAY-400;
+    box-shadow: $LIGHT_BOX_SHADOW;
+  }
+  &.dark {
+    background-color: $GRAY-800;
+    box-shadow: $DARK_BOX_SHADOW;
+  }
+}
+
+@layer default {
+  .tooltip-message-wrap {
+    width: fit-content;
+    padding: 8px 10px;
+
+    font-size: small;
+    white-space: pre;
+  }
 }
 
 .tooltip {
   cursor: help;
+}
+
+@layer default {
+  .tooltip {
+    width: fit-content;
+  }
 }
 
 .triangle {
@@ -29,7 +51,13 @@
   border-width: 0 7.5px;
   border-style: solid;
   border-bottom-width: 5px;
-  border-bottom-color: $PURPLE-600;
+  &.light {
+    border-bottom-color: $GRAY-400;
+  }
+
+  &.dark {
+    border-bottom-color: $GRAY-800;
+  }
 }
 
 .tooltip-message-container {
