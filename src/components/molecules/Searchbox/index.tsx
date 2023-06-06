@@ -28,7 +28,9 @@ export interface SearchboxProps
   options?: string[];
   value?: string;
   onChange?: (value: string) => void;
-  onSelect?: (value: string) => void;
+  onSelect?: (value: string) => {
+    preventDefault?: boolean;
+  } | void;
 }
 
 export const Searchbox = ({
@@ -132,8 +134,8 @@ export const Searchbox = ({
           value={inputValue}
           onChange={(value) => {
             setOpened(false);
-            handleChange(value ?? '');
-            onSelect?.(value ?? inputValue ?? '');
+            const { preventDefault } = onSelect?.(value ?? '') ?? {};
+            if (!preventDefault) handleChange(value ?? '');
           }}
           float={float}
         />
