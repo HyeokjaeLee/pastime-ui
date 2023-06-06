@@ -4,11 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-type HtmlButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
-
 export interface ButtonProps extends HtmlButtonProps {
   delay?: number;
   size?: 'small' | 'medium' | 'large';

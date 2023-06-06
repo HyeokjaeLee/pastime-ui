@@ -12,16 +12,6 @@ import {
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-type HTMLInputProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
-
-type HTMLDivProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
-
 export interface InputContainerProps extends HTMLDivProps {
   validationMessage?: string | null;
 }

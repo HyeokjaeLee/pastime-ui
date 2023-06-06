@@ -4,11 +4,6 @@ import styles from './index.module.scss';
 import { useOpeningState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
-type HTMLDivProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
-
 export interface FocusLayerProps
   extends Omit<HTMLDivProps, 'style' | 'onBlur'> {
   focused?: boolean;

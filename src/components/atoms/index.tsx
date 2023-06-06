@@ -4,3 +4,4 @@ export * from './Options';
 export * from './FocusLayer';
 export * from './Accordion';
 export * from './Toast';
+export * from './Tooltip';

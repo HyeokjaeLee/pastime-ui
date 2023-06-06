@@ -6,11 +6,6 @@ import { Button } from '../../atoms';
 
 import type { ButtonProps } from '../../atoms';
 
-type HTMLUListProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLUListElement>,
-  HTMLUListElement
->;
-
 export interface PaginationProps
   extends Omit<HTMLUListProps, 'onChange'>,
     Pick<ButtonProps, 'size'> {

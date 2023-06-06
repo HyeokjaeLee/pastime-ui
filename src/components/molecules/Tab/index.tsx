@@ -13,11 +13,6 @@ import { Button } from '../../atoms';
 
 import type { ButtonProps } from '../../atoms';
 
-type HTMLUListProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLUListElement>,
-  HTMLUListElement
->;
-
 export interface TabProps
   extends Omit<HTMLUListProps, 'size' | 'ref'>,
     Pick<ButtonProps, 'size'> {

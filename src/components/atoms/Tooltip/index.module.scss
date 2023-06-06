@@ -1,0 +1,47 @@
+@import '../../../styles/libs';
+
+.tooltip-message-wrap {
+  position: absolute;
+  z-index: 2;
+
+  width: fit-content;
+  margin: 4px 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  background-color: $PURPLE-600;
+
+  color: $WHITE;
+  font-size: $SMALL3X;
+}
+
+.tooltip {
+  cursor: help;
+}
+
+.triangle {
+  position: absolute;
+  z-index: 1;
+
+  width: 0;
+  height: 0;
+  border: transparent;
+  border-width: 0 7.5px;
+  border-style: solid;
+  border-bottom-width: 5px;
+  border-bottom-color: $PURPLE-600;
+}
+
+.tooltip-message-container {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: left 0.3s, top 0.3s;
+  @include fade-in(0.1s);
+  &.closing {
+    @include fade-out(0.1s);
+  }
+}

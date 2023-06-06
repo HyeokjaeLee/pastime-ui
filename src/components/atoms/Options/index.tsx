@@ -6,15 +6,10 @@ import { cleanClassName } from '../../../utils';
 
 export type ValidOptionValue = string | number;
 
-type HtmlSectionProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLSelectElement>,
-  HTMLSelectElement
->;
-
 export interface OptionsProps<
   OptionValue extends ValidOptionValue = ValidOptionValue,
   Multiple extends boolean = false,
-> extends Omit<HtmlSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
+> extends Omit<HTMLSectionProps, 'value' | 'onChange' | 'onKeyDown'> {
   opened?: boolean;
   options?: {
     label: string;

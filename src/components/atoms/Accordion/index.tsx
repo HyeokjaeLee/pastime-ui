@@ -1,29 +1,14 @@
-import type { Dispatch, SetStateAction } from 'react';
-import { createContext, useContext, useRef, useMemo } from 'react';
+import { useContext, useRef, useMemo } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
+import { AccordionContext } from '../../../contexts';
 import { useSubscribedState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
-type HTMLDListProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDListElement>,
-  HTMLDListElement
->;
+import type { AccordionContextValue } from '../../../contexts';
 
-export interface AccordionProps extends HTMLDListProps {
-  opened?: boolean;
-  size?: 'small' | 'medium' | 'large';
-}
-
-const AccordionContext = createContext<
-  {
-    setOpened: Dispatch<SetStateAction<boolean>>;
-  } & Pick<AccordionProps, 'size' | 'opened'>
->({
-  opened: false,
-  setOpened: () => undefined,
-});
+export type AccordionProps = HTMLDListProps & AccordionContextValue;
 
 const AccordionMain = ({
   //* Accordion props
@@ -58,12 +43,7 @@ const AccordionMain = ({
   );
 };
 
-type commonProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLElement>,
-  HTMLElement
->;
-
-export type AccordionTitleProps = commonProps;
+export type AccordionTitleProps = HTMLDtProps;
 
 const AccordionTitle = ({
   children,
@@ -94,7 +74,7 @@ const AccordionTitle = ({
   );
 };
 
-export interface AccordionContentsProps extends Omit<commonProps, 'style'> {
+export interface AccordionContentsProps extends Omit<HTMLDdProps, 'style'> {
   style?: Omit<React.CSSProperties, 'height'>;
 }
 const AccordionContents = ({
