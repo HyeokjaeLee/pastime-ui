@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use '../../../styles/libs' as libs;
 
 @mixin default-theme($color, $backgroundColor, $boxShadow, $borderColor) {
   border: 1px solid $borderColor;
@@ -10,11 +10,21 @@
 }
 
 .light {
-  @include default-theme($GRAY-700, white, $LIGHT_BOX_SHADOW, $COOL-GRAY-100);
+  @include default-theme(
+    libs.$GRAY-700,
+    white,
+    libs.$LIGHT_BOX_SHADOW,
+    libs.$COOL-GRAY-100
+  );
 }
 
 .dark {
-  @include default-theme($GRAY-50, $GRAY-700, $DARK_BOX_SHADOW, $COOL-GRAY-700);
+  @include default-theme(
+    libs.$GRAY-50,
+    libs.$GRAY-700,
+    libs.$DARK_BOX_SHADOW,
+    libs.$COOL-GRAY-700
+  );
 }
 
 .options {
@@ -23,9 +33,9 @@
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
-  border-radius: $BORDER-RADIUS-MD;
+  border-radius: libs.$BORDER-RADIUS-MD;
 
-  box-shadow: $LIGHT_BOX_SHADOW;
+  box-shadow: libs.$LIGHT_BOX_SHADOW;
 
   font-size: inherit;
 
@@ -39,10 +49,10 @@
 
     margin-bottom: 0.5rem;
     &.opening {
-      @include fade-in-bottom;
+      @include libs.fade-in-bottom;
     }
     &.closing {
-      @include fade-out-bottom;
+      @include libs.fade-out-bottom;
     }
   }
 
@@ -51,10 +61,10 @@
 
     margin-top: 0.5rem;
     &.opening {
-      @include fade-in-top;
+      @include libs.fade-in-top;
     }
     &.closing {
-      @include fade-out-top;
+      @include libs.fade-out-top;
     }
   }
 }
@@ -90,7 +100,7 @@
   max-width: 100%;
   padding: 0.7em 0.8em;
   border: 0;
-  border-radius: $BORDER-RADIUS-SM;
+  border-radius: libs.$BORDER-RADIUS-SM;
 
   background-color: transparent;
   outline: none;
@@ -104,7 +114,7 @@
   cursor: pointer;
 
   &.hovered {
-    background-color: $INDIGO-600;
+    background-color: libs.$INDIGO-600;
 
     color: white;
   }
