@@ -6,21 +6,15 @@ import { Input } from '.';
 import { HIDDEN, THEME, SIZE, INPUT_WIDTH } from '../../../constants';
 import { useSubscribedState } from '../../../hooks';
 
-import type { InputProps, InputContainerProps, InputWrapProps } from '.';
+import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'size' | 'theme'> &
-  Pick<InputContainerProps, 'validationMessage'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size' | 'theme'>;
 
 const GROUPS = {
   INPUT: {
     table: {
       category: 'Input',
-    },
-  },
-  CONTAINER: {
-    table: {
-      category: 'Input.Container',
     },
   },
   WRAP: {
@@ -42,7 +36,7 @@ export default {
     ref: HIDDEN,
     onChange: HIDDEN,
     validationMessage: {
-      ...GROUPS.CONTAINER,
+      ...GROUPS.WRAP,
     },
 
     //* Input.Wrap
@@ -102,23 +96,23 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Container
+      <Input.Wrap
         validationMessage={validationMessage}
+        size={size}
+        theme={theme}
         style={{
           width: INPUT_WIDTH,
         }}
       >
-        <Input.Wrap size={size} theme={theme}>
-          <Input
-            {...args}
-            value={inputValue}
-            onChange={(value) => {
-              setInputValue(value);
-              onChange?.(value);
-            }}
-          />
-        </Input.Wrap>
-      </Input.Container>
+        <Input
+          {...args}
+          value={inputValue}
+          onChange={(value) => {
+            setInputValue(value);
+            onChange?.(value);
+          }}
+        />
+      </Input.Wrap>
     );
   },
 };

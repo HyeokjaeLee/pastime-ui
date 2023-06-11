@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use '../../../styles/libs' as libs;
 
 @mixin default-theme(
   $textColor: transparent,
@@ -8,7 +8,7 @@
   background-color: $backgroundColor;
 
   color: $textColor;
-  @include border($border, 1px);
+  @include libs.border($border, 1px);
 
   &.delayed-button {
     &:disabled {
@@ -37,7 +37,7 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 1px);
+    @include libs.border($border, 1px);
   }
 
   &.delayed-button > .delay-bar {
@@ -57,7 +57,7 @@
 
     transition: background-color 0.5s, color 0.5s;
 
-    @include border($border, 1px);
+    @include libs.border($border, 1px);
   }
 }
 
@@ -70,7 +70,7 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 1px);
+    @include libs.border($border, 1px);
   }
 }
 
@@ -100,51 +100,53 @@
     cursor: not-allowed;
   }
 
-  &.children-type-text {
-    padding: 0 16px;
-  }
-
-  &.children-type-icon {
-    padding: 0;
-  }
-
-  &.children-type-both {
-    padding: 0 10px;
-  }
-
-  //* Size
-  &.size-small {
-    height: 32px;
-    &.children-type-icon {
-      width: 32px;
+  @layer {
+    &.children-type-text {
+      padding: 0 16px;
     }
-  }
 
-  &.size-medium {
-    height: 40px;
     &.children-type-icon {
-      width: 40px;
+      padding: 0;
     }
-  }
 
-  &.size-large {
-    height: 48px;
-    &.children-type-icon {
-      width: 48px;
+    &.children-type-both {
+      padding: 0 10px;
     }
-  }
 
-  //* Shape
-  &.shape-sharp-corner {
-    border-radius: 0;
-  }
+    //* Size
+    &.size-small {
+      height: 32px;
+      &.children-type-icon {
+        width: 32px;
+      }
+    }
 
-  &.shape-rounded {
-    border-radius: $BORDER-RADIUS-MD;
-  }
+    &.size-medium {
+      height: 40px;
+      &.children-type-icon {
+        width: 40px;
+      }
+    }
 
-  &.shape-pill {
-    border-radius: 99999px;
+    &.size-large {
+      height: 48px;
+      &.children-type-icon {
+        width: 48px;
+      }
+    }
+
+    //* Shape
+    &.shape-sharp-corner {
+      border-radius: 0;
+    }
+
+    &.shape-rounded {
+      border-radius: libs.$BORDER-RADIUS-MD;
+    }
+
+    &.shape-pill {
+      border-radius: 99999px;
+    }
   }
 
   //* Icon direction
@@ -185,65 +187,65 @@
 
 //* Theme
 .primary {
-  @include default-theme($GRAY-50, $INDIGO-600);
-  @include disable-theme(rgba($GRAY-50, 0.6), $INDIGO-300);
-  @include hover-theme(white, $INDIGO-500);
-  @include active-theme(white, $INDIGO-700, $INDIGO-500);
+  @include default-theme(libs.$GRAY-50, libs.$INDIGO-600);
+  @include disable-theme(rgba(libs.$GRAY-50, 0.6), libs.$INDIGO-300);
+  @include hover-theme(white, libs.$INDIGO-500);
+  @include active-theme(white, libs.$INDIGO-700, libs.$INDIGO-500);
 }
 
 .secondary {
-  @include default-theme($GRAY-50, $BLUE-GRAY-700);
-  @include disable-theme(rgba($GRAY-50, 0.6), $BLUE-GRAY-300);
-  @include hover-theme(white, $BLUE-GRAY-600);
-  @include active-theme(white, $BLUE-GRAY-800, $BLUE-GRAY-400);
+  @include default-theme(libs.$GRAY-50, libs.$BLUE-GRAY-700);
+  @include disable-theme(rgba(libs.$GRAY-50, 0.6), libs.$BLUE-GRAY-300);
+  @include hover-theme(white, libs.$BLUE-GRAY-600);
+  @include active-theme(white, libs.$BLUE-GRAY-800, libs.$BLUE-GRAY-400);
 }
 
 .success {
-  @include default-theme($GRAY-50, $LIME-500);
-  @include disable-theme(white, $LIME-200);
-  @include hover-theme(white, $LIME-400);
-  @include active-theme(white, $LIME-600, $LIME-300);
+  @include default-theme(libs.$GRAY-50, libs.$LIME-500);
+  @include disable-theme(white, libs.$LIME-200);
+  @include hover-theme(white, libs.$LIME-400);
+  @include active-theme(white, libs.$LIME-600, libs.$LIME-300);
 }
 
 .warning {
-  @include default-theme($GRAY-50, $ORANGE-400);
-  @include disable-theme(rgba($GRAY-50, 0.6), $ORANGE-200);
-  @include hover-theme(white, $ORANGE-300);
-  @include active-theme(white, $ORANGE-600, $ORANGE-300);
+  @include default-theme(libs.$GRAY-50, libs.$ORANGE-400);
+  @include disable-theme(rgba(libs.$GRAY-50, 0.6), libs.$ORANGE-200);
+  @include hover-theme(white, libs.$ORANGE-300);
+  @include active-theme(white, libs.$ORANGE-600, libs.$ORANGE-300);
 }
 
 .danger {
-  @include default-theme($GRAY-50, $ROSE-500);
-  @include disable-theme(white, $ROSE-100);
-  @include hover-theme(white, $ROSE-400);
-  @include active-theme(white, $ROSE-600, $ROSE-300);
+  @include default-theme(libs.$GRAY-50, libs.$ROSE-500);
+  @include disable-theme(white, libs.$ROSE-100);
+  @include hover-theme(white, libs.$ROSE-400);
+  @include active-theme(white, libs.$ROSE-600, libs.$ROSE-300);
 }
 
 .dark {
-  @include default-theme($BLUE-GRAY-100, transparent);
-  @include disable-theme(rgba($BLUE-GRAY-100, 0.2), transparent);
-  @include hover-theme($BLUE-GRAY-50, rgba($GRAY-600, 0.3));
-  @include active-theme($BLUE-GRAY-50, rgba($GRAY-600, 0.8));
+  @include default-theme(libs.$BLUE-GRAY-100, transparent);
+  @include disable-theme(rgba(libs.$BLUE-GRAY-100, 0.2), transparent);
+  @include hover-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.3));
+  @include active-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.8));
 }
 
 .light {
-  @include default-theme($GRAY-700, transparent);
-  @include disable-theme(rgba($GRAY-700, 0.2), transparent);
-  @include hover-theme($BLUE-GRAY-800, rgba($GRAY-300, 0.3));
-  @include active-theme($BLUE-GRAY-800, rgba($GRAY-300, 0.8));
+  @include default-theme(libs.$GRAY-700, transparent);
+  @include disable-theme(rgba(libs.$GRAY-700, 0.2), transparent);
+  @include hover-theme(libs.$BLUE-GRAY-800, rgba(libs.$GRAY-300, 0.3));
+  @include active-theme(libs.$BLUE-GRAY-800, rgba(libs.$GRAY-300, 0.8));
 }
 
 .ghost {
   @include default-theme(
-    rgba($GRAY-400, 0.5),
+    rgba(libs.$GRAY-400, 0.5),
     transparent,
-    rgba($GRAY-400, 0.5)
+    rgba(libs.$GRAY-400, 0.5)
   );
   @include disable-theme(
-    rgba($GRAY-400, 0.2),
+    rgba(libs.$GRAY-400, 0.2),
     transparent,
-    rgba($GRAY-400, 0.2)
+    rgba(libs.$GRAY-400, 0.2)
   );
-  @include hover-theme(rgba($GRAY-400, 0.7), rgba($GRAY-400, 0.1));
-  @include active-theme(rgba($GRAY-400, 0.8), rgba($GRAY-400, 0.2));
+  @include hover-theme(rgba(libs.$GRAY-400, 0.7), rgba(libs.$GRAY-400, 0.1));
+  @include active-theme(rgba(libs.$GRAY-400, 0.8), rgba(libs.$GRAY-400, 0.2));
 }

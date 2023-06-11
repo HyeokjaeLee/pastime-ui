@@ -1,119 +1,19 @@
 import {
   Ref,
-  useRef,
   useState,
   useMemo,
   forwardRef,
-  createContext,
   useContext,
   useEffect,
 } from 'react';
 
+import { InputContext } from '@contexts';
+import { cleanClassName } from '@utils';
+
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
+import { InputWrap } from './inputWrap';
 
-export type InputContainerProps = HTMLTagProps<'div'> & {
-  validationMessage?: string | null;
-};
-
-const InputContext = createContext<
-  Pick<InputContainerProps, 'validationMessage'> & {
-    readonly?: boolean;
-    setReadonly?: React.Dispatch<React.SetStateAction<boolean>>;
-  }
->({});
-
-const InputContainer = ({
-  //* Input.Container props
-  validationMessage,
-
-  //* HTML div props
-  children,
-  className,
-  ...restDivProps
-}: InputContainerProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [messageWrapHeight, setMessageWrapHeight] =
-    useState<React.CSSProperties>();
-
-  const [readonly, setReadonly] = useState(false);
-
-  useEffect(() => {
-    const { current } = ref;
-    if (current && validationMessage) {
-      return setMessageWrapHeight({
-        height: current.clientHeight,
-      });
-    }
-    return setMessageWrapHeight(undefined);
-  }, [ref, validationMessage]);
-
-  const inputContextValue = useMemo(
-    () => ({
-      validationMessage,
-      readonly,
-      setReadonly,
-    }),
-    [validationMessage, readonly, setReadonly],
-  );
-
-  return (
-    <div
-      {...restDivProps}
-      className={cleanClassName(
-        `${styles['input-container-wrap']} ${className}`,
-      )}
-    >
-      <InputContext.Provider value={inputContextValue}>
-        <div className={styles['input-container']}>{children}</div>
-      </InputContext.Provider>
-      <div
-        className={cleanClassName(
-          `${styles['validation-message-wrap']} ${
-            messageWrapHeight && styles.show
-          }`,
-        )}
-        style={messageWrapHeight}
-      >
-        {validationMessage ? (
-          <p ref={ref} className={styles['validation-message']}>
-            {validationMessage}
-          </p>
-        ) : null}
-      </div>
-    </div>
-  );
-};
-
-export type InputWrapProps = HTMLTagProps<'div'> & {
-  size?: 'small' | 'medium' | 'large';
-  theme?: Theme;
-};
-
-const InputWrap = ({
-  //* Input.Wrap props
-  size = 'medium',
-  theme = 'light',
-
-  //* HTML div props
-  className,
-  ...restDivProps
-}: InputWrapProps) => {
-  const { validationMessage, readonly } = useContext(InputContext);
-
-  return (
-    <div
-      {...restDivProps}
-      className={cleanClassName(
-        `${styles['input-wrap']} ${styles[theme]} ${
-          readonly && styles.readonly
-        } ${validationMessage && styles.error} ${
-          styles[`size-${size}`]
-        } ${className}`,
-      )}
-    />
-  );
-};
+export type { InputWrapProps } from './inputWrap';
 
 export type InputType =
   | 'text'
@@ -135,115 +35,114 @@ export interface InputProps
   ref?: Ref<HTMLInputElement>;
 }
 
-const InputMain: (props: InputProps) => JSX.Element | null = forwardRef(
-  (
-    {
-      //* Input props
-      type = 'text',
-      value: parentValue,
-      disabled = false,
-      onChange,
-      //* HTML input props
-      placeholder = '',
-      className,
-      onFocus,
-      onBlur,
-      ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
-      ...restInputProps
+export const Input = Object.assign(
+  forwardRef(
+    (
+      {
+        //* Input props
+        type = 'text',
+        value: parentValue,
+        disabled = false,
+        onChange,
+        //* HTML input props
+        placeholder = '',
+        className,
+        onFocus,
+        onBlur,
+        ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
+        ...restInputProps
+      },
+      ref,
+    ) => {
+      const [isFocused, setIsFucused] = useState(false);
+
+      const setReadonly = useContext(InputContext);
+      const isReadonly = disabled === 'readonly';
+      useEffect(() => setReadonly?.(isReadonly), [isReadonly, setReadonly]);
+
+      const value = (() => {
+        if (type === 'button' && !parentValue) return placeholder;
+
+        if (parentValue !== 0 && !parentValue) return '';
+
+        const valueString = String(parentValue);
+
+        if (isFocused) return valueString;
+
+        switch (type) {
+          case 'number':
+            return valueString;
+
+          case 'large-number':
+            return Number(valueString).toLocaleString();
+
+          case 'phone-number':
+            if (valueString.length === 10)
+              return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+
+          default:
+            return valueString;
+        }
+      })();
+
+      const convertChangeHandlerParam = useMemo((): ((
+        value: string,
+      ) => string | null) => {
+        switch (type) {
+          case 'number':
+          case 'large-number':
+            return (value) => {
+              const isValidNumber =
+                value === '-' || !Number.isNaN(Number(value));
+              return value && (isValidNumber ? value : null);
+            };
+
+          case 'phone-number':
+            return (value) => {
+              let numberString = value.replace(/[^0-9]/g, '');
+              if (numberString.length > 11)
+                numberString = numberString.slice(0, 11);
+
+              return value && numberString;
+            };
+
+          default:
+            return (value) => value;
+        }
+      }, [type]);
+
+      return (
+        <input
+          {...restInputProps}
+          ref={ref}
+          onFocus={(e) => {
+            setIsFucused(true);
+            onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            setIsFucused(false);
+            onBlur?.(e);
+          }}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          className={cleanClassName(
+            `${styles.input} ${type === 'button' && styles.button} ${
+              !parentValue && styles.empty
+            } ${className}`,
+          )}
+          disabled={!!disabled}
+          onChange={({ target: { value } }) => {
+            const convertedValue = convertChangeHandlerParam(value);
+
+            if (convertedValue !== null) onChange?.(convertedValue);
+          }}
+        />
+      );
     },
-    ref,
-  ) => {
-    const [isFocused, setIsFucused] = useState(false);
-
-    const { setReadonly } = useContext(InputContext);
-
-    const isReadonly = disabled === 'readonly';
-
-    useEffect(() => setReadonly?.(isReadonly), [setReadonly, isReadonly]);
-
-    const value = (() => {
-      if (type === 'button' && !parentValue) return placeholder;
-
-      if (parentValue !== 0 && !parentValue) return '';
-
-      const valueString = String(parentValue);
-
-      if (isFocused) return valueString;
-
-      switch (type) {
-        case 'number':
-          return valueString;
-
-        case 'large-number':
-          return Number(valueString).toLocaleString();
-
-        case 'phone-number':
-          if (valueString.length === 10)
-            return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-          return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-
-        default:
-          return valueString;
-      }
-    })();
-
-    const convertChangeHandlerParam = useMemo((): ((
-      value: string,
-    ) => string | null) => {
-      switch (type) {
-        case 'number':
-        case 'large-number':
-          return (value) => {
-            const isValidNumber = value === '-' || !Number.isNaN(Number(value));
-            return value && (isValidNumber ? value : null);
-          };
-
-        case 'phone-number':
-          return (value) => {
-            let numberString = value.replace(/[^0-9]/g, '');
-            if (numberString.length > 11)
-              numberString = numberString.slice(0, 11);
-
-            return value && numberString;
-          };
-
-        default:
-          return (value) => value;
-      }
-    }, [type]);
-
-    return (
-      <input
-        {...restInputProps}
-        ref={ref}
-        onFocus={(e) => {
-          setIsFucused(true);
-          onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          setIsFucused(false);
-          onBlur?.(e);
-        }}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        className={cleanClassName(
-          `${styles.input} ${type === 'button' && styles.button} ${
-            parentValue || styles.empty
-          } ${className}`,
-        )}
-        disabled={!!disabled}
-        onChange={({ target: { value } }) => {
-          const convertedValue = convertChangeHandlerParam(value);
-
-          if (convertedValue !== null) onChange?.(convertedValue);
-        }}
-      />
-    );
+  ) as (props: InputProps) => JSX.Element,
+  {
+    Wrap: InputWrap,
   },
 );
-
-export const Input = Object.assign(InputMain, {
-  Container: InputContainer,
-  Wrap: InputWrap,
-});
