@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Check } from 'react-feather';
 
+import { cleanClassName } from '@utils';
+
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
 
 export type ValidOptionValue = string | number;
 
-export type OptionsProps<
+export type SelectProps<
   OptionValue extends ValidOptionValue = ValidOptionValue,
   Multiple extends boolean = false,
 > = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
@@ -17,17 +18,18 @@ export type OptionsProps<
   }[];
   multiple?: Multiple;
   value?: Multiple extends true ? OptionValue[] : OptionValue;
-  onChange?: (value: OptionsProps<OptionValue, Multiple>['value']) => void;
+  onChange?: (value: SelectProps<OptionValue, Multiple>['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   theme?: Theme;
+  cancelable?: boolean;
 };
 
-export const Options = <
+export const Select = <
   OptionValue extends ValidOptionValue = ValidOptionValue,
   Multiple extends boolean = false,
 >({
-  //* Options props
+  //* Select props
   opened = false,
   options,
   multiple = false as Multiple,
@@ -36,11 +38,12 @@ export const Options = <
   onKeyDown,
   float = 'bottom',
   theme = 'light',
+  cancelable = true,
 
   //* HTML section props
   className,
   ...restSectionProps
-}: OptionsProps<OptionValue, Multiple>) => {
+}: SelectProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     opened,
   );
@@ -135,6 +138,7 @@ export const Options = <
           return (
             <li key={index} className={styles['option-wrap']}>
               <button
+                name="select-option-item"
                 type="button"
                 ref={(element) => {
                   optionRefs.current[index] = element;
@@ -144,23 +148,30 @@ export const Options = <
                 )}
                 onClick={() => {
                   if (multiple) {
-                    const selectedValues = (selectedValue ??
+                    let valuesForSelect = (selectedValue ??
                       []) as OptionValue[];
+
                     const handleChange = onChange as
                       | ((values: OptionValue[]) => void)
                       | undefined;
-                    handleChange?.(
-                      isSelected
-                        ? selectedValues.filter(
+
+                    if (cancelable) {
+                      valuesForSelect = isSelected
+                        ? valuesForSelect.filter(
                             (selectedValue) => selectedValue !== value,
                           )
-                        : [...selectedValues, value],
-                    );
+                        : [...valuesForSelect, value];
+                    }
+
+                    handleChange?.(valuesForSelect);
                   } else {
                     const handleChange = onChange as
                       | ((value?: OptionValue) => void)
                       | undefined;
-                    handleChange?.(isSelected ? undefined : value);
+
+                    handleChange?.(
+                      isSelected && cancelable ? undefined : value,
+                    );
                   }
                 }}
                 onMouseEnter={() => {

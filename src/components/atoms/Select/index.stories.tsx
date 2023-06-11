@@ -2,14 +2,14 @@ import React, { useState as createState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Options } from '.';
+import { Select } from '.';
 import { HIDDEN, THEME, OPTIONS_FLOAT, LONG_TEXT } from '../../../constants';
 
 import type { ValidOptionValue } from '..';
 
-const meta: Meta<typeof Options> = {
-  title: 'atoms/Options',
-  component: Options,
+const meta: Meta<typeof Select> = {
+  title: 'atoms/Select',
+  component: Select,
 
   argTypes: {
     opened: {
@@ -29,6 +29,10 @@ const meta: Meta<typeof Options> = {
     },
     onChange: HIDDEN,
     onKeyDown: HIDDEN,
+    cancelable: {
+      control: 'boolean',
+      description: '이미 선택된 옵션을 다시 선택하여 취소 가능 여부',
+    },
   },
 
   args: {
@@ -41,6 +45,7 @@ const meta: Meta<typeof Options> = {
     })),
     float: 'bottom',
     multiple: false,
+    cancelable: true,
   },
 
   decorators: [
@@ -68,13 +73,13 @@ const meta: Meta<typeof Options> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Options>;
+type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
   render: (props) => {
     const [value, setValue] = createState<
       ValidOptionValue | ValidOptionValue[]
     >();
-    return <Options {...props} value={value} onChange={setValue} />;
+    return <Select {...props} value={value} onChange={setValue} />;
   },
 };
