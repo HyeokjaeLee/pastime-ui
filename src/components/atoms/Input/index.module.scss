@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use '../../../styles/libs' as libs;
 
 .input {
   width: 100%;
@@ -19,7 +19,7 @@
   }
 
   &::placeholder {
-    color: rgba($BLUE-GRAY-300, 0.3);
+    color: rgba(libs.$BLUE-GRAY-300, 0.3);
   }
 }
 
@@ -29,6 +29,6 @@
   text-overflow: ellipsis;
 
   &.empty {
-    color: $GRAY-300;
+    color: libs.$GRAY-300;
   }
 }

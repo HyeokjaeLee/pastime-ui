@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use '../../../styles/libs' as libs;
 
 .input-wrap {
   position: relative;
@@ -10,7 +10,7 @@
 
   box-sizing: border-box;
   width: 100%;
-  border-radius: $BORDER-RADIUS-MD;
+  border-radius: libs.$BORDER-RADIUS-MD;
 
   transition: box-shadow 0.3s, background-color 0.3s;
 
@@ -30,13 +30,13 @@
   }
 
   &.error {
-    @include border($ROSE-500, 2.2px);
+    @include libs.border(libs.$ROSE-500, 2.2px);
   }
 }
 
 @mixin default-theme($color, $backgroundColor, $borderColor) {
   color: $color;
-  @include border($borderColor, 1px);
+  @include libs.border($borderColor, 1px);
 
   &:not(&:has(:disabled)) {
     background-color: $backgroundColor;
@@ -57,39 +57,39 @@
 
 @mixin focus-border($borderColor) {
   &:not(&:has(:disabled)):has(:focus) {
-    @include border($borderColor, 2px);
+    @include libs.border($borderColor, 2px);
   }
 }
 
 @mixin hover-border($borderColor) {
   &:not(&:has(:disabled)):hover {
-    @include border($borderColor, 1px);
+    @include libs.border($borderColor, 1px);
   }
 }
 
 .light {
-  @include default-theme($GRAY-700, white, $COOL-GRAY-100);
-  @include disabled-theme($GRAY-300, $GRAY-50);
-  @include hover-border($COOL-GRAY-200);
-  @include focus-border($COOL-GRAY-300);
+  @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
+  @include disabled-theme(libs.$GRAY-300, libs.$GRAY-50);
+  @include hover-border(libs.$COOL-GRAY-200);
+  @include focus-border(libs.$COOL-GRAY-300);
 }
 
 .dark {
-  @include default-theme($GRAY-50, $GRAY-700, $COOL-GRAY-600);
-  @include disabled-theme($GRAY-500, $GRAY-600);
-  @include hover-border($COOL-GRAY-500);
-  @include focus-border($COOL-GRAY-400);
+  @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);
+  @include disabled-theme(libs.$GRAY-500, libs.$GRAY-600);
+  @include hover-border(libs.$COOL-GRAY-500);
+  @include focus-border(libs.$COOL-GRAY-400);
 }
 
 .validation-message {
-  @include shake-horizontal(0.9s);
+  @include libs.shake-horizontal(0.9s);
   z-index: 0;
 
   margin: 0;
   padding: 0;
   padding-left: 0.4em;
 
-  color: $ROSE-500;
+  color: libs.$ROSE-500;
   font-size: small;
 }
 
