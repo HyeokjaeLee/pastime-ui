@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
-import type { CSSProperties } from 'react';
+import { useRef } from 'react';
 
+import { cleanClassName } from '@utils';
+
+import { useDynamicHeight } from './hooks/useDynamicHeight';
+import { useToastTimer } from './hooks/useToastTimer';
 import styles from './index.module.scss';
-import { useOpeningState } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
 
 export interface ToastProps {
   children?: React.ReactNode;
@@ -22,47 +23,20 @@ export const Toast = ({
   theme = 'light',
   holdingTime = 5000,
 }: ToastProps) => {
-  const [openingState, setOpeningState] = useOpeningState(true, 500);
-  const [isLooking, setIsLooking] = useState(false);
+  const { isExisting, isOpened, holdToast, unholdToast } =
+    useToastTimer(holdingTime);
 
-  useEffect(() => {
-    if (!isLooking && openingState === true) {
-      const closingTimer = setTimeout(
-        () => setOpeningState('closing'),
-        holdingTime,
-      );
-      return () => clearTimeout(closingTimer);
-    }
-  }, [holdingTime, setOpeningState, openingState, isLooking]);
-
-  const isOpened = openingState === true;
   const ref = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<CSSProperties>();
 
-  useEffect(() => {
-    const height = ref.current?.clientHeight;
-    if (height) {
-      setStyle({
-        height,
-        margin: '0.7em 0',
-      });
-    }
-  }, [ref]);
+  const dynamicHeightStyle = useDynamicHeight(ref, isOpened);
 
-  return openingState ? (
+  return isExisting ? (
     <div
       ref={ref}
-      style={
-        isOpened
-          ? style
-          : {
-              margin: 0,
-              height: 0,
-            }
-      }
+      style={dynamicHeightStyle}
       className={cleanClassName(`${styles['toast-wrap']} ${className}`)}
-      onMouseEnter={() => setIsLooking(true)}
-      onMouseLeave={() => setIsLooking(false)}
+      onMouseEnter={holdToast}
+      onMouseLeave={unholdToast}
     >
       <div
         className={cleanClassName(
