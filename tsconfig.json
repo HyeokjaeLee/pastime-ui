@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
@@ -18,16 +19,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["./src/types"],
+    "types": ["./src/types.d.ts"],
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@components/*": ["components/*"],
       "@utils": ["utils"],
       "@hooks": ["hooks"],
       "@contexts": ["contexts"],
-      "@constants": ["constants"]
+      "@constants": ["constants"],
+      "@styles": ["styles"],
+      "@functions": ["functions"]
     }
   },
   "files": ["./src/index.tsx"],
-  "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["vite.config.ts", "src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

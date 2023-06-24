@@ -1,4 +1,4 @@
-@import './libs/animations';
-@import './libs/vars';
-@import './libs/palette';
-@import './libs/mixins';
+@forward './libs/animations';
+@forward './libs/vars';
+@forward './libs/palette';
+@forward './libs/mixins';

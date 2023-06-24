@@ -3,6 +3,7 @@ import path from 'node:path';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 import react from '@vitejs/plugin-react-swc';
 
@@ -11,6 +12,7 @@ export const ALIAS = ['components', 'utils', 'hooks', 'contexts', 'constants'];
 export default defineConfig({
   plugins: [
     react(),
+    tsconfigPaths(),
     dts({
       insertTypesEntry: true,
     }),
@@ -46,11 +48,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  resolve: {
-    alias: ALIAS.reduce((alias, name) => {
-      alias[`@${name}`] = `/src/${name}`;
-      return alias;
-    }, {}),
   },
 });

@@ -1,9 +1,8 @@
 import { useRef } from 'react';
 
+import { useToastTimer, useDynamicToastHeight } from '@hooks';
 import { cleanClassName } from '@utils';
 
-import { useDynamicHeight } from './hooks/useDynamicHeight';
-import { useToastTimer } from './hooks/useToastTimer';
 import styles from './index.module.scss';
 
 export interface ToastProps {
@@ -28,7 +27,7 @@ export const Toast = ({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const dynamicHeightStyle = useDynamicHeight(ref, isOpened);
+  const dynamicHeightStyle = useDynamicToastHeight(ref, isOpened);
 
   return isExisting ? (
     <div

@@ -1,10 +1,9 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { HIDDEN, THEME, SIZE, INPUT_WIDTH } from '@constants';
+import { useSubscribedState } from '@hooks';
+
 import { Input } from '.';
-import { HIDDEN, THEME, SIZE, INPUT_WIDTH } from '../../../constants';
-import { useSubscribedState } from '../../../hooks';
 
 import type { InputProps, InputWrapProps } from '.';
 

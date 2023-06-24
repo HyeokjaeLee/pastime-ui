@@ -5,7 +5,7 @@ const CLOSED_HEIGHT_STYLE = {
   height: 0,
 };
 
-export const useDynamicHeight = (
+export const useDynamicToastHeight = (
   ref: React.RefObject<HTMLDivElement>,
   isOpened: boolean,
 ) => {
