@@ -1,6 +1,5 @@
 import { omit } from 'lodash-es';
 
-import React from 'react';
 import type { ReactNode } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';

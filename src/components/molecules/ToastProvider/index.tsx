@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 import styles from './index.module.scss';
 import { ToastProviderContext } from '../../../contexts';
@@ -44,23 +45,28 @@ export const ToastProvider = ({
 
   return (
     <ToastProviderContext.Provider value={pushToast}>
-      <div
-        className={cleanClassName(
-          `${styles['toast-container']} ${styles[`float-direction-${float}`]}`,
-        )}
-      >
-        <div>
-          {toastData.map((toastProps, index) => (
-            <Toast
-              {...toastProps}
-              theme={theme}
-              key={index}
-              float={float}
-              holdingTime={holdingTime}
-            />
-          ))}
-        </div>
-      </div>
+      {createPortal(
+        <div
+          className={cleanClassName(
+            `${styles['toast-container']} ${
+              styles[`float-direction-${float}`]
+            }`,
+          )}
+        >
+          <div>
+            {toastData.map((toastProps, index) => (
+              <Toast
+                {...toastProps}
+                theme={theme}
+                key={index}
+                float={float}
+                holdingTime={holdingTime}
+              />
+            ))}
+          </div>
+        </div>,
+        document.body,
+      )}
       {children}
     </ToastProviderContext.Provider>
   );

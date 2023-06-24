@@ -1,4 +1,3 @@
-import React from 'react';
 import { CheckCircle } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
