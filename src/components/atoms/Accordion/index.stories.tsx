@@ -37,19 +37,21 @@ const meta: Meta<MetaProps> = {
       },
     },
     titleChildren: {
-      description: 'Accordion.Title의 children \n\n `ReactNode`',
+      description: 'Accordion.Title의 children',
       type: 'string',
       name: 'children',
       table: {
+        type: { summary: 'ReactNode' },
         category: 'Accordion.Title',
       },
     },
     style: HIDDEN,
     contentsChildren: {
-      description: 'Accordion.Contents의 children \n\n `ReactNode`',
+      description: 'Accordion.Contents의 children',
       type: 'string',
       name: 'children',
       table: {
+        type: { summary: 'ReactNode' },
         category: 'Accordion.Contents',
       },
     },

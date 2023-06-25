@@ -1,13 +1,15 @@
 import { useContext } from 'react';
-import type { ReactNode } from 'react';
 
-import { ToastProviderContext } from '../contexts/ToastProviderContext';
+import { ToastContext } from '@contexts';
+import type { ToastOption } from '@contexts';
 
 export const useToast = () => {
-  const pushToast = useContext(ToastProviderContext);
-  return (message: ReactNode, icon?: ReactNode) =>
-    pushToast({
-      children: message,
-      icon,
-    });
+  const setToastOptionList = useContext(ToastContext);
+  return {
+    toast: (option: ToastOption) =>
+      setToastOptionList?.((prevToastOptionList) => [
+        ...prevToastOptionList,
+        option,
+      ]),
+  };
 };

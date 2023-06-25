@@ -4,6 +4,14 @@ export const HIDDEN = {
   },
 };
 
+export const DARK_MODE = {
+  control: 'boolean',
+  description: '다크 모드를 설정합니다.',
+  table: {
+    defaultValue: { summary: false },
+  },
+};
+
 export const THEME = {
   options: ['light', 'dark'],
   control: 'radio',

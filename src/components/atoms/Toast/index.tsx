@@ -1,54 +1,9 @@
-import { useRef } from 'react';
+import { Toast as ToastMain } from './Toast';
+import { ToastProvider } from './ToastProvider';
 
-import { useToastTimer, useDynamicToastHeight } from '@hooks';
-import { cleanClassName } from '@utils';
+export type { ToastProps } from './Toast';
+export type { ToastProviderProps } from './ToastProvider';
 
-import styles from './index.module.scss';
-
-export interface ToastProps {
-  children?: React.ReactNode;
-  float?: 'from-top' | 'from-bottom';
-  className?: string;
-  icon?: React.ReactNode;
-  theme?: 'light' | 'dark';
-  holdingTime?: number;
-}
-
-export const Toast = ({
-  children,
-  float = 'from-top',
-  className,
-  icon,
-  theme = 'light',
-  holdingTime = 5000,
-}: ToastProps) => {
-  const { isExisting, isOpened, holdToast, unholdToast } =
-    useToastTimer(holdingTime);
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  const dynamicHeightStyle = useDynamicToastHeight(ref, isOpened);
-
-  return isExisting ? (
-    <div
-      ref={ref}
-      style={dynamicHeightStyle}
-      className={cleanClassName(`${styles['toast-wrap']} ${className}`)}
-      onMouseEnter={holdToast}
-      onMouseLeave={unholdToast}
-    >
-      <div
-        className={cleanClassName(
-          `${styles.toast} ${styles[`float-direction-${float}`]} ${
-            styles[theme]
-          } ${isOpened ? styles.opened : styles.closing}`,
-        )}
-      >
-        {icon}
-        <div className={styles['toast-contents-wrap']}>{children}</div>
-      </div>
-    </div>
-  ) : (
-    <></>
-  );
-};
+export const Toast = Object.assign(ToastMain, {
+  Provider: ToastProvider,
+});

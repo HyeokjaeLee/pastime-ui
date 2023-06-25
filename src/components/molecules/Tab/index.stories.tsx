@@ -54,9 +54,9 @@ const meta: Meta<MetaProps> = {
       },
     },
     icon: {
-      description: 'Tab.Item의 아이콘 \n\n `ReactNode`',
-      type: 'string',
+      description: 'Tab.Item의 아이콘',
       table: {
+        type: { summary: 'ReactNode' },
         category: 'Tab.Item',
       },
     },
