@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { HIDDEN, THEME, SIZE, INPUT_WIDTH } from '@constants';
+import { STORY_META, STORY_STYLES } from '@constants';
 import { useSubscribedState } from '@hooks';
 
 import { Input } from '.';
@@ -32,24 +32,24 @@ export default {
   },
   argTypes: {
     //* Input.Container
-    ref: HIDDEN,
-    onChange: HIDDEN,
+    ref: STORY_META.HIDDEN,
+    onChange: STORY_META.HIDDEN,
     validationMessage: {
       ...GROUPS.WRAP,
     },
 
     //* Input.Wrap
     size: {
-      ...SIZE,
+      ...STORY_META.SIZE,
       table: {
-        ...SIZE.table,
+        ...STORY_META.SIZE.table,
         ...GROUPS.WRAP.table,
       },
     },
     theme: {
-      ...THEME,
+      ...STORY_META.THEME,
       table: {
-        ...THEME.table,
+        ...STORY_META.THEME.table,
         ...GROUPS.WRAP.table,
       },
     },
@@ -100,7 +100,7 @@ export const Default: Story = {
         size={size}
         theme={theme}
         style={{
-          width: INPUT_WIDTH,
+          width: STORY_STYLES.INPUT_WIDTH,
         }}
       >
         <Input

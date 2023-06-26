@@ -6,7 +6,7 @@ export const HIDDEN = {
 
 export const DARK_MODE = {
   control: 'boolean',
-  description: '다크 모드를 설정합니다.',
+  description: 'Dark mode setting.',
   table: {
     defaultValue: { summary: false },
   },
@@ -24,7 +24,7 @@ export const THEME = {
 export const SIZE = {
   options: ['small', 'medium', 'large'],
   control: 'radio',
-  description: '컴포넌트의 크기를 설정합니다.',
+  description: 'Sets the size of the component.',
   table: {
     defaultValue: { summary: 'medium' },
   },
@@ -42,5 +42,5 @@ export const OPTIONS_FLOAT = {
 export const VALIDATION = {
   control: false,
   description:
-    '유효성 검사를 위한 함수입니다.\n\n 함수의 `argument`는 입력값이고 반환값이 에러 메시지가 되며 `undefined`를 반환하면 유효성 검사를 통과한 것으로 간주합니다.',
+    'A function for validation.\n\n 함수의 The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.',
 };

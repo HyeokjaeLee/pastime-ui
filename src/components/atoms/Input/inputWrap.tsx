@@ -1,20 +1,20 @@
 import { useRef, useState, useEffect } from 'react';
 
 import { InputContext } from '@contexts';
+import { useDarkMode } from '@hooks';
+import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './InputWrap.module.scss';
 
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
   size?: 'small' | 'medium' | 'large';
-  theme?: Theme;
   validationMessage?: string | null;
 };
 
 export const InputWrap = ({
   //* Input.Container props
   size = 'medium',
-  theme = 'light',
   validationMessage,
 
   //* HTML div props
@@ -26,6 +26,8 @@ export const InputWrap = ({
     useState<React.CSSProperties>();
 
   const [readonly, setReadonly] = useState(false);
+
+  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     const { current } = ref;
@@ -41,7 +43,7 @@ export const InputWrap = ({
     <div {...restDivProps}>
       <div
         className={cleanClassName(
-          `${styles['input-wrap']} ${styles[theme]} ${
+          `${styles['input-wrap']} ${isDarkMode && styles.dark} ${
             validationMessage && styles.error
           } ${styles[`size-${size}`]} ${readonly && styles.readonly}`,
         )}

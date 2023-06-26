@@ -2,8 +2,9 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { STORY_DUUMMY, STORY_META, STORY_STYLES } from '@constants';
+
 import { Accordion } from '.';
-import { HIDDEN, INPUT_WIDTH, LONG_TEXT, SIZE } from '../../../constants';
 
 import type { AccordionProps } from '.';
 
@@ -17,27 +18,27 @@ const meta: Meta<MetaProps> = {
   component: Accordion,
   args: {
     size: 'medium',
-    style: { width: INPUT_WIDTH },
-    contentsChildren: LONG_TEXT,
+    style: { width: STORY_STYLES.INPUT_WIDTH },
+    contentsChildren: STORY_DUUMMY.LONG_TEXT,
     titleChildren: 'Accordion Title',
   },
   argTypes: {
     size: {
-      ...SIZE,
+      ...STORY_META.SIZE,
       table: {
-        ...SIZE.table,
+        ...STORY_META.SIZE.table,
         category: 'Accordion',
       },
     },
     opened: {
-      description: 'Accordion의 열림 여부',
+      description: 'The open state of the Accordion.',
       type: 'boolean',
       table: {
         category: 'Accordion',
       },
     },
     titleChildren: {
-      description: 'Accordion.Title의 children',
+      description: 'Child elements of Accordion.Title.',
       type: 'string',
       name: 'children',
       table: {
@@ -45,9 +46,9 @@ const meta: Meta<MetaProps> = {
         category: 'Accordion.Title',
       },
     },
-    style: HIDDEN,
+    style: STORY_META.HIDDEN,
     contentsChildren: {
-      description: 'Accordion.Contents의 children',
+      description: 'Child elements of Accordion.Contents.',
       type: 'string',
       name: 'children',
       table: {

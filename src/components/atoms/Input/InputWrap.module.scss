@@ -1,38 +1,4 @@
-@use '../../../styles/libs' as libs;
-
-.input-wrap {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  gap: 0.8em;
-  align-items: center;
-  justify-content: center;
-
-  box-sizing: border-box;
-  width: 100%;
-  border-radius: libs.$BORDER-RADIUS-MD;
-
-  transition: box-shadow 0.3s, background-color 0.3s;
-
-  //*Size
-  @mixin size($paddingX, $height) {
-    height: $height;
-    padding: 0 $paddingX;
-  }
-  &.size-small {
-    @include size(14px, 32px);
-  }
-  &.size-medium {
-    @include size(16px, 40px);
-  }
-  &.size-large {
-    @include size(18px, 48px);
-  }
-
-  &.error {
-    @include libs.border(libs.$ROSE-500, 2.2px);
-  }
-}
+@use 'src/styles/libs' as libs;
 
 @mixin default-theme($color, $backgroundColor, $borderColor) {
   color: $color;
@@ -67,18 +33,51 @@
   }
 }
 
-.light {
+@mixin size($paddingX, $height) {
+  height: $height;
+  padding: 0 $paddingX;
+}
+
+.input-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
+
   @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
   @include disabled-theme(libs.$GRAY-300, libs.$GRAY-50);
   @include hover-border(libs.$COOL-GRAY-200);
   @include focus-border(libs.$COOL-GRAY-300);
-}
 
-.dark {
-  @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);
-  @include disabled-theme(libs.$GRAY-500, libs.$GRAY-600);
-  @include hover-border(libs.$COOL-GRAY-500);
-  @include focus-border(libs.$COOL-GRAY-400);
+  &.dark {
+    @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);
+    @include disabled-theme(libs.$GRAY-500, libs.$GRAY-600);
+    @include hover-border(libs.$COOL-GRAY-500);
+    @include focus-border(libs.$COOL-GRAY-400);
+  }
+
+  //*Size
+  &.size-small {
+    @include size(14px, 32px);
+  }
+  &.size-medium {
+    @include size(16px, 40px);
+  }
+  &.size-large {
+    @include size(18px, 48px);
+  }
+
+  &.error {
+    @include libs.border(libs.$ROSE-500, 2.2px);
+  }
 }
 
 .validation-message {
