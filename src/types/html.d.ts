@@ -1,8 +1,3 @@
-declare module '*.scss' {
-  const content: Record<string, string>;
-  export default content;
-}
-
 type HTMLTags =
   | 'section'
   | 'dt'
@@ -13,12 +8,7 @@ type HTMLTags =
   | 'div'
   | 'input';
 
-type HTMLElementProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLElement>,
-  HTMLElement
->;
-
-type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
+export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
   ? React.DetailedHTMLProps<
       React.HTMLAttributes<HTMLDListElement>,
       HTMLDListElement
@@ -43,6 +33,4 @@ type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >
-  : HTMLElementProps;
-
-type Theme = 'light' | 'dark';
+  : React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;

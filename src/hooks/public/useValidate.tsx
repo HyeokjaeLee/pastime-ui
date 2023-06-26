@@ -1,6 +1,7 @@
 import { useContext, useState, useCallback } from 'react';
 
 import { ValidationContext } from '@contexts';
+import type { ValidationContextValue } from '@contexts';
 
 interface ValidateResult {
   isValid: boolean;
@@ -51,4 +52,17 @@ export const useValidate = () => {
     ...data,
     validate,
   };
+};
+
+export const validationObserver = <T extends object>(
+  Component: (props: T) => JSX.Element | null,
+) => {
+  const validationStore: ValidationContextValue = new Map();
+  // eslint-disable-next-line react/function-component-definition
+  return () => (props: T) =>
+    (
+      <ValidationContext.Provider value={validationStore}>
+        <Component {...props} />
+      </ValidationContext.Provider>
+    );
 };

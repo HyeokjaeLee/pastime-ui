@@ -1,6 +1,7 @@
 import { useContext, useRef, useMemo } from 'react';
 
 import { AccordionContext } from '@contexts';
+import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './AccordionContents.module.scss';

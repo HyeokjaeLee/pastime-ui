@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { AccordionContext } from '@contexts';
 import type { AccordionContextValue } from '@contexts';
 import { useSubscribedState } from '@hooks';
+import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import { AccordionContents } from './AccordionContents';

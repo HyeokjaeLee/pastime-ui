@@ -1,6 +1,5 @@
 import { omit } from 'lodash-es';
 
-import React from 'react';
 import { Trash2 } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';

@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { InputContext } from '@contexts';
+import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
+import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';

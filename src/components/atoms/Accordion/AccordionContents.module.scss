@@ -1,5 +1,5 @@
 @use './AccordionTitle.module.scss' as title;
-@use '../../../styles/libs' as libs;
+@use 'src/styles/libs' as libs;
 
 .accordian-contents-wrap {
   overflow: hidden;
