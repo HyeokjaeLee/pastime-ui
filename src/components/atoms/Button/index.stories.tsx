@@ -4,6 +4,8 @@ import { Trash2 } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { STORY_META } from '@constants';
+
 import { Button } from '.';
 
 import type { ButtonProps } from '.';
@@ -21,15 +23,45 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     delay: {
       control: 'number',
-      description: '렌더링 후 버튼을 비활성화하는 시간(ms)입니다.',
+      description: `The time (in milliseconds) to disable the button after rendering.\n\n렌더링 후 버튼을 비활성화하는 시간(ms)`,
     },
-    disabled: {
-      control: 'boolean',
-    },
+
     children: {
+      description: 'The content of the button.\n\n버튼의 내용',
       control: 'text',
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
+
+    size: STORY_META.SIZE,
+
+    theme: {
+      description: 'The theme of the button.\n\n버튼의 테마',
+    },
+
+    shape: {
+      description: 'The shape of the button.\n\n버튼의 모양',
+    },
+
+    icon: {
+      description: 'The icon of the button.\n\n버튼의 아이콘',
+    },
+
+    iconDirection: {
+      description: 'The display position of the icon.\n\n아이콘 표시 위치',
+    },
+
+    disabled: {
+      description: 'The disabled state of the button.\n\n버튼의 비활성화 상태',
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
     },
   },
+
   args: {
     children: 'Button',
   },
@@ -51,9 +83,8 @@ export const Theme: Story = {
           'success',
           'warning',
           'danger',
-          'dark',
-          'light',
           'ghost',
+          'clear',
         ] satisfies ButtonProps['theme'][]
       ).map((theme) => (
         <Button {...args} theme={theme} key={theme}>
@@ -112,8 +143,8 @@ export const Delay: Story = {
   render: (args) => (
     <>
       <Button {...args} />
-      <Button {...args} theme="light" />
-      <Button {...args} theme="dark" />
+      <Button {...args} theme="ghost" />
+      <Button {...args} theme="clear" />
     </>
   ),
 };

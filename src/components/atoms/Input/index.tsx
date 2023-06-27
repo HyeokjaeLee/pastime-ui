@@ -33,116 +33,107 @@ export interface InputProps
   value?: number | string;
   disabled?: boolean | 'readonly';
   onChange?: (value: string) => void;
-  ref?: Ref<HTMLInputElement>;
 }
 
 export const Input = Object.assign(
-  forwardRef(
-    (
-      {
-        //* Input props
-        type = 'text',
-        value: parentValue,
-        disabled = false,
-        onChange,
-        //* HTML input props
-        placeholder = '',
-        className,
-        onFocus,
-        onBlur,
-        ref: _, // eslint-disable-line @typescript-eslint/no-unused-vars
-        ...restInputProps
-      },
-      ref,
-    ) => {
-      const [isFocused, setIsFucused] = useState(false);
+  ({
+    //* Input props
+    type = 'text',
+    value: parentValue,
+    disabled = false,
+    onChange,
+    //* HTML input props
+    placeholder = '',
+    className,
+    onFocus,
+    onBlur,
+    ...restInputProps
+  }: InputProps) => {
+    const [isFocused, setIsFucused] = useState(false);
 
-      const setReadonly = useContext(InputContext);
-      const isReadonly = disabled === 'readonly';
-      useEffect(() => setReadonly?.(isReadonly), [isReadonly, setReadonly]);
+    const setReadonly = useContext(InputContext);
+    const isReadonly = disabled === 'readonly';
 
-      const value = (() => {
-        if (type === 'button' && !parentValue) return placeholder;
+    useEffect(() => setReadonly?.(isReadonly), [isReadonly, setReadonly]);
 
-        if (parentValue !== 0 && !parentValue) return '';
+    const value = (() => {
+      if (type === 'button' && !parentValue) return placeholder;
 
-        const valueString = String(parentValue);
+      if (parentValue !== 0 && !parentValue) return '';
 
-        if (isFocused) return valueString;
+      const valueString = String(parentValue);
 
-        switch (type) {
-          case 'number':
-            return valueString;
+      if (isFocused) return valueString;
 
-          case 'large-number':
-            return Number(valueString).toLocaleString();
+      switch (type) {
+        case 'number':
+          return valueString;
 
-          case 'phone-number':
-            if (valueString.length === 10)
-              return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+        case 'large-number':
+          return Number(valueString).toLocaleString();
 
-          default:
-            return valueString;
-        }
-      })();
+        case 'phone-number':
+          if (valueString.length === 10)
+            return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+          return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 
-      const convertChangeHandlerParam = useMemo((): ((
-        value: string,
-      ) => string | null) => {
-        switch (type) {
-          case 'number':
-          case 'large-number':
-            return (value) => {
-              const isValidNumber =
-                value === '-' || !Number.isNaN(Number(value));
-              return value && (isValidNumber ? value : null);
-            };
+        default:
+          return valueString;
+      }
+    })();
 
-          case 'phone-number':
-            return (value) => {
-              let numberString = value.replace(/[^0-9]/g, '');
-              if (numberString.length > 11)
-                numberString = numberString.slice(0, 11);
+    const convertChangeHandlerParam = useMemo((): ((
+      value: string,
+    ) => string | null) => {
+      switch (type) {
+        case 'number':
+        case 'large-number':
+          return (value) => {
+            const isValidNumber = value === '-' || !Number.isNaN(Number(value));
+            return value && (isValidNumber ? value : null);
+          };
 
-              return value && numberString;
-            };
+        case 'phone-number':
+          return (value) => {
+            let numberString = value.replace(/[^0-9]/g, '');
+            if (numberString.length > 11)
+              numberString = numberString.slice(0, 11);
 
-          default:
-            return (value) => value;
-        }
-      }, [type]);
+            return value && numberString;
+          };
 
-      return (
-        <input
-          {...restInputProps}
-          ref={ref}
-          onFocus={(e) => {
-            setIsFucused(true);
-            onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setIsFucused(false);
-            onBlur?.(e);
-          }}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          className={cleanClassName(
-            `${styles.input} ${type === 'button' && styles.button} ${
-              !parentValue && styles.empty
-            } ${className}`,
-          )}
-          disabled={!!disabled}
-          onChange={({ target: { value } }) => {
-            const convertedValue = convertChangeHandlerParam(value);
+        default:
+          return (value) => value;
+      }
+    }, [type]);
 
-            if (convertedValue !== null) onChange?.(convertedValue);
-          }}
-        />
-      );
-    },
-  ) as (props: InputProps) => JSX.Element,
+    return (
+      <input
+        {...restInputProps}
+        onFocus={(e) => {
+          setIsFucused(true);
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          setIsFucused(false);
+          onBlur?.(e);
+        }}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        className={cleanClassName(
+          `${styles.input} ${type === 'button' && styles.button} ${
+            !parentValue && styles.empty
+          } ${className}`,
+        )}
+        disabled={!!disabled}
+        onChange={({ target: { value } }) => {
+          const convertedValue = convertChangeHandlerParam(value);
+          if (convertedValue !== null) onChange?.(convertedValue);
+        }}
+      />
+    );
+  },
   {
     Wrap: InputWrap,
   },

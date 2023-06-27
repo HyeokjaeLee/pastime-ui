@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { AccordionContext } from '@contexts';
 import type { AccordionContextValue } from '@contexts';
-import { useSubscribedState } from '@hooks';
+import { useDarkMode, useSubscribedState } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -36,11 +36,16 @@ export const Accordion = Object.assign(
       }),
       [opened, setOpened, size],
     );
+
+    const { isDarkMode } = useDarkMode();
+
     return (
       <dl
         {...restDlProps}
         className={cleanClassName(
-          `${styles['accordian-container']} ${className}`,
+          `${styles['accordian-container']} ${
+            isDarkMode && styles.dark
+          } ${className}`,
         )}
       >
         <AccordionContext.Provider value={accordionContextValue}>

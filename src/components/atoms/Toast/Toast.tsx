@@ -2,7 +2,12 @@ import { useEffect } from 'react';
 import { XCircle, AlertTriangle, Info, CheckCircle } from 'react-feather';
 
 import type { ToastType } from '@contexts';
-import { useToastState, TOAST_STATE, useToastDynamicHeight } from '@hooks';
+import {
+  useToastState,
+  TOAST_STATE,
+  useToastDynamicHeight,
+  useDarkMode,
+} from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './Toast.module.scss';
@@ -13,7 +18,6 @@ export interface ToastProps {
   space?: boolean;
   floatDirection?: 'from-top' | 'from-bottom';
   holdTime?: number;
-  darkMode?: boolean;
   onDelete?: () => void;
 }
 
@@ -23,13 +27,14 @@ export const Toast = ({
   space = false,
   floatDirection = 'from-top',
   holdTime = 5000,
-  darkMode = false,
   onDelete,
 }: ToastProps) => {
   const { toastState, hasSpace, holdToast, unholdToast } = useToastState({
     holdTime,
     space,
   });
+
+  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     if (toastState === TOAST_STATE.DELETED) onDelete?.();
@@ -48,7 +53,7 @@ export const Toast = ({
       onMouseLeave={unholdToast}
       className={cleanClassName(
         `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
-          darkMode && styles.dark
+          isDarkMode && styles.dark
         } ${hasSpace && styles['has-space']} ${styles[toastState]}`,
       )}
     >
@@ -66,12 +71,7 @@ export const Toast = ({
             }[icon]
           : icon}
       </div>
-      <div
-        ref={toastContentRef}
-        className={cleanClassName(
-          `${styles['toast-contents-wrap']} ${darkMode && styles.dark}`,
-        )}
-      >
+      <div ref={toastContentRef} className={styles['toast-contents-wrap']}>
         {children}
       </div>
     </div>

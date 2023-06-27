@@ -15,8 +15,8 @@
   font-weight: normal;
   font-size: libs.$FONT-SIZE-SM;
 
-  transition: box-shadow 0.3s, height 0.5s cubic-bezier(0.71, -0.01, 0.39, 1.01),
-    margin 0.5s cubic-bezier(0.71, -0.01, 0.39, 1.01);
+  transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
+    margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
   &:hover {
     box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.25);
 
@@ -53,20 +53,20 @@
   &.float-direction-from-top {
     &.holding,
     &.opened {
-      @include libs.fade-in-top(0.3s);
+      @include libs.fade-in-top(0.4s);
     }
     &.closing {
-      @include libs.fade-out-top(0.3s);
+      @include libs.fade-out-top(0.4s);
     }
   }
 
   &.float-direction-from-bottom {
     &.holding,
     &.opened {
-      @include libs.fade-in-bottom(0.3s);
+      @include libs.fade-in-bottom(0.4s);
     }
     &.closing {
-      @include libs.fade-out-bottom(0.3s);
+      @include libs.fade-out-bottom(0.4s);
     }
   }
 }

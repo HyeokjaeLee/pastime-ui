@@ -221,18 +221,18 @@
   @include active-theme(white, libs.$ROSE-600, libs.$ROSE-300);
 }
 
-.dark {
-  @include default-theme(libs.$BLUE-GRAY-100, transparent);
-  @include disable-theme(rgba(libs.$BLUE-GRAY-100, 0.2), transparent);
-  @include hover-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.3));
-  @include active-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.8));
-}
-
-.light {
+.clear {
   @include default-theme(libs.$GRAY-700, transparent);
   @include disable-theme(rgba(libs.$GRAY-700, 0.2), transparent);
   @include hover-theme(libs.$BLUE-GRAY-800, rgba(libs.$GRAY-300, 0.3));
   @include active-theme(libs.$BLUE-GRAY-800, rgba(libs.$GRAY-300, 0.8));
+
+  &.dark {
+    @include default-theme(libs.$BLUE-GRAY-100, transparent);
+    @include disable-theme(rgba(libs.$BLUE-GRAY-100, 0.2), transparent);
+    @include hover-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.3));
+    @include active-theme(libs.$BLUE-GRAY-50, rgba(libs.$GRAY-600, 0.8));
+  }
 }
 
 .ghost {

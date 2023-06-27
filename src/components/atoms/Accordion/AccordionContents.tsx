@@ -1,6 +1,7 @@
 import { useContext, useRef, useMemo } from 'react';
 
 import { AccordionContext } from '@contexts';
+import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -33,6 +34,8 @@ export const AccordionContents = ({
     };
   }, [opened, style]);
 
+  const { isDarkMode } = useDarkMode();
+
   return (
     <dd
       {...restDdProps}
@@ -49,8 +52,8 @@ export const AccordionContents = ({
       <article
         ref={ref}
         className={cleanClassName(
-          `${styles['accordian-contents']} ${
-            opened && styles.opened
+          `${styles['accordian-contents']} ${opened && styles.opened} ${
+            isDarkMode && styles.dark
           } ${className}`,
         )}
       >

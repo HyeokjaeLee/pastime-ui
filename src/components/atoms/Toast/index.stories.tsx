@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '@components/atoms';
-import { STORY_DUUMMY_DATA, STORY_META_DATA } from '@constants';
+import { STORY_DUUMMY } from '@constants';
 import { ToastOption } from '@contexts';
 import { useToast } from '@hooks';
 
@@ -23,7 +23,7 @@ const ToastTestButton = ({ message, type, holdTime }: ToastTestButtonProps) => {
           message:
             message ||
             (toastIndex % 4 === 0
-              ? STORY_DUUMMY_DATA.LONG_TEXT
+              ? STORY_DUUMMY.LONG_TEXT
               : `Toast test text ${toastIndex}`),
           type:
             type ??
@@ -61,32 +61,22 @@ enum CATEGORY {
 const meta: Meta<MetaProps> = {
   title: 'molecules/Toast',
   component: Toast.Provider,
-
-  render: ({ message, holdTime, type, ...args }) => (
-    <Toast.Provider {...args}>
-      <ToastTestButton message={message} type={type} holdTime={holdTime} />
-    </Toast.Provider>
-  ),
   argTypes: {
     //* Toast.Provider
     floatDirection: {
-      description: 'Toast가 표시될 위치',
-      table: {
-        category: CATEGORY.TOAST_PROVIDER,
-      },
-    },
-    darkMode: {
-      ...STORY_META_DATA.DARK_MODE,
+      description:
+        'The location where the Toast will be displayed.\n\nToast가 표시될 위치',
       table: {
         category: CATEGORY.TOAST_PROVIDER,
       },
     },
     children: {
-      description: '앱의 최상위 컴포넌트로 감싸주어야 합니다. \n\n `ReactNode`',
+      description:
+        'You should wrap it around the top-level component of the app.\n\n앱의 최상위 컴포넌트로 감싸주어야 합니다.',
       control: '-',
       table: {
+        type: { summary: 'ReactNode' },
         category: CATEGORY.TOAST_PROVIDER,
-        type: 'ReactNode',
       },
     },
 
@@ -125,21 +115,59 @@ export default meta;
 
 type Story = StoryObj<MetaProps>;
 
-export const Default: Story = {};
+const DEFAULT_CODE_EXAMPLE = `
+// App.tsx
+<Toast.Provider floatDirection="from-top">
+  <App />
+</Toast.Provider>
+
+// Page.tsx
+const Page = () => {
+  const { toast } = useToast();
+  return (
+    <Button
+      onClick={() =>
+        toast({
+          type: 'success',
+          message: 'Toast test text',
+          holdTime: 5000,
+        })
+      }
+    >
+      🚀 Toast!
+    </Button>
+  );
+}
+`;
+
+export const Default: Story = {
+  render: ({ message, holdTime, type, ...args }) => (
+    <Toast.Provider {...args}>
+      <ToastTestButton message={message} type={type} holdTime={holdTime} />
+    </Toast.Provider>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: DEFAULT_CODE_EXAMPLE,
+      },
+    },
+  },
+};
 
 export const Type: Story = {
-  render: () => (
+  render: ({ holdTime = 999999 }) => (
     <div className="story-container">
-      <Toast holdTime={999999} icon="success">
+      <Toast holdTime={holdTime} icon="success">
         Success toast
       </Toast>
-      <Toast holdTime={999999} icon="fail">
+      <Toast holdTime={holdTime} icon="fail">
         Fail toast
       </Toast>
-      <Toast holdTime={999999} icon="warning">
+      <Toast holdTime={holdTime} icon="warning">
         Warning toast
       </Toast>
-      <Toast holdTime={999999} icon="info">
+      <Toast holdTime={holdTime} icon="info">
         Info toast
       </Toast>
     </div>

@@ -16,10 +16,16 @@
 .divider {
   margin: 0;
   padding: 0;
-  border-color: rgba(libs.$GRAY-400, 0.1);
+  border: 0.5px solid libs.$COOL-GRAY-300;
+
+  &.dark {
+    border: 0.5px solid libs.$COOL-GRAY-500;
+  }
+
   &.opened {
     @include libs.fade-in(0.3s, 0.2s);
   }
+
   &.closed {
     @include libs.fade-out(0.2s);
   }

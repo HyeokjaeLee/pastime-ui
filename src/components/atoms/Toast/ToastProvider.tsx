@@ -9,14 +9,13 @@ import styles from './ToastProvider.module.scss';
 
 import type { ToastProps } from './Toast';
 
-export interface ToastProviderProps
-  extends Pick<ToastProps, 'darkMode' | 'floatDirection'> {
+export interface ToastProviderProps extends Pick<ToastProps, 'floatDirection'> {
   children?: React.ReactNode;
 }
+
 export const ToastProvider = ({
   children,
   floatDirection = 'from-top',
-  darkMode = false,
 }: ToastProviderProps) => {
   const [toastOptionList, setToastOptionList] = useState<ToastOption[]>([]);
 
@@ -52,7 +51,6 @@ export const ToastProvider = ({
                     floatDirection={floatDirection}
                     holdTime={toastOption.holdTime}
                     icon={toastOption.type}
-                    darkMode={darkMode}
                     onDelete={handleToastOptionListReset}
                   >
                     {toastOption.message}

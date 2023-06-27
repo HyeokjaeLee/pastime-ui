@@ -18,6 +18,10 @@
   font-size: inherit;
 
   cursor: pointer;
+
+  &:hover > .chevron-down-icon {
+    color: rgba(libs.$GRAY-400, 0.8);
+  }
 }
 
 @mixin size($paddingX, $height) {
@@ -57,7 +61,7 @@
 
   color: rgba(libs.$GRAY-400, 0.4);
 
-  transition: transform 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
   stroke-width: 2;
   &.opened {
     transform: rotate(180deg);

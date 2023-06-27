@@ -52,10 +52,10 @@
 
   transition: box-shadow 0.3s, background-color 0.3s;
 
-  @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
+  @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-200);
   @include disabled-theme(libs.$GRAY-300, libs.$GRAY-50);
-  @include hover-border(libs.$COOL-GRAY-200);
-  @include focus-border(libs.$COOL-GRAY-300);
+  @include hover-border(libs.$COOL-GRAY-300);
+  @include focus-border(libs.$COOL-GRAY-400);
 
   &.dark {
     @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);

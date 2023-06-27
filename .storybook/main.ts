@@ -1,3 +1,5 @@
+import type { StorybookConfig } from '@storybook/react-vite';
+
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -13,6 +15,7 @@ module.exports = {
     storyStoreV7: true,
   },
   docs: {
+    docsMode: true,
     autodocs: true,
   },
-};
+} satisfies StorybookConfig;

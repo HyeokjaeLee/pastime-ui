@@ -13,6 +13,12 @@ interface MetaProps extends AccordionProps {
   contentsChildren: React.ReactNode;
 }
 
+enum CATEGORY {
+  ACCORDION = 'Accordion',
+  ACCORDION_TITLE = 'Accordion.Title',
+  ACCORDION_CONTENTS = 'Accordion.Contents',
+}
+
 const meta: Meta<MetaProps> = {
   title: 'atoms/Accordion',
   component: Accordion,
@@ -27,46 +33,67 @@ const meta: Meta<MetaProps> = {
       ...STORY_META.SIZE,
       table: {
         ...STORY_META.SIZE.table,
-        category: 'Accordion',
+        category: CATEGORY.ACCORDION,
       },
     },
     opened: {
-      description: 'The open state of the Accordion.',
+      description: 'The open state of the Accordion.\n\nAccordion의 열림 상태',
       type: 'boolean',
       table: {
-        category: 'Accordion',
+        category: CATEGORY.ACCORDION,
       },
     },
     titleChildren: {
-      description: 'Child elements of Accordion.Title.',
+      description:
+        'Child elements of Accordion.Title.\n\nAccordion.Title의 자식 요소',
       type: 'string',
       name: 'children',
       table: {
         type: { summary: 'ReactNode' },
-        category: 'Accordion.Title',
+        category: CATEGORY.ACCORDION_TITLE,
       },
     },
     style: STORY_META.HIDDEN,
     contentsChildren: {
-      description: 'Child elements of Accordion.Contents.',
+      description:
+        'Child elements of Accordion.Contents.\n\nAccordion.Contents의 자식 요소',
       type: 'string',
       name: 'children',
       table: {
         type: { summary: 'ReactNode' },
-        category: 'Accordion.Contents',
+        category: CATEGORY.ACCORDION_CONTENTS,
       },
     },
   },
+};
+
+export default meta;
+
+type Story = StoryObj<MetaProps>;
+
+const DEFAULT_CODE_EXAMPLE = `
+<Accordion size="medium">
+  <Accordion.Title>
+    Accordion Title
+  </Accordion.Title>
+  <Accordion.Contents>
+    aurora sunrise...
+  </Accordion.Contents>
+</Accordion>
+`;
+
+export const Default: Story = {
   render: ({ titleChildren, contentsChildren, ...args }) => (
     <Accordion {...args}>
       <Accordion.Title>{titleChildren}</Accordion.Title>
       <Accordion.Contents>{contentsChildren}</Accordion.Contents>
     </Accordion>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: DEFAULT_CODE_EXAMPLE,
+      },
+    },
+  },
 };
-
-export default meta;
-
-type Story = StoryObj<typeof Accordion>;
-
-export const Default: Story = {};
