@@ -1,13 +1,8 @@
-import {
-  Ref,
-  useState,
-  useMemo,
-  forwardRef,
-  useContext,
-  useEffect,
-} from 'react';
+import { useContext, useEffect } from 'react';
 
 import { InputContext } from '@contexts';
+import { useFormatInputValue } from '@hooks';
+import type { InputType } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -15,14 +10,6 @@ import styles from './index.module.scss';
 import { InputWrap } from './inputWrap';
 
 export type { InputWrapProps } from './inputWrap';
-
-export type InputType =
-  | 'text'
-  | 'number'
-  | 'large-number'
-  | 'phone-number'
-  | 'password'
-  | 'button';
 
 export interface InputProps
   extends Omit<
@@ -39,91 +26,50 @@ export const Input = Object.assign(
   ({
     //* Input props
     type = 'text',
-    value: parentValue,
+    value,
     disabled = false,
     onChange,
+
     //* HTML input props
-    placeholder = '',
+    placeholder,
     className,
     onFocus,
     onBlur,
     ...restInputProps
   }: InputProps) => {
-    const [isFocused, setIsFucused] = useState(false);
-
     const setReadonly = useContext(InputContext);
     const isReadonly = disabled === 'readonly';
 
     useEffect(() => setReadonly?.(isReadonly), [isReadonly, setReadonly]);
 
-    const value = (() => {
-      if (type === 'button' && !parentValue) return placeholder;
-
-      if (parentValue !== 0 && !parentValue) return '';
-
-      const valueString = String(parentValue);
-
-      if (isFocused) return valueString;
-
-      switch (type) {
-        case 'number':
-          return valueString;
-
-        case 'large-number':
-          return Number(valueString).toLocaleString();
-
-        case 'phone-number':
-          if (valueString.length === 10)
-            return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-          return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-
-        default:
-          return valueString;
-      }
-    })();
-
-    const convertChangeHandlerParam = useMemo((): ((
-      value: string,
-    ) => string | null) => {
-      switch (type) {
-        case 'number':
-        case 'large-number':
-          return (value) => {
-            const isValidNumber = value === '-' || !Number.isNaN(Number(value));
-            return value && (isValidNumber ? value : null);
-          };
-
-        case 'phone-number':
-          return (value) => {
-            let numberString = value.replace(/[^0-9]/g, '');
-            if (numberString.length > 11)
-              numberString = numberString.slice(0, 11);
-
-            return value && numberString;
-          };
-
-        default:
-          return (value) => value;
-      }
-    }, [type]);
+    const {
+      formattedValue,
+      displayFormattedValue,
+      displayOriginalValue,
+      convertChangeHandlerParam,
+    } = useFormatInputValue({
+      type,
+      value,
+      placeholder,
+    });
 
     return (
       <input
         {...restInputProps}
         onFocus={(e) => {
-          setIsFucused(true);
+          displayOriginalValue();
           onFocus?.(e);
         }}
         onBlur={(e) => {
-          setIsFucused(false);
+          displayFormattedValue();
           onBlur?.(e);
         }}
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={formattedValue}
         className={cleanClassName(
           `${styles.input} ${type === 'button' && styles.button} ${
-            !parentValue && styles.empty
+            !value && styles.empty
           } ${className}`,
         )}
         disabled={!!disabled}

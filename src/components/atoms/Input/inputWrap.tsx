@@ -1,7 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { InputContext } from '@contexts';
-import { useDarkMode } from '@hooks';
+import { useDarkMode, useInputMessageDynamicHeight } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -9,7 +9,7 @@ import styles from './InputWrap.module.scss';
 
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
   size?: 'small' | 'medium' | 'large';
-  validationMessage?: string | null;
+  validationMessage?: string;
 };
 
 export const InputWrap = ({
@@ -21,23 +21,12 @@ export const InputWrap = ({
   children,
   ...restDivProps
 }: InputWrapProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [messageWrapHeight, setMessageWrapHeight] =
-    useState<React.CSSProperties>();
+  const { messageRef, messageWrapHeight } =
+    useInputMessageDynamicHeight(validationMessage);
 
   const [readonly, setReadonly] = useState(false);
 
   const { isDarkMode } = useDarkMode();
-
-  useEffect(() => {
-    const { current } = ref;
-    if (current && validationMessage) {
-      return setMessageWrapHeight({
-        height: current.clientHeight,
-      });
-    }
-    return setMessageWrapHeight(undefined);
-  }, [validationMessage]);
 
   return (
     <div {...restDivProps}>
@@ -61,7 +50,7 @@ export const InputWrap = ({
         style={messageWrapHeight}
       >
         {validationMessage ? (
-          <p ref={ref} className={styles['validation-message']}>
+          <p ref={messageRef} className={styles['validation-message']}>
             {validationMessage}
           </p>
         ) : null}

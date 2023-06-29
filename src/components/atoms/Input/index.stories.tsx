@@ -8,7 +8,7 @@ import { Input } from '.';
 import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'validationMessage' | 'size' | 'theme'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size'>;
 
 const GROUPS = {
   INPUT: {
@@ -46,13 +46,6 @@ export default {
         ...GROUPS.WRAP.table,
       },
     },
-    theme: {
-      ...STORY_META.THEME,
-      table: {
-        ...STORY_META.THEME.table,
-        ...GROUPS.WRAP.table,
-      },
-    },
 
     //* Input
     placeholder: {
@@ -86,7 +79,7 @@ export const Default: Story = {
     validationMessage,
     //* Input.Wrap
     size,
-    theme,
+
     //* Input
     value,
     onChange,
@@ -98,7 +91,6 @@ export const Default: Story = {
       <Input.Wrap
         validationMessage={validationMessage}
         size={size}
-        theme={theme}
         style={{
           width: STORY_STYLES.INPUT_WIDTH,
         }}
