@@ -1,7 +1,9 @@
-import { useContext, useCallback } from 'react';
+import { useCallback, ComponentType } from 'react';
 
-import { ValidationContext } from '@contexts/ValidationContext';
-import type { ValidationContextValue } from '@contexts/ValidationContext';
+import {
+  ValidationContextProvider,
+  useValidationContext,
+} from '@contexts/ValidationContext';
 
 interface ValidateResult {
   isValid: boolean;
@@ -13,7 +15,7 @@ interface ValidateOptions {
 }
 
 export const useValidate = () => {
-  const validationContext = useContext(ValidationContext);
+  const { validationMap } = useValidationContext();
 
   const validate = useCallback(
     ({ scrollToFirstInvalid }: ValidateOptions) => {
@@ -22,7 +24,9 @@ export const useValidate = () => {
         invalidElementIds: [],
       };
 
-      validationContext?.forEach((validateValue, id) => {
+      if (!validationMap) throw new Error('validationMap is not defined');
+
+      validationMap.forEach((validateValue, id) => {
         if (validateValue()) {
           validateResult.isValid = false;
           validateResult.invalidElementIds.push(id);
@@ -44,7 +48,7 @@ export const useValidate = () => {
 
       return validateResult;
     },
-    [validationContext],
+    [validationMap],
   );
 
   return {
@@ -52,14 +56,12 @@ export const useValidate = () => {
   };
 };
 
-export const validationObserver = <T extends object>(
-  Component: (props: T) => JSX.Element | null,
-) => {
-  const validationStore: ValidationContextValue = new Map();
+export const validationObserver =
+  <T extends object>(Component: ComponentType<T>) =>
   // eslint-disable-next-line react/function-component-definition
-  return (props: T) => (
-    <ValidationContext.Provider value={validationStore}>
-      <Component {...props} />
-    </ValidationContext.Provider>
-  );
-};
+  (props: T) =>
+    (
+      <ValidationContextProvider>
+        <Component {...props} />
+      </ValidationContextProvider>
+    );

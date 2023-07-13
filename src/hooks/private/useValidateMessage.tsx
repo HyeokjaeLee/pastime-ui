@@ -1,6 +1,6 @@
-import { useCallback, useState, useContext, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
-import { ValidationContext } from '@contexts/ValidationContext';
+import { useValidationContext } from '@contexts/ValidationContext';
 
 export type ValidateHandler<TValue> =
   | ((value: TValue) => string | undefined)
@@ -17,7 +17,7 @@ export const useValidationMessage = <TValue,>({
   value,
   validateHandler,
 }: UseValidationMessageParams<TValue>) => {
-  const validationContext = useContext(ValidationContext);
+  const { validationMap } = useValidationContext();
 
   const [validationMessage, setValidationMessage] = useState<string>();
 
@@ -27,18 +27,18 @@ export const useValidationMessage = <TValue,>({
   );
 
   useEffect(() => {
-    if (validationContext && id && validateHandler) {
-      validationContext.set(id, () => {
+    if (validationMap && id && validateHandler) {
+      validationMap.set(id, () => {
         const validationMessage = validateHandler(value);
         setValidationMessage(validationMessage);
         return validationMessage;
       });
 
       return () => {
-        validationContext.delete(id);
+        validationMap.delete(id);
       };
     }
-  }, [id, validateHandler, validationContext, value]);
+  }, [id, validateHandler, validationMap, value]);
 
   return {
     validationMessage,
