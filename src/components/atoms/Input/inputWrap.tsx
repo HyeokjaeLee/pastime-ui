@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { InputContext } from '@contexts';
+import { InputContext } from '@contexts/InputContext';
 import { useDarkMode, useInputMessageDynamicHeight } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';

@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ToastContext } from '@contexts';
-import type { ToastOption } from '@contexts';
+import { ToastContext } from '@contexts/ToastContext';
+import type { ToastOption } from '@contexts/ToastContext';
 
 import { Toast } from './Toast';
 import styles from './ToastProvider.module.scss';

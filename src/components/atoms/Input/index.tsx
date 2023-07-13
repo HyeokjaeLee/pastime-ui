@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { InputContext } from '@contexts';
+import { InputContext } from '@contexts/InputContext';
 import { useFormatInputValue } from '@hooks';
 import type { InputType } from '@hooks';
 import type { HTMLTagProps } from '@types';

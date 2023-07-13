@@ -7,8 +7,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import react from '@vitejs/plugin-react-swc';
 
-export const ALIAS = ['components', 'utils', 'hooks', 'contexts', 'constants'];
-
 export default defineConfig({
   plugins: [
     react(),

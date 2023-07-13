@@ -1,0 +1,11 @@
+@use 'src/styles/libs' as libs;
+
+.tooltip {
+  cursor: help;
+}
+
+@layer default {
+  .tooltip {
+    width: fit-content;
+  }
+}

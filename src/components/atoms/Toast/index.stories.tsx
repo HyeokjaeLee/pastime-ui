@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '@components/atoms';
 import { STORY_DUUMMY } from '@constants';
-import { ToastOption } from '@contexts';
+import { ToastOption } from '@contexts/ToastContext';
 import { useToast } from '@hooks';
 
 import { Toast, ToastProviderProps } from '.';

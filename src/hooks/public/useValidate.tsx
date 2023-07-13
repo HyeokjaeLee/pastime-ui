@@ -1,7 +1,7 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 
-import { ValidationContext } from '@contexts';
-import type { ValidationContextValue } from '@contexts';
+import { ValidationContext } from '@contexts/ValidationContext';
+import type { ValidationContextValue } from '@contexts/ValidationContext';
 
 interface ValidateResult {
   isValid: boolean;
@@ -14,7 +14,6 @@ interface ValidateOptions {
 
 export const useValidate = () => {
   const validationContext = useContext(ValidationContext);
-  const [data, setData] = useState<ValidateResult>();
 
   const validate = useCallback(
     ({ scrollToFirstInvalid }: ValidateOptions) => {
@@ -43,13 +42,12 @@ export const useValidate = () => {
         });
       }
 
-      setData(validateResult);
+      return validateResult;
     },
     [validationContext],
   );
 
   return {
-    ...data,
     validate,
   };
 };
@@ -59,11 +57,9 @@ export const validationObserver = <T extends object>(
 ) => {
   const validationStore: ValidationContextValue = new Map();
   // eslint-disable-next-line react/function-component-definition
-  return () => (props: T) =>
-    (
-      <ValidationContext.Provider value={validationStore}>
-        <Component {...props} />
-      </ValidationContext.Provider>
-    );
+  return (props: T) => (
+    <ValidationContext.Provider value={validationStore}>
+      <Component {...props} />
+    </ValidationContext.Provider>
+  );
 };
-

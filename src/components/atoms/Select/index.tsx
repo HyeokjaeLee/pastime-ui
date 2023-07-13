@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Check } from 'react-feather';
 
+import { useDarkMode } from '@hooks';
+import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -21,7 +23,6 @@ export type SelectProps<
   onChange?: (value: SelectProps<OptionValue, Multiple>['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  theme?: Theme;
   cancelable?: boolean;
 };
 
@@ -37,7 +38,6 @@ export const Select = <
   onChange,
   onKeyDown,
   float = 'bottom',
-  theme = 'light',
   cancelable = true,
 
   //* HTML section props
@@ -55,6 +55,8 @@ export const Select = <
     });
   }, [opened]);
 
+  const { isDarkMode } = useDarkMode();
+
   const isChangeOpenState = typeof openState === 'string';
   const [indexForSelect, setIndexForSelect] = useState(-1);
 
@@ -71,7 +73,7 @@ export const Select = <
     }
   }, [isChangeOpenState, openState, options, selectedValue]);
 
-  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const selectRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     if (openState === true && options) {
@@ -83,7 +85,7 @@ export const Select = <
             return setIndexForSelect((prevIndex) => {
               if (prevIndex > 0) {
                 const nextIndex = prevIndex - 1;
-                optionRefs.current[nextIndex]?.focus();
+                selectRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -94,7 +96,7 @@ export const Select = <
             return setIndexForSelect((prevIndex) => {
               if (prevIndex < options.length - 1) {
                 const nextIndex = prevIndex + 1;
-                optionRefs.current[nextIndex]?.focus();
+                selectRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -102,7 +104,7 @@ export const Select = <
           case 'Enter':
             event.preventDefault();
             return setIndexForSelect((index) => {
-              if (index >= 0) optionRefs.current[index]?.click();
+              if (index >= 0) selectRefs.current[index]?.click();
               return index;
             });
           default:
@@ -118,12 +120,12 @@ export const Select = <
     <section
       {...restSectionProps}
       className={cleanClassName(
-        `${styles.options} ${styles[theme]} ${styles[float]} ${
+        `${styles.select} ${isDarkMode && styles.dark} ${styles[float]} ${
           isChangeOpenState && styles[openState]
         } ${className}`,
       )}
     >
-      <ul className={cleanClassName(styles['option-container'])}>
+      <ul className={cleanClassName(styles['select-container'])}>
         {options?.map(({ label, value }, index) => {
           const isHovered = index === indexForSelect;
           const isSelected = (() => {
@@ -136,15 +138,17 @@ export const Select = <
           })();
 
           return (
-            <li key={index} className={styles['option-wrap']}>
+            <li key={index} className={styles['select-wrap']}>
               <button
                 name="select-option-item"
                 type="button"
                 ref={(element) => {
-                  optionRefs.current[index] = element;
+                  selectRefs.current[index] = element;
                 }}
                 className={cleanClassName(
-                  `${styles['option-item']} ${isHovered && styles.hovered}`,
+                  `${styles['select-option-item']} ${
+                    isHovered && styles.hovered
+                  }`,
                 )}
                 onClick={() => {
                   if (multiple) {

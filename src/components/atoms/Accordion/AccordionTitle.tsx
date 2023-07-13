@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ChevronDown } from 'react-feather';
 
-import { AccordionContext } from '@contexts';
+import { AccordionContext } from '@contexts/AccordionContext';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 

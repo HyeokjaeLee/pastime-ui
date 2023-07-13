@@ -1,6 +1,6 @@
 import { useCallback, useState, useContext, useEffect } from 'react';
 
-import { ValidationContext } from '@contexts';
+import { ValidationContext } from '@contexts/ValidationContext';
 
 export type ValidateHandler<TValue> =
   | ((value: TValue) => string | undefined)

@@ -1,6 +1,6 @@
 @use '../../../styles/libs' as libs;
 
-@mixin default-theme($color, $backgroundColor, $boxShadow, $borderColor) {
+@mixin theme($color, $backgroundColor, $boxShadow, $borderColor) {
   border: 1px solid $borderColor;
 
   background-color: $backgroundColor;
@@ -9,25 +9,7 @@
   color: $color;
 }
 
-.light {
-  @include default-theme(
-    libs.$GRAY-700,
-    white,
-    libs.$LIGHT_BOX_SHADOW,
-    libs.$COOL-GRAY-100
-  );
-}
-
-.dark {
-  @include default-theme(
-    libs.$GRAY-50,
-    libs.$GRAY-700,
-    libs.$DARK_BOX_SHADOW,
-    libs.$COOL-GRAY-700
-  );
-}
-
-.options {
+.select {
   position: absolute;
 
   box-sizing: border-box;
@@ -56,6 +38,22 @@
     }
   }
 
+  @include theme(
+    libs.$GRAY-700,
+    white,
+    libs.$LIGHT_BOX_SHADOW,
+    libs.$COOL-GRAY-100
+  );
+
+  &.dark {
+    @include theme(
+      libs.$GRAY-50,
+      libs.$GRAY-700,
+      libs.$DARK_BOX_SHADOW,
+      libs.$COOL-GRAY-700
+    );
+  }
+
   &.bottom {
     top: 100%;
 
@@ -69,7 +67,7 @@
   }
 }
 
-.option-container {
+.select-container {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -85,15 +83,16 @@
   }
 }
 
-.option-wrap {
+.select-wrap {
   scroll-snap-align: start;
 
   width: 100%;
 }
 
-.option-item {
+.select-option-item {
   display: flex;
   gap: 4px;
+  align-items: center;
   justify-content: space-between;
 
   min-width: 100%;

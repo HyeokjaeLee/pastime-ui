@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { XCircle, AlertTriangle, Info, CheckCircle } from 'react-feather';
 
-import type { ToastType } from '@contexts';
+import type { ToastType } from '@contexts/ToastContext';
 import {
   useToastState,
   TOAST_STATE,

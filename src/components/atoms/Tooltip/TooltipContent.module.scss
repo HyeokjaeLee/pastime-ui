@@ -1,0 +1,61 @@
+@use 'src/styles/libs' as libs;
+
+.tooltip-message-container {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: left 0.3s, top 0.3s;
+  @include libs.fade-in(0.1s);
+  &.closing {
+    @include libs.fade-out(0.1s);
+  }
+}
+
+.triangle {
+  position: absolute;
+  z-index: 1;
+
+  width: 0;
+  height: 0;
+  border: transparent;
+  border-width: 0 7.5px;
+  border-style: solid;
+  border-bottom-width: 5px;
+  border-bottom-color: libs.$GRAY-400;
+
+  &.dark {
+    border-bottom-color: libs.$GRAY-800;
+  }
+}
+
+.tooltip-message-wrap {
+  position: absolute;
+  z-index: 2;
+
+  margin-top: 4px;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  background-color: libs.$GRAY-800;
+  background-color: libs.$GRAY-400;
+  box-shadow: libs.$LIGHT_BOX_SHADOW;
+
+  color: white;
+
+  &.dark {
+    background-color: libs.$GRAY-800;
+    box-shadow: libs.$DARK_BOX_SHADOW;
+  }
+}
+
+@layer default {
+  .tooltip-message-wrap {
+    width: fit-content;
+    padding: 8px 10px;
+
+    font-size: small;
+    white-space: pre;
+  }
+}

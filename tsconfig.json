@@ -25,10 +25,9 @@
       "@components/*": ["components/*"],
       "@utils": ["utils"],
       "@hooks": ["hooks"],
-      "@contexts": ["contexts"],
+      "@contexts/*": ["contexts/*"],
       "@constants": ["constants"],
       "@styles": ["styles"],
-      "@functions": ["functions"],
       "@types": ["types"]
     }
   },

@@ -1,6 +1,6 @@
 import { useContext, useRef, useMemo } from 'react';
 
-import { AccordionContext } from '@contexts';
+import { AccordionContext } from '@contexts/AccordionContext';
 import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
