@@ -29,6 +29,7 @@ const meta: Meta<MetaProps> = {
     titleChildren: 'Accordion Title',
   },
   argTypes: {
+    //* Accordion
     size: {
       ...STORY_META.SIZE,
       table: {
@@ -43,6 +44,8 @@ const meta: Meta<MetaProps> = {
         category: CATEGORY.ACCORDION,
       },
     },
+
+    //* Accordion.Title
     titleChildren: {
       description:
         'Child elements of Accordion.Title.\n\nAccordion.Title의 자식 요소',
@@ -54,6 +57,8 @@ const meta: Meta<MetaProps> = {
       },
     },
     style: STORY_META.HIDDEN,
+
+    //* Accordion.Contents
     contentsChildren: {
       description:
         'Child elements of Accordion.Contents.\n\nAccordion.Contents의 자식 요소',
