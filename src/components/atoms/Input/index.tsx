@@ -1,6 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { InputContext } from '@contexts/InputContext';
+import { useInputContext } from '@contexts/InputContext';
 import { useFormatInputValue } from '@hooks';
 import type { InputType } from '@hooks';
 import type { HTMLTagProps } from '@types';
@@ -37,10 +37,10 @@ export const Input = Object.assign(
     onBlur,
     ...restInputProps
   }: InputProps) => {
-    const setReadonly = useContext(InputContext);
+    const { setReadonly } = useInputContext();
     const isReadonly = disabled === 'readonly';
 
-    useEffect(() => setReadonly?.(isReadonly), [isReadonly, setReadonly]);
+    useEffect(() => setReadonly(isReadonly), [isReadonly, setReadonly]);
 
     const {
       formattedValue,
