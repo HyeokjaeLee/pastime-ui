@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import { ChevronDown } from 'react-feather';
 
-import { AccordionContext } from '@contexts/AccordionContext';
+import { useAccordionContext } from '@contexts/AccordionContext';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -14,7 +13,10 @@ export const AccordionTitle = ({
   className,
   ...restDtProps
 }: AccordionTitleProps) => {
-  const { opened, setOpened, size } = useContext(AccordionContext);
+  const {
+    openedState: [opened, setOpened],
+    size,
+  } = useAccordionContext();
   return (
     <dt
       {...restDtProps}

@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
-
-import { AccordionContext } from '@contexts/AccordionContext';
-import type { AccordionContextValue } from '@contexts/AccordionContext';
-import { useDarkMode, useSubscribedState } from '@hooks';
+import { AccordionContextProvider } from '@contexts/AccordionContext';
+import type { AccordionContextProviderProps } from '@contexts/AccordionContext';
+import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -13,12 +11,12 @@ import styles from './index.module.scss';
 export type { AccordionTitleProps } from './AccordionTitle';
 export type { AccordionContentsProps } from './AccordionContents';
 
-export type AccordionProps = HTMLTagProps<'dl'> & AccordionContextValue;
+export type AccordionProps = HTMLTagProps<'dl'> & AccordionContextProviderProps;
 
 export const Accordion = Object.assign(
   ({
     //* Accordion props
-    opened: deliveredOpened = false,
+    opened,
     size = 'medium',
 
     //* HTML dl props
@@ -26,17 +24,6 @@ export const Accordion = Object.assign(
     className,
     ...restDlProps
   }: AccordionProps) => {
-    const [opened, setOpened] = useSubscribedState(deliveredOpened);
-
-    const accordionContextValue = useMemo(
-      () => ({
-        opened,
-        setOpened,
-        size,
-      }),
-      [opened, setOpened, size],
-    );
-
     const { isDarkMode } = useDarkMode();
 
     return (
@@ -48,9 +35,9 @@ export const Accordion = Object.assign(
           } ${className}`,
         )}
       >
-        <AccordionContext.Provider value={accordionContextValue}>
+        <AccordionContextProvider opened={opened} size={size}>
           {children}
-        </AccordionContext.Provider>
+        </AccordionContextProvider>
       </dl>
     );
   },

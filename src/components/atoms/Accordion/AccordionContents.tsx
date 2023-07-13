@@ -1,6 +1,6 @@
-import { useContext, useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 
-import { AccordionContext } from '@contexts/AccordionContext';
+import { useAccordionContext } from '@contexts/AccordionContext';
 import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
@@ -17,7 +17,10 @@ export const AccordionContents = ({
   className,
   ...restDdProps
 }: AccordionContentsProps) => {
-  const { opened, size } = useContext(AccordionContext);
+  const {
+    openedState: [opened],
+    size,
+  } = useAccordionContext();
   const ref = useRef<HTMLElement>(null);
 
   const accordianContentsStyle = useMemo(() => {
