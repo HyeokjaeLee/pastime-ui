@@ -25,8 +25,8 @@ const meta: Meta<MetaProps> = {
   args: {
     size: 'medium',
     style: { width: STORY_STYLES.INPUT_WIDTH },
-    contentsChildren: STORY_DUUMMY.LONG_TEXT,
     titleChildren: 'Accordion Title',
+    contentsChildren: STORY_DUUMMY.LONG_TEXT,
   },
   argTypes: {
     //* Accordion
@@ -47,8 +47,7 @@ const meta: Meta<MetaProps> = {
 
     //* Accordion.Title
     titleChildren: {
-      description:
-        'Child elements of Accordion.Title.\n\nAccordion.Title의 자식 요소',
+      description: 'The content that is always displayed.\n\n항상 보이는 내용',
       type: 'string',
       name: 'children',
       table: {
@@ -61,7 +60,7 @@ const meta: Meta<MetaProps> = {
     //* Accordion.Contents
     contentsChildren: {
       description:
-        'Child elements of Accordion.Contents.\n\nAccordion.Contents의 자식 요소',
+        'The content displayed when the Accordion is expanded.\n\nAccordion이 펼쳐졌을 때 보이는 내용',
       type: 'string',
       name: 'children',
       table: {
