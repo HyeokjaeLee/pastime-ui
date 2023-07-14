@@ -14,12 +14,15 @@
 @include title.sizeClasses;
 
 .divider {
+  height: 1px;
   margin: 0;
   padding: 0;
-  border: 0.5px solid libs.$COOL-GRAY-300;
+  border: none;
+
+  background-color: libs.$COOL-GRAY-300;
 
   &.dark {
-    border: 0.5px solid libs.$COOL-GRAY-500;
+    background-color: libs.$COOL-GRAY-500;
   }
 
   &.opened {
