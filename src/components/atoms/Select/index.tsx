@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Check } from 'react-feather';
 
-import { useDarkMode } from '@hooks';
+import { useDarkMode, useIndexForSelect, useSelectOpenStatus } from '@hooks';
+import type { ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
-
-export type ValidOptionValue = string | number;
 
 export type SelectProps<
   OptionValue extends ValidOptionValue = ValidOptionValue,
@@ -44,84 +43,25 @@ export const Select = <
   className,
   ...restSectionProps
 }: SelectProps<OptionValue, Multiple>) => {
-  const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
-    opened,
-  );
-
-  useEffect(() => {
-    setOpenState((prevOpenState) => {
-      if (prevOpenState !== opened) return opened ? 'opening' : 'closing';
-      return prevOpenState;
-    });
-  }, [opened]);
+  const openStatus = useSelectOpenStatus(opened);
 
   const { isDarkMode } = useDarkMode();
 
-  const isChangeOpenState = typeof openState === 'string';
-  const [indexForSelect, setIndexForSelect] = useState(-1);
-
-  useEffect(() => {
-    if (isChangeOpenState) {
-      const nextOpenState = openState === 'opening';
-
-      setIndexForSelect(
-        options?.findIndex(({ value }) => value === selectedValue) ?? -1,
-      );
-
-      const timeout = setTimeout(() => setOpenState(nextOpenState), 250);
-      return () => clearTimeout(timeout);
-    }
-  }, [isChangeOpenState, openState, options, selectedValue]);
-
   const selectRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  useEffect(() => {
-    if (openState === true && options) {
-      const keyboardEvent = (event: KeyboardEvent) => {
-        onKeyDown?.(event);
-        switch (event.key) {
-          case 'ArrowUp':
-            event.preventDefault();
-            return setIndexForSelect((prevIndex) => {
-              if (prevIndex > 0) {
-                const nextIndex = prevIndex - 1;
-                selectRefs.current[nextIndex]?.focus();
-                return nextIndex;
-              }
-              return prevIndex;
-            });
+  const [indexForSelect, setIndexForSelect] = useIndexForSelect({
+    openStatus,
+    options,
+    selectRefs,
+    onKeyDown,
+  });
 
-          case 'ArrowDown':
-            event.preventDefault();
-            return setIndexForSelect((prevIndex) => {
-              if (prevIndex < options.length - 1) {
-                const nextIndex = prevIndex + 1;
-                selectRefs.current[nextIndex]?.focus();
-                return nextIndex;
-              }
-              return prevIndex;
-            });
-          case 'Enter':
-            event.preventDefault();
-            return setIndexForSelect((index) => {
-              if (index >= 0) selectRefs.current[index]?.click();
-              return index;
-            });
-          default:
-        }
-      };
-
-      document.addEventListener('keydown', keyboardEvent);
-      return () => document.removeEventListener('keydown', keyboardEvent);
-    }
-  }, [openState, options, onKeyDown]);
-
-  return openState && options?.length ? (
+  return openStatus && options?.length ? (
     <section
       {...restSectionProps}
       className={cleanClassName(
         `${styles.select} ${isDarkMode && styles.dark} ${styles[float]} ${
-          isChangeOpenState && styles[openState]
+          typeof openStatus === 'string' && styles[openStatus]
         } ${className}`,
       )}
     >
