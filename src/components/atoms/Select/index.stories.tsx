@@ -3,10 +3,9 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_DUUMMY, STORY_META } from '@constants';
+import type { ValidOptionValue } from '@hooks';
 
 import { Select } from '.';
-
-import type { ValidOptionValue } from '..';
 
 const meta: Meta<typeof Select> = {
   title: 'atoms/Select',
@@ -15,14 +14,17 @@ const meta: Meta<typeof Select> = {
   argTypes: {
     opened: {
       control: 'boolean',
+      description: "Whether it's open or not.\n\n열려있는지 여부",
     },
     float: STORY_META.OPTIONS_FLOAT,
     options: {
       control: 'object',
+      description: 'The options to provide.\n\n제공할 옵션',
     },
     multiple: {
       control: 'boolean',
-      description: '다중 선택 가능 여부',
+      description:
+        'Whether multiple selection is possible or not.\n\n다중 선택이 가능한지 여부',
       table: {
         defaultValue: { summary: false },
       },
@@ -31,7 +33,11 @@ const meta: Meta<typeof Select> = {
     onKeyDown: STORY_META.HIDDEN,
     cancelable: {
       control: 'boolean',
-      description: '이미 선택된 옵션을 다시 선택하여 취소 가능 여부',
+      description:
+        'Whether it is possible to cancel by re-selecting the already selected option.\n\n이미 선택된 옵션을 다시 선택하여 취소할 수 있는지 여부',
+    },
+    value: {
+      description: 'The value of the selected option.\n\n선택된 옵션의 값',
     },
   },
 
