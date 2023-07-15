@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+
 import { useTooltipContext } from '@contexts/TooltipContext';
 import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
@@ -26,36 +28,41 @@ export const TooltipContent = ({
 
   const darkModeClassName = isDarkMode && styles.dark;
 
-  return display ? (
-    <div
-      {...restDivProps}
-      onMouseEnter={(e) => {
-        mouseEventHandler.handleMouseEnter(e);
-        onMouseEnter?.(e);
-      }}
-      onMouseLeave={(e) => {
-        mouseEventHandler.handleMouseLeave(e);
-        onMouseLeave?.(e);
-      }}
-      className={`${styles['tooltip-message-container']} ${
-        display === 'closing' && styles.closing
-      }`}
-      style={{
-        ...style,
-        left: location.left,
-        top: location.top,
-      }}
-    >
-      <div
-        className={cleanClassName(`${styles.triangle} ${darkModeClassName}`)}
-      />
-      <div
-        className={cleanClassName(
-          `${styles['tooltip-message-wrap']} ${darkModeClassName} ${className}`,
-        )}
-      >
-        {children}
-      </div>
-    </div>
-  ) : null;
+  return display
+    ? createPortal(
+        <div
+          {...restDivProps}
+          onMouseEnter={(e) => {
+            mouseEventHandler.handleMouseEnter(e);
+            onMouseEnter?.(e);
+          }}
+          onMouseLeave={(e) => {
+            mouseEventHandler.handleMouseLeave(e);
+            onMouseLeave?.(e);
+          }}
+          className={`${styles['tooltip-message-container']} ${
+            display === 'closing' && styles.closing
+          }`}
+          style={{
+            ...style,
+            left: location.left,
+            top: location.top,
+          }}
+        >
+          <div
+            className={cleanClassName(
+              `${styles.triangle} ${darkModeClassName}`,
+            )}
+          />
+          <div
+            className={cleanClassName(
+              `${styles['tooltip-message-wrap']} ${darkModeClassName} ${className}`,
+            )}
+          >
+            {children}
+          </div>
+        </div>,
+        document.body,
+      )
+    : null;
 };

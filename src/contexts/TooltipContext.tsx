@@ -5,10 +5,13 @@ import {
   useContext,
   useMemo,
   useReducer,
+  useRef,
   useState,
 } from 'react';
 
 import { useMountedEffect } from '@hooks';
+
+import type { DebouncedFunc } from 'lodash-es';
 
 interface Location {
   top: number;
@@ -23,7 +26,7 @@ interface TooltipContextValue {
   display: TooltipDisplay;
   locationState: [
     Location,
-    React.Dispatch<React.MouseEvent<HTMLDivElement, MouseEvent>>,
+    DebouncedFunc<React.Dispatch<React.MouseEvent<HTMLDivElement, MouseEvent>>>,
   ];
 
   mouseEventHandler: {
@@ -41,13 +44,10 @@ type LocationReducer = (
   event: React.MouseEvent<HTMLDivElement, MouseEvent>,
 ) => Location;
 
-const locationReducer: LocationReducer = throttle(
-  ((_, event) => ({
-    left: event.clientX,
-    top: event.clientY + 10,
-  })) satisfies LocationReducer,
-  100,
-);
+const locationReducer: LocationReducer = (_, event) => ({
+  left: event.clientX,
+  top: event.clientY + 10,
+});
 
 export interface TooltipContextProviderProps {
   children?: React.ReactNode;
@@ -60,7 +60,14 @@ export const TooltipContextProvider = ({
 }: TooltipContextProviderProps) => {
   const [hovered, setHovered] = useState(false);
   const [display, setDisplay] = useState<TooltipDisplay>(false);
-  const locationState = useReducer(locationReducer, { left: 0, top: 0 });
+  const [location, dispatchLocation] = useReducer(locationReducer, {
+    left: 0,
+    top: 0,
+  });
+
+  const { current: throttledDispatchLocation } = useRef(
+    throttle(dispatchLocation, 100),
+  );
 
   useMountedEffect(() => {
     if (display === 'closing') {
@@ -77,16 +84,16 @@ export const TooltipContextProvider = ({
     setDisplay((prev) => (prev === true ? 'closing' : prev));
   }, [hovered]);
 
-  const tooltipContextValue = useMemo(
+  const tooltipContextValue: TooltipContextValue = useMemo(
     () => ({
       display,
-      locationState,
+      locationState: [location, throttledDispatchLocation],
       mouseEventHandler: {
         handleMouseEnter: () => setHovered(true),
         handleMouseLeave: () => setHovered(false),
       },
     }),
-    [display, locationState],
+    [display, location, throttledDispatchLocation],
   );
 
   return (
