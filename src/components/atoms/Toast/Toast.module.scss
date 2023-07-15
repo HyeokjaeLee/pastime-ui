@@ -9,7 +9,7 @@
   border-radius: libs.$BORDER-RADIUS-MD;
 
   background-color: white;
-  box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.1);
+  box-shadow: libs.$BOX_SHADOW;
 
   color: libs.$GRAY-700;
   font-weight: normal;
@@ -18,7 +18,7 @@
   transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
     margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
   &:hover {
-    box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.25);
+    box-shadow: libs.$HOVERED_BOX_SHADOW;
 
     cursor: grabbing;
   }
