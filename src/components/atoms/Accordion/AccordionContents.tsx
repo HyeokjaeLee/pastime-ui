@@ -48,7 +48,7 @@ export const AccordionContents = ({
       style={accordianContentsStyle}
     >
       <hr
-        className={`${styles.divider} ${
+        className={`${styles.divider} ${isDarkMode && styles.dark} ${
           opened ? styles.opened : styles.closed
         }`}
       />

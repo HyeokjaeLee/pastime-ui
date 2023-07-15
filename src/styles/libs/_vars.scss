@@ -8,6 +8,5 @@ $BORDER-RADIUS-SM: 2px;
 $BORDER-RADIUS-MD: 6px;
 $BORDER-RADIUS-LG: 12px;
 
-$BOX_SHADOW: 0 5px 10px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-$HOVERED_BOX_SHADOW: 0 5px 10px rgba(0, 0, 0, 0.24),
-  0 1px 2px rgba(0, 0, 0, 0.48);
+$BOX_SHADOW: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$HOVERED_BOX_SHADOW: rgba(0, 0, 0, 0.24) 0px 3px 8px;
