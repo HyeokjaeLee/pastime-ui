@@ -1,0 +1,20 @@
+@use 'src/styles/libs' as libs;
+
+.accordian-container {
+  overflow: hidden;
+
+  border: 1px solid libs.$COOL-GRAY-300;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  background-color: white;
+
+  color: libs.$GRAY-700;
+}
+
+.dark {
+  border: 1px solid libs.$COOL-GRAY-500;
+
+  background-color: libs.$GRAY-700;
+
+  color: libs.$GRAY-50;
+}

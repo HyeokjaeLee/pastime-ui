@@ -1,7 +1,8 @@
-import React from 'react';
 import { Percent } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { STORY_META, STORY_STYLES } from '@constants';
 
 import { Textbox } from '..';
 
@@ -11,6 +12,9 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'placeholder',
     value: '',
+    style: {
+      width: STORY_STYLES.INPUT_WIDTH,
+    },
   },
   argTypes: {
     value: {
@@ -19,6 +23,10 @@ const meta: Meta<typeof Textbox> = {
     unit: {
       control: 'text',
     },
+    ref: STORY_META.HIDDEN,
+    onChange: STORY_META.HIDDEN,
+    size: STORY_META.SIZE,
+    validation: STORY_META.VALIDATION,
   },
   decorators: [
     (Story) => (
@@ -35,7 +43,7 @@ type Story = StoryObj<typeof Textbox>;
 
 export const Default: Story = {};
 
-export const Unit: Story = {
+export const WithUnit: Story = {
   args: {
     unit: '원',
     type: 'large-number',
@@ -49,13 +57,9 @@ export const Unit: Story = {
   ),
 };
 
-export const Validation: Story = {
+export const WithValidation: Story = {
   args: {
-    validation: (value) => {
-      if (value === '') return '값을 입력해주세요';
-
-      if (Number(value) < 1000) return '1,000원 이상 입력해주세요';
-    },
+    validation: (value) => String(value),
     unit: '원',
     type: 'large-number',
   },

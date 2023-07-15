@@ -1,64 +1,56 @@
-import type { ReactNode } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useDarkMode, useButtonDelay } from '@hooks';
+import type { HTMLTagProps } from '@types';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
 
-type HtmlButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
+type Theme =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'clear'
+  | 'ghost';
 
-export interface ButtonProps extends HtmlButtonProps {
+export interface ButtonProps extends HTMLTagProps<'button'> {
   delay?: number;
   size?: 'small' | 'medium' | 'large';
-  theme?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'text-dark'
-    | 'text-light';
-  icon?: ReactNode;
+  theme?: Theme;
+  icon?: React.ReactNode;
   iconDirection?: 'left' | 'right';
-  shape?: 'round' | 'default';
+  shape?: 'sharp-corner' | 'rounded' | 'pill';
 }
 
 export const Button = ({
+  //* Button props
   delay,
-  type = 'button',
-  children,
   size = 'medium',
   theme = 'primary',
-  disabled,
-  shape = 'default',
+  shape = 'rounded',
   iconDirection = 'left',
   icon,
+
+  //* HTML button props
+  type = 'button',
+  children,
+  disabled,
   className,
   ...restButtonProps
 }: ButtonProps) => {
-  const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
-    'after',
-  );
+  const { isDelayButton, isDelaying } = useButtonDelay({
+    delay,
+    disabled,
+  });
 
-  const childrenType = useMemo(() => {
+  const childrenType = (() => {
     if (icon && children) return 'both';
-
     return icon ? 'icon' : 'text';
-  }, [icon, children]);
+  })();
 
-  useEffect(() => {
-    if (!disabled && delay) {
-      setDelayState('before');
-      setTimeout(() => setDelayState('delaying'));
-      setTimeout(() => setDelayState('after'), delay);
-    }
-  }, [delay, disabled]);
-
-  const isDelaying = delayState === 'delaying';
-  const isDelayButton = delayState === 'before' || isDelaying;
   const isDisabled = disabled || isDelayButton;
+
+  const { isDarkMode } = useDarkMode();
 
   return (
     <button
@@ -69,8 +61,8 @@ export const Button = ({
           styles[`shape-${shape}`]
         } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
-        } ${styles[`children-type-${childrenType}`]} ${
-          styles[theme]
+        } ${styles[`children-type-${childrenType}`]} ${styles[theme]} ${
+          isDarkMode && theme === 'clear' && styles.dark
         } ${className}`,
       )}
       disabled={isDisabled}

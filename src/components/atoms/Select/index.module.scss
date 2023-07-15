@@ -1,0 +1,113 @@
+@use 'src/styles/libs' as libs;
+
+@mixin theme($color, $backgroundColor, $borderColor) {
+  border: 1px solid $borderColor;
+
+  background-color: $backgroundColor;
+
+  color: $color;
+}
+
+.select {
+  position: absolute;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  box-shadow: libs.$BOX_SHADOW;
+
+  font-size: inherit;
+
+  &.closing,
+  &.opening {
+    cursor: default;
+  }
+
+  &.top {
+    bottom: 100%;
+
+    margin-bottom: 0.5rem;
+  }
+
+  &.bottom {
+    top: 100%;
+
+    margin-top: 0.5rem;
+  }
+
+  &.opening {
+    @include libs.fade-in(0.2s);
+  }
+  &.closing {
+    @include libs.fade-out(0.2s);
+  }
+
+  @include theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
+
+  &.dark {
+    @include theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-700);
+  }
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  max-height: 300px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.select-wrap {
+  scroll-snap-align: start;
+
+  width: 100%;
+}
+
+.select-option-item {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+
+  min-width: 100%;
+  max-width: 100%;
+  padding: 0.7em 0.8em;
+  border: 0;
+  border-radius: libs.$BORDER-RADIUS-SM;
+
+  background-color: transparent;
+  outline: none;
+
+  color: inherit;
+  font-weight: 300;
+  font-size: 0.8em;
+  text-align: start;
+  white-space: pre-wrap;
+
+  cursor: pointer;
+
+  &.hovered {
+    background-color: libs.$INDIGO-600;
+
+    color: white;
+  }
+}
+
+.icon-wrap {
+  margin-top: 0.2em;
+
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+  }
+}

@@ -1,4 +1,4 @@
-@import './palette';
+@use 'vars' as vars;
 
 @mixin border($color, $lineWidth) {
   box-shadow: inset 0 0 0 $lineWidth $color;
@@ -8,31 +8,31 @@
   font-size: inherit;
 
   &.font-size-large4x {
-    font-size: $LARGE4X;
+    font-size: vars.$LARGE4X;
   }
   &.font-size-large3x {
-    font-size: $LARGE3X;
+    font-size: vars.$LARGE3X;
   }
   &.font-size-large2x {
-    font-size: $LARGE2X;
+    font-size: vars.$LARGE2X;
   }
   &.font-size-large {
-    font-size: $LARGE;
+    font-size: vars.$LARGE;
   }
   &.font-size-medium {
-    font-size: $MEDIUM;
+    font-size: vars.$MEDIUM;
   }
   &.font-size-normal {
-    font-size: $NORMAL;
+    font-size: vars.$NORMAL;
   }
   &.font-size-small {
-    font-size: $SMALL;
+    font-size: vars.$SMALL;
   }
   &.font-size-small2x {
-    font-size: $SMALL2X;
+    font-size: vars.$SMALL2X;
   }
   &.font-size-small3x {
-    font-size: $SMALL3X;
+    font-size: vars.$SMALL3X;
   }
 }
 

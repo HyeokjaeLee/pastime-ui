@@ -1,0 +1,104 @@
+@use 'src/styles/libs' as libs;
+
+@mixin default-theme($color, $backgroundColor, $borderColor) {
+  color: $color;
+  @include libs.border($borderColor, 1px);
+
+  &:not(&:has(:disabled)) {
+    background-color: $backgroundColor;
+  }
+
+  &:has(:disabled).readonly {
+    color: $color;
+  }
+}
+
+@mixin disabled-theme($color, $backgroundColor) {
+  &:has(:disabled) {
+    background-color: $backgroundColor;
+
+    color: $color;
+  }
+}
+
+@mixin focus-border($borderColor) {
+  &:not(&:has(:disabled)):has(:focus) {
+    @include libs.border($borderColor, 2px);
+  }
+}
+
+@mixin hover-border($borderColor) {
+  &:not(&:has(:disabled)):hover {
+    @include libs.border($borderColor, 1px);
+  }
+}
+
+@mixin size($paddingX, $height) {
+  height: $height;
+  padding: 0 $paddingX;
+}
+
+.input-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
+
+  @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-200);
+  @include disabled-theme(libs.$GRAY-300, libs.$GRAY-50);
+  @include hover-border(libs.$COOL-GRAY-300);
+  @include focus-border(libs.$COOL-GRAY-400);
+
+  &.dark {
+    @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);
+    @include disabled-theme(libs.$GRAY-500, libs.$GRAY-600);
+    @include hover-border(libs.$COOL-GRAY-500);
+    @include focus-border(libs.$COOL-GRAY-400);
+  }
+
+  //*Size
+  &.size-small {
+    @include size(14px, 32px);
+  }
+  &.size-medium {
+    @include size(16px, 40px);
+  }
+  &.size-large {
+    @include size(18px, 48px);
+  }
+
+  &.error {
+    @include libs.border(libs.$ROSE-500, 2.2px);
+  }
+}
+
+.validation-message {
+  @include libs.shake-horizontal(0.9s);
+  z-index: 0;
+
+  margin: 0;
+  padding: 0;
+  padding-left: 0.4em;
+
+  color: libs.$ROSE-500;
+  font-size: small;
+}
+
+.validation-message-wrap {
+  height: 0;
+  padding-top: 0;
+
+  transition: height 0.3s, padding-top 0.3s;
+
+  &.show {
+    padding-top: 6px;
+  }
+}

@@ -1,0 +1,8 @@
+@use 'src/styles/libs' as libs;
+
+.search-icon {
+  width: 1.2em;
+
+  color: rgba(libs.$GRAY-400, 0.5);
+  stroke-width: 2.5;
+}

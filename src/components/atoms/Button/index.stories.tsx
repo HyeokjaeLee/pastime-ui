@@ -1,11 +1,14 @@
 import { omit } from 'lodash-es';
 
-import React from 'react';
 import { Trash2 } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from './index';
+import { STORY_META } from '@constants';
+
+import { Button } from '.';
+
+import type { ButtonProps } from '.';
 
 const meta: Meta<typeof Button> = {
   title: 'atoms/Button',
@@ -18,13 +21,47 @@ const meta: Meta<typeof Button> = {
     ),
   ],
   argTypes: {
-    disabled: {
-      control: 'boolean',
+    delay: {
+      control: 'number',
+      description: `The time (in milliseconds) to disable the button after rendering.\n\n렌더링 후 버튼을 비활성화하는 시간(ms)`,
     },
+
     children: {
+      description: 'The content of the button.\n\n버튼의 내용',
       control: 'text',
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
+
+    size: STORY_META.SIZE,
+
+    theme: {
+      description: 'The theme of the button.\n\n버튼의 테마',
+    },
+
+    shape: {
+      description: 'The shape of the button.\n\n버튼의 모양',
+    },
+
+    icon: {
+      description: 'The icon of the button.\n\n버튼의 아이콘',
+    },
+
+    iconDirection: {
+      description: 'The display position of the icon.\n\n아이콘 표시 위치',
+    },
+
+    disabled: {
+      description: 'The disabled state of the button.\n\n버튼의 비활성화 상태',
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
     },
   },
+
   args: {
     children: 'Button',
   },
@@ -39,13 +76,21 @@ export const Default: Story = {};
 export const Theme: Story = {
   render: (args) => (
     <>
-      <Button {...args} theme="primary" />
-      <Button {...args} theme="secondary" />
-      <Button {...args} theme="success" />
-      <Button {...args} theme="warning" />
-      <Button {...args} theme="danger" />
-      <Button {...args} theme="text-dark" />
-      <Button {...args} theme="text-light" />
+      {(
+        [
+          'primary',
+          'secondary',
+          'success',
+          'warning',
+          'danger',
+          'ghost',
+          'clear',
+        ] satisfies ButtonProps['theme'][]
+      ).map((theme) => (
+        <Button {...args} theme={theme} key={theme}>
+          {theme} button
+        </Button>
+      ))}
     </>
   ),
 };
@@ -53,9 +98,13 @@ export const Theme: Story = {
 export const Size: Story = {
   render: (args) => (
     <>
-      <Button {...args} size="small" />
-      <Button {...args} size="medium" />
-      <Button {...args} size="large" />
+      {(['small', 'medium', 'large'] satisfies ButtonProps['size'][]).map(
+        (size) => (
+          <Button {...args} size={size} key={size}>
+            {size} button
+          </Button>
+        ),
+      )}
     </>
   ),
 };
@@ -63,8 +112,13 @@ export const Size: Story = {
 export const Shape: Story = {
   render: (args) => (
     <>
-      <Button {...args} shape="default" />
-      <Button {...args} shape="round" />
+      {(
+        ['pill', 'rounded', 'sharp-corner'] satisfies ButtonProps['shape'][]
+      ).map((shape) => (
+        <Button {...args} shape={shape} key={shape}>
+          {shape} button
+        </Button>
+      ))}
     </>
   ),
 };
@@ -89,8 +143,8 @@ export const Delay: Story = {
   render: (args) => (
     <>
       <Button {...args} />
-      <Button {...args} theme="text-light" />
-      <Button {...args} theme="text-dark" />
+      <Button {...args} theme="ghost" />
+      <Button {...args} theme="clear" />
     </>
   ),
 };

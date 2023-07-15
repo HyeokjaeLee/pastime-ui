@@ -1,0 +1,23 @@
+@import '../../../styles/libs';
+
+.pagination {
+  display: flex;
+  overflow: hidden;
+
+  width: fit-content;
+  padding: 0;
+  border: 1px solid rgba($GRAY-400, 0.4);
+  border-radius: $BORDER-RADIUS-MD;
+
+  list-style: none;
+
+  font-weight: 600;
+}
+
+.pagination-item-border {
+  border-right: 1px solid rgba($GRAY-400, 0.1);
+}
+
+.hidden {
+  visibility: hidden;
+}

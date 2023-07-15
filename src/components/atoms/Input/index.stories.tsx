@@ -1,15 +1,14 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Input } from '..';
-import { useSubscribedState } from '../../../hooks';
+import { STORY_META, STORY_STYLES } from '@constants';
+import { useSubscribedState } from '@hooks';
 
-import type { InputProps, InputContainerProps, InputWrapProps } from '.';
+import { Input } from '.';
+
+import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'size' | 'theme'> &
-  Pick<InputContainerProps, 'validationMessage'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size'>;
 
 const GROUPS = {
   INPUT: {
@@ -17,21 +16,10 @@ const GROUPS = {
       category: 'Input',
     },
   },
-  CONTAINER: {
-    table: {
-      category: 'Input.Container',
-    },
-  },
   WRAP: {
     table: {
       category: 'Input.Wrap',
     },
-  },
-};
-
-const HIDDEN = {
-  table: {
-    disable: true,
   },
 };
 
@@ -44,28 +32,19 @@ export default {
   },
   argTypes: {
     //* Input.Container
-    ref: HIDDEN,
-    onChange: HIDDEN,
+    ref: STORY_META.HIDDEN,
+    onChange: STORY_META.HIDDEN,
     validationMessage: {
-      ...GROUPS.CONTAINER,
+      ...GROUPS.WRAP,
     },
 
     //* Input.Wrap
     size: {
-      ...GROUPS.WRAP,
-      control: {
-        type: 'radio',
+      ...STORY_META.SIZE,
+      table: {
+        ...STORY_META.SIZE.table,
+        ...GROUPS.WRAP.table,
       },
-      options: ['small', 'medium', 'large'],
-      defaultValue: 'medium',
-    },
-    theme: {
-      ...GROUPS.WRAP,
-      control: {
-        type: 'radio',
-      },
-      options: ['light', 'dark'],
-      defaultValue: 'light',
     },
 
     //* Input
@@ -100,7 +79,7 @@ export const Default: Story = {
     validationMessage,
     //* Input.Wrap
     size,
-    theme,
+
     //* Input
     value,
     onChange,
@@ -109,18 +88,22 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Container validationMessage={validationMessage}>
-        <Input.Wrap size={size} theme={theme}>
-          <Input
-            {...args}
-            value={inputValue}
-            onChange={(value) => {
-              setInputValue(value);
-              onChange?.(value);
-            }}
-          />
-        </Input.Wrap>
-      </Input.Container>
+      <Input.Wrap
+        validationMessage={validationMessage}
+        size={size}
+        style={{
+          width: STORY_STYLES.INPUT_WIDTH,
+        }}
+      >
+        <Input
+          {...args}
+          value={inputValue}
+          onChange={(value) => {
+            setInputValue(value);
+            onChange?.(value);
+          }}
+        />
+      </Input.Wrap>
     );
   },
 };

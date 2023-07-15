@@ -1,0 +1,112 @@
+@use 'src/styles/libs' as libs;
+
+.toast {
+  display: flex;
+  overflow: hidden;
+
+  width: fit-content;
+  height: 0;
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  background-color: white;
+  box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.1);
+
+  color: libs.$GRAY-700;
+  font-weight: normal;
+  font-size: libs.$FONT-SIZE-SM;
+
+  transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
+    margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
+  &:hover {
+    box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.25);
+
+    cursor: grabbing;
+  }
+
+  &.has-space {
+    margin: 5px 10px;
+  }
+
+  &.dark {
+    background-color: libs.$GRAY-700;
+    box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.4);
+
+    color: libs.$GRAY-50;
+    &:hover {
+      box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.8);
+    }
+  }
+
+  //* toast status
+  &.opening,
+  &.closed {
+    visibility: hidden;
+  }
+
+  &.deleted {
+    height: 0;
+    margin: 0;
+
+    visibility: hidden;
+  }
+
+  &.float-direction-from-top {
+    &.holding,
+    &.opened {
+      @include libs.fade-in-top(0.4s);
+    }
+    &.closing {
+      @include libs.fade-out-top(0.4s);
+    }
+  }
+
+  &.float-direction-from-bottom {
+    &.holding,
+    &.opened {
+      @include libs.fade-in-bottom(0.4s);
+    }
+    &.closing {
+      @include libs.fade-out-bottom(0.4s);
+    }
+  }
+}
+
+.toast-contents-wrap {
+  box-sizing: content-box;
+  height: fit-content;
+  padding: 0.8em 1em;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 1.3em;
+  padding: 0 0.6em;
+
+  background-color: libs.$GRAY-200;
+
+  color: white;
+
+  &.success {
+    background-color: libs.$GREEN-400;
+  }
+
+  &.fail {
+    background-color: libs.$RED-500;
+  }
+
+  &.warning {
+    background-color: libs.$AMBER-500;
+  }
+
+  &.info {
+    background-color: libs.$BLUE-400;
+  }
+
+  > svg {
+    width: 1.2em;
+    height: 1.2em;
+  }
+}

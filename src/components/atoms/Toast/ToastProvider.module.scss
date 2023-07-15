@@ -1,0 +1,33 @@
+.toast-container-wrap {
+  position: fixed;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+
+  width: 100vw;
+  height: 0;
+
+  &.float-direction-from-top {
+    top: 0;
+    flex-direction: column;
+
+    margin-top: 10px;
+  }
+
+  &.float-direction-from-bottom {
+    bottom: 0;
+    flex-direction: column-reverse;
+
+    margin-bottom: 10px;
+  }
+}
+
+.toast-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: fit-content;
+  height: fit-content;
+}
