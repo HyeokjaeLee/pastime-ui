@@ -1,19 +1,20 @@
 import { useMemo, useRef, useState } from 'react';
 import { Search } from 'react-feather';
 
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import type { ValidateHandler } from '@hooks';
+
 import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
 import { Select, Input } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
 import type { InputProps, InputWrapProps, SelectProps } from '../../atoms';
 
 export interface SearchboxProps
   extends Omit<InputProps, 'size' | 'value' | 'onChange' | 'type' | 'onSelect'>,
-    Pick<InputWrapProps, 'size' | 'theme'>,
+    Pick<InputWrapProps, 'size'>,
     Pick<SelectProps<string, false>, 'float'> {
   filterByKeyword?: boolean;
-  validation?: Validation<SearchboxProps['value']>;
+  validation?: ValidateHandler<SearchboxProps['value']>;
   options?: string[];
   value?: string;
   onChange?: (value: string) => void;
@@ -41,7 +42,6 @@ export const Searchbox = ({
 
   //* Input.Wrap props
   size,
-  theme,
 
   //* Select props
   float,
@@ -81,58 +81,56 @@ export const Searchbox = ({
     });
   }
 
-  const { validationMessage, checkValidation } = useValidation(
-    inputValue,
-    validation,
-    id || name,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    id,
+    value: inputValue,
+    validateHandler: validation,
+  });
 
   const handleChange: typeof onChange = (value) => {
-    setInputValue?.(value);
+    setInputValue(value);
     onChange?.(value);
-    checkValidation?.(value);
+    validateValue(value);
   };
 
   const tempSearchboxFocusEvent = useRef<SearchboxFocusEvent>();
   let isRefocus = false;
 
   return (
-    <Input.Container
+    <Input.Wrap
+      size={size}
       validationMessage={validationMessage}
       className={className}
       style={style}
     >
-      <Input.Wrap size={size} theme={theme}>
-        <Input
-          {...restInputProps}
-          id={id}
-          name={name}
-          onChange={(value) => {
-            setOpened(true);
-            handleChange(value);
-          }}
-          onFocus={(e) => {
-            if (isRefocus) isRefocus = false;
-            else onFocus?.(e);
-          }}
-          onClick={(e) => {
-            setOpened(true);
-            onClick?.(e);
-          }}
-          onBlur={(e: SearchboxFocusEvent) => {
-            if (e.relatedTarget?.name === 'select-option-item')
-              tempSearchboxFocusEvent.current = e;
-            else {
-              setOpened(false);
-              onBlur?.(e);
-            }
-          }}
-          value={inputValue}
-        />
-        <Search className={styles['search-icon']} />
-      </Input.Wrap>
+      <Input
+        {...restInputProps}
+        id={id}
+        name={name}
+        onChange={(value) => {
+          setOpened(true);
+          handleChange(value);
+        }}
+        onFocus={(e) => {
+          if (isRefocus) isRefocus = false;
+          else onFocus?.(e);
+        }}
+        onClick={(e) => {
+          setOpened(true);
+          onClick?.(e);
+        }}
+        onBlur={(e: SearchboxFocusEvent) => {
+          if (e.relatedTarget?.name === 'select-option-item')
+            tempSearchboxFocusEvent.current = e;
+          else {
+            setOpened(false);
+            onBlur?.(e);
+          }
+        }}
+        value={inputValue}
+      />
+      <Search className={styles['search-icon']} />
       <Select
-        theme={theme}
         opened={opened}
         options={filteredSelect}
         value={inputValue}
@@ -146,6 +144,6 @@ export const Searchbox = ({
         }}
         float={float}
       />
-    </Input.Container>
+    </Input.Wrap>
   );
 };

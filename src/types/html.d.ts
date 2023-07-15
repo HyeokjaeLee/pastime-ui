@@ -4,6 +4,7 @@ type HTMLTags =
   | 'dd'
   | 'dl'
   | 'ul'
+  | 'li'
   | 'button'
   | 'div'
   | 'input';
@@ -22,6 +23,11 @@ export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
   ? React.DetailedHTMLProps<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       HTMLButtonElement
+    >
+  : T extends 'li'
+  ? React.DetailedHTMLProps<
+      React.InputHTMLAttributes<HTMLLIElement>,
+      HTMLLIElement
     >
   : T extends 'div'
   ? React.DetailedHTMLProps<

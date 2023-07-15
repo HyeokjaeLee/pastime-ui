@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .unit {
   position: absolute;
@@ -9,27 +9,25 @@
   box-sizing: border-box;
   height: 100%;
   padding: 0 1em;
-  border-top-right-radius: $BORDER-RADIUS-MD;
-  border-bottom-right-radius: $BORDER-RADIUS-MD;
+  border-top-right-radius: libs.$BORDER-RADIUS-MD;
+  border-bottom-right-radius: libs.$BORDER-RADIUS-MD;
 
-  color: $GRAY-400;
+  background: linear-gradient(
+    to right,
+    rgba(libs.$GRAY-300, 0.01) 5%,
+    rgba(libs.$GRAY-300, 0.2) 60%
+  );
+
+  &.dark {
+    background: linear-gradient(
+      to right,
+      rgba(libs.$GRAY-100, 0.01) 5%,
+      rgba(libs.$GRAY-100, 0.2) 60%
+    );
+  }
+
+  color: libs.$GRAY-400;
   font-weight: 700;
   font-size: 0.7em;
   white-space: nowrap;
-}
-
-.light {
-  background: linear-gradient(
-    to right,
-    rgba($GRAY-300, 0.01) 5%,
-    rgba($GRAY-300, 0.2) 60%
-  );
-}
-
-.dark {
-  background: linear-gradient(
-    to right,
-    rgba($GRAY-100, 0.01) 5%,
-    rgba($GRAY-100, 0.2) 60%
-  );
 }

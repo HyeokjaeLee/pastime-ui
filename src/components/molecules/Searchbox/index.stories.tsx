@@ -1,16 +1,8 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { STORY_META, STORY_STYLES } from '@constants';
+
 import { Searchbox } from '.';
-import {
-  HIDDEN,
-  THEME,
-  SIZE,
-  OPTIONS_FLOAT,
-  VALIDATION,
-  INPUT_WIDTH,
-} from '../../../constants';
 
 const meta: Meta<typeof Searchbox> = {
   title: 'molecules/Searchbox',
@@ -32,7 +24,7 @@ const meta: Meta<typeof Searchbox> = {
     placeholder: 'Searchbox',
     filterByKeyword: true,
     style: {
-      width: INPUT_WIDTH,
+      width: STORY_STYLES.INPUT_WIDTH,
     },
     options: Array.from(
       { length: 10 },
@@ -48,16 +40,15 @@ const meta: Meta<typeof Searchbox> = {
   },
 
   argTypes: {
-    validation: VALIDATION,
+    validation: STORY_META.VALIDATION,
     filterByKeyword: {
       description: '옵션을 검색어로 필터링할지 여부입니다.',
     },
-    onChange: HIDDEN,
-    style: HIDDEN,
-    ref: HIDDEN,
-    size: SIZE,
-    theme: THEME,
-    float: OPTIONS_FLOAT,
+    onChange: STORY_META.HIDDEN,
+    style: STORY_META.HIDDEN,
+    ref: STORY_META.HIDDEN,
+    size: STORY_META.SIZE,
+    float: STORY_META.OPTIONS_FLOAT,
   },
 };
 

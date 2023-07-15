@@ -1,10 +1,9 @@
 @use 'src/styles/libs' as libs;
 
-@mixin theme($color, $backgroundColor, $boxShadow, $borderColor) {
+@mixin theme($color, $backgroundColor, $borderColor) {
   border: 1px solid $borderColor;
 
   background-color: $backgroundColor;
-  box-shadow: $boxShadow;
 
   color: $color;
 }
@@ -17,7 +16,7 @@
   padding: 10px;
   border-radius: libs.$BORDER-RADIUS-MD;
 
-  box-shadow: libs.$LIGHT_BOX_SHADOW;
+  box-shadow: libs.$BOX_SHADOW;
 
   font-size: inherit;
 
@@ -30,40 +29,25 @@
     bottom: 100%;
 
     margin-bottom: 0.5rem;
-    &.opening {
-      @include libs.fade-in-bottom;
-    }
-    &.closing {
-      @include libs.fade-out-bottom;
-    }
-  }
-
-  @include theme(
-    libs.$GRAY-700,
-    white,
-    libs.$LIGHT_BOX_SHADOW,
-    libs.$COOL-GRAY-100
-  );
-
-  &.dark {
-    @include theme(
-      libs.$GRAY-50,
-      libs.$GRAY-700,
-      libs.$DARK_BOX_SHADOW,
-      libs.$COOL-GRAY-700
-    );
   }
 
   &.bottom {
     top: 100%;
 
     margin-top: 0.5rem;
-    &.opening {
-      @include libs.fade-in-top;
-    }
-    &.closing {
-      @include libs.fade-out-top;
-    }
+  }
+
+  &.opening {
+    @include libs.fade-in(0.2s);
+  }
+  &.closing {
+    @include libs.fade-out(0.2s);
+  }
+
+  @include theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
+
+  &.dark {
+    @include theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-700);
   }
 }
 

@@ -1,18 +1,17 @@
-import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
-import { Input, InputContainerProps } from '../../atoms';
+import type { InputProps, InputWrapProps } from '@components/atoms';
+import { Input } from '@components/atoms';
+import { useDarkMode, useSubscribedState, useValidationMessage } from '@hooks';
+import type { ValidateHandler, InputType } from '@hooks';
+import { cleanClassName } from '@utils';
 
-import type { Validation } from '../../../hooks';
-import type { InputProps, InputWrapProps, InputType } from '../../atoms';
+import styles from './index.module.scss';
 
 export interface TextboxProps
   extends Omit<InputProps, 'className' | 'size' | 'style'>,
-    Pick<InputContainerProps, 'className' | 'style'>,
-    Pick<InputWrapProps, 'size' | 'theme'> {
+    Pick<InputWrapProps, 'size' | 'className' | 'style'> {
   unit?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
-  validation?: Validation<TextboxProps['value']>;
+  validation?: ValidateHandler<TextboxProps['value']>;
 }
 
 export const Textbox = ({
@@ -21,13 +20,10 @@ export const Textbox = ({
   validation,
   type,
 
-  //* Input.Container props
-  className,
-  style,
-
   //* Input.Wrap props
   size,
-  theme = 'light',
+  className,
+  style,
 
   //* Input props
   onChange,
@@ -37,37 +33,42 @@ export const Textbox = ({
   ...restInputProps
 }: TextboxProps) => {
   const [inputValue, setInputValue] = useSubscribedState(value);
-  const { validationMessage, checkValidation } = useValidation(
-    inputValue,
-    validation,
-    id || name,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    validateHandler: validation,
+    value: inputValue,
+    id,
+  });
+
+  const { isDarkMode } = useDarkMode();
 
   return (
-    <Input.Container
+    <Input.Wrap
+      size={size}
       validationMessage={validationMessage}
       className={className}
       style={style}
     >
-      <Input.Wrap size={size} theme={theme}>
-        <Input
-          {...restInputProps}
-          type={type}
-          value={inputValue}
-          id={id}
-          name={name}
-          onChange={(value) => {
-            checkValidation?.(value);
-            setInputValue(value);
-            onChange?.(value);
-          }}
-        />
-        {unit ? (
-          <div className={cleanClassName(`${styles.unit} ${styles[theme]}`)}>
-            {unit}
-          </div>
-        ) : null}
-      </Input.Wrap>
-    </Input.Container>
+      <Input
+        {...restInputProps}
+        type={type}
+        value={inputValue}
+        id={id}
+        name={name}
+        onChange={(value) => {
+          validateValue(value);
+          setInputValue(value);
+          onChange?.(value);
+        }}
+      />
+      {unit ? (
+        <div
+          className={cleanClassName(
+            `${styles.unit} ${isDarkMode && styles.dark}`,
+          )}
+        >
+          {unit}
+        </div>
+      ) : null}
+    </Input.Wrap>
   );
 };

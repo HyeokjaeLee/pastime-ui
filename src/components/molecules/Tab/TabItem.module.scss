@@ -1,0 +1,14 @@
+@use 'src/styles/libs' as libs;
+
+.tab-item {
+  padding-bottom: 0.5em;
+  border-bottom: transparent 3px solid;
+}
+
+.tab-item-active {
+  border-color: libs.$ORANGE-400;
+}
+
+.item-content {
+  white-space: pre;
+}

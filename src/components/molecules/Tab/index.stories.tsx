@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { STORY_META } from '@constants';
+
 import { Tab } from '.';
-import { SIZE, THEME } from '../../../constants';
 
 import type { TabItemProps, TabProps } from '.';
 
 type MetaProps = TabProps &
   Pick<TabItemProps, 'active' | 'disabled' | 'icon' | 'iconDirection'>;
+
+enum CATEGORY {
+  TAB = 'Tab',
+  TAB_ITEM = 'Tab.Item',
+}
 
 const createTabDummyData = (length: number) =>
   Array.from({ length }, (_, index) => `Tab ${index + 1}`);
@@ -17,30 +23,22 @@ const meta: Meta<MetaProps> = {
   title: 'molecules/Tab',
   component: Tab,
   args: {
-    theme: 'light',
     size: 'medium',
     icon: '⚙️',
   },
   argTypes: {
-    theme: {
-      ...THEME,
-      table: {
-        ...THEME.table,
-        category: 'Tab',
-      },
-    },
     size: {
-      ...SIZE,
+      ...STORY_META.SIZE,
       table: {
-        ...SIZE.table,
-        category: 'Tab',
+        ...STORY_META.SIZE.table,
+        category: CATEGORY.TAB,
       },
     },
     active: {
       description: 'Tab.Item의 선택 여부 \n\n `boolean`',
       type: 'boolean',
       table: {
-        category: 'Tab.Item',
+        category: CATEGORY.TAB_ITEM,
         defaultValue: { summary: false },
       },
     },
@@ -49,7 +47,7 @@ const meta: Meta<MetaProps> = {
       type: 'boolean',
 
       table: {
-        category: 'Tab.Item',
+        category: CATEGORY.TAB_ITEM,
         defaultValue: { summary: false },
       },
     },
@@ -57,7 +55,7 @@ const meta: Meta<MetaProps> = {
       description: 'Tab.Item의 아이콘',
       table: {
         type: { summary: 'ReactNode' },
-        category: 'Tab.Item',
+        category: CATEGORY.TAB_ITEM,
       },
     },
     iconDirection: {
@@ -66,7 +64,7 @@ const meta: Meta<MetaProps> = {
       options: ['left', 'right'],
       control: 'radio',
       table: {
-        category: 'Tab.Item',
+        category: CATEGORY.TAB_ITEM,
       },
     },
   },

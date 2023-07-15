@@ -59,7 +59,7 @@ enum CATEGORY {
 }
 
 const meta: Meta<MetaProps> = {
-  title: 'molecules/Toast',
+  title: 'atoms/Toast',
   component: Toast.Provider,
   argTypes: {
     //* Toast.Provider

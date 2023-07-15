@@ -1,118 +1,46 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import type { ButtonProps } from '@components/atoms';
+import { TabContextProvider } from '@contexts/TabContext';
+import { useDarkMode, useTabOverflowX } from '@hooks';
+import { HTMLTagProps } from '@types';
+import { cleanClassName } from '@utils';
 
+import { TabItem } from './TabItem';
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
-import { Button } from '../../atoms';
 
-import type { ButtonProps } from '../../atoms';
+export type { TabItemProps } from './TabItem';
 
-export interface TabProps
-  extends Omit<HTMLUListProps, 'size' | 'ref'>,
-    Pick<ButtonProps, 'size'> {
-  theme?: Extract<ButtonProps['theme'], 'dark' | 'light'>;
-}
+export type TabProps = Omit<HTMLTagProps<'ul'>, 'size' | 'ref'> &
+  Pick<ButtonProps, 'size'>;
 
-const TabContext = createContext<Pick<TabProps, 'size' | 'theme'>>({});
+export const Tab = Object.assign(
+  ({
+    //* Button props
+    size,
 
-const TabMain = ({
-  //* Tab props
-  theme = 'light',
+    //* HTML ul props
+    className,
+    children,
+    ...restUlProps
+  }: TabProps) => {
+    const { isOverflowX, ref } = useTabOverflowX();
 
-  //* Button props
-  size,
+    const { isDarkMode } = useDarkMode();
 
-  //* HTML ul props
-  className,
-  children,
-  ...restUlProps
-}: TabProps) => {
-  const tabContextValue = useMemo(() => ({ size, theme }), [size, theme]);
-  const ref = useRef<HTMLUListElement>(null);
-  const [isOverflowX, setIsOverflowX] = useState(false);
-  useEffect(() => {
-    const uListElement = ref.current;
-    if (uListElement)
-      setIsOverflowX(uListElement.scrollWidth > uListElement.clientWidth);
-  }, [ref]);
-
-  return (
-    <ul
-      {...restUlProps}
-      ref={ref}
-      className={cleanClassName(
-        `${styles.tab} ${
-          isOverflowX && styles[`overflow-${theme}`]
-        } ${className}`,
-      )}
-    >
-      <TabContext.Provider value={tabContextValue}>
-        {children}
-      </TabContext.Provider>
-    </ul>
-  );
-};
-
-type HTMLLIProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLLIElement>,
-  HTMLLIElement
->;
-
-export interface TabItemProps
-  extends Omit<HTMLLIProps, 'children' | 'onClick'>,
-    Pick<
-      ButtonProps,
-      'disabled' | 'children' | 'onClick' | 'icon' | 'iconDirection'
-    > {
-  active?: boolean;
-}
-
-const TabItem = ({
-  //* TabItem props
-  active = false,
-
-  //* Button props
-  children,
-  disabled,
-  onClick,
-  icon,
-  iconDirection,
-
-  //* HTML li props
-  className,
-  ...restLiProps
-}: TabItemProps) => {
-  const { theme, size } = useContext(TabContext);
-  return (
-    <li
-      {...restLiProps}
-      className={cleanClassName(
-        `${styles['tab-item']} ${
-          active && styles['tab-item-active']
-        } ${className}`,
-      )}
-    >
-      <Button
-        disabled={disabled}
-        size={size}
-        onClick={onClick}
-        theme={theme}
-        className={styles['item-content']}
-        icon={icon}
-        iconDirection={iconDirection}
+    return (
+      <ul
+        {...restUlProps}
+        ref={ref}
+        className={cleanClassName(
+          `${styles.tab} ${
+            isOverflowX && styles[`overflow-${isDarkMode ? 'dark' : 'light'}`]
+          } ${className}`,
+        )}
       >
-        {children}
-      </Button>
-    </li>
-  );
-};
-
-export const Tab = Object.assign(TabMain, {
-  Item: TabItem,
-});
+        <TabContextProvider size={size}>{children}</TabContextProvider>
+      </ul>
+    );
+  },
+  {
+    Item: TabItem,
+  },
+);

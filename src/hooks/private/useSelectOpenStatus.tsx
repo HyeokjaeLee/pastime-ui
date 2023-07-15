@@ -16,7 +16,7 @@ export const useSelectOpenStatus = (opened: boolean) => {
     if (typeof openStatus === 'string') {
       const nextOpenState = openStatus === 'opening';
 
-      const timeout = setTimeout(() => setOpenStatus(nextOpenState), 250);
+      const timeout = setTimeout(() => setOpenStatus(nextOpenState), 200);
       return () => clearTimeout(timeout);
     }
   }, [openStatus]);

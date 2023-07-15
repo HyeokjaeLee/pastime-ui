@@ -1,15 +1,15 @@
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
-import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
-import { Button } from '../../atoms';
+import type { ButtonProps } from '@components/atoms';
+import { Button } from '@components/atoms';
+import { HTMLTagProps } from '@types';
+import { cleanClassName } from '@utils';
 
-import type { ButtonProps } from '../../atoms';
+import styles from './index.module.scss';
 
 export interface PaginationProps
-  extends Omit<HTMLUListProps, 'onChange'>,
+  extends Omit<HTMLTagProps<'ul'>, 'onChange'>,
     Pick<ButtonProps, 'size'> {
-  theme?: Extract<ButtonProps['theme'], 'dark' | 'light'>;
   onChange?: (page: number) => void;
   totalItems?: number;
   pageSize?: number;
@@ -19,7 +19,6 @@ export interface PaginationProps
 
 export const Pagination = ({
   //* Pagination props
-  theme = 'light',
   onChange,
   buttonCount = 10,
   totalItems = 0,
@@ -34,7 +33,7 @@ export const Pagination = ({
   ...restUlProps
 }: PaginationProps) => {
   const commonButtonProps: ButtonProps = {
-    theme,
+    theme: 'clear',
     size,
     shape: 'sharp-corner',
   };

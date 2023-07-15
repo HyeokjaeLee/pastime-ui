@@ -40,13 +40,12 @@
 
   background-color: libs.$GRAY-800;
   background-color: libs.$GRAY-400;
-  box-shadow: libs.$LIGHT_BOX_SHADOW;
+  box-shadow: libs.$BOX_SHADOW;
 
   color: white;
 
   &.dark {
     background-color: libs.$GRAY-800;
-    box-shadow: libs.$DARK_BOX_SHADOW;
   }
 }
 
