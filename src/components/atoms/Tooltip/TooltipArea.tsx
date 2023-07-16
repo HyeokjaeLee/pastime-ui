@@ -1,4 +1,5 @@
 import { useTooltipContext } from '@contexts/TooltipContext';
+import { useTooltipCloseOnScroll } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -9,28 +10,30 @@ export type TooltipAreaProps = HTMLTagProps<'div'>;
 export const TooltipArea = ({
   children,
   className,
-  onMouseEnter,
+  onMouseMove,
   onMouseLeave,
   ...restDivProps
 }: TooltipAreaProps) => {
   const {
+    tooltipState: [, setOpeningTransition],
     locationState: [, dispatchLocation],
-    mouseEventHandler,
   } = useTooltipContext();
+
+  useTooltipCloseOnScroll();
 
   return (
     <div
       {...restDivProps}
-      onMouseEnter={(e) => {
-        mouseEventHandler.handleMouseEnter(e);
-        onMouseEnter?.(e);
-      }}
       onMouseLeave={(e) => {
-        mouseEventHandler.handleMouseLeave(e);
+        setOpeningTransition(false);
         onMouseLeave?.(e);
       }}
       className={cleanClassName(`${styles.tooltip} ${className}`)}
-      onMouseMove={dispatchLocation}
+      onMouseMove={(e) => {
+        setOpeningTransition(true);
+        dispatchLocation(e);
+        onMouseMove?.(e);
+      }}
     >
       {children}
     </div>

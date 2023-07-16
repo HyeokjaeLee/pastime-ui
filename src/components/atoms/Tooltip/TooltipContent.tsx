@@ -1,47 +1,51 @@
 import { createPortal } from 'react-dom';
 
 import { useTooltipContext } from '@contexts/TooltipContext';
-import { useDarkMode } from '@hooks';
+import { useDarkMode, OPENING_TRANSITION } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './TooltipContent.module.scss';
 
-export type TooltipContentProps = HTMLTagProps<'div'>;
+export interface TooltipContentProps
+  extends Omit<HTMLTagProps<'div'>, 'styles'> {
+  style?: Omit<React.CSSProperties, 'left' | 'top'>;
+}
 
 export const TooltipContent = ({
+  //* TooltipContent props
+  style,
+
   //* HTML div props
   children,
   className,
   onMouseEnter,
   onMouseLeave,
-  style,
   ...restDivProps
 }: TooltipContentProps) => {
   const {
-    display,
+    tooltipState: [openingTransition, setOpeningTransition],
     locationState: [location],
-    mouseEventHandler,
   } = useTooltipContext();
 
   const { isDarkMode } = useDarkMode();
 
   const darkModeClassName = isDarkMode && styles.dark;
 
-  return display
+  return openingTransition
     ? createPortal(
         <div
           {...restDivProps}
           onMouseEnter={(e) => {
-            mouseEventHandler.handleMouseEnter(e);
+            setOpeningTransition(true);
             onMouseEnter?.(e);
           }}
           onMouseLeave={(e) => {
-            mouseEventHandler.handleMouseLeave(e);
+            setOpeningTransition(false);
             onMouseLeave?.(e);
           }}
           className={`${styles['tooltip-message-container']} ${
-            display === 'closing' && styles.closing
+            openingTransition === OPENING_TRANSITION.CLOSING && styles.closing
           }`}
           style={{
             ...style,
