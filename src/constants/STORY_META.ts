@@ -12,18 +12,6 @@ export const DARK_MODE = {
   },
 };
 
-/**
- * @deprecated 안씀
- */
-export const THEME = {
-  options: ['light', 'dark'],
-  control: 'radio',
-  description: '컴포넌트의 테마를 설정합니다.',
-  table: {
-    defaultValue: { summary: 'light' },
-  },
-};
-
 export const SIZE = {
   options: ['small', 'medium', 'large'],
   control: 'radio',
@@ -46,5 +34,5 @@ export const OPTIONS_FLOAT = {
 export const VALIDATION = {
   control: false,
   description:
-    'A function for validation.\n\n 함수의 The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.',
+    'The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.\n\n함수의 `argument`는 입력값이며, 리턴값이 에러 메시지가 됩니다. `undefined`를 리턴하면 검증을 통과한 것으로 간주됩니다.',
 };

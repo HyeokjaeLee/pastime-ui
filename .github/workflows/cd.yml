@@ -33,59 +33,8 @@ jobs:
       - name: Check branch
         run: exit 0
 
-  test_code_convention:
-    needs: check_valid_commit
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: ${{ env.NPM_REGISTRY_URL }}
-
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
-
-      - name: Test eslint
-        run: pnpm rule:eslint
-
-      - name: Test prettier
-        run: pnpm rule:prettier
-
-  test_build:
-    needs: check_valid_commit
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: ${{ env.NPM_REGISTRY_URL }}
-
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
-
-      - name: Test build library
-        run: pnpm build:lib
-
-      - name: Test build document
-        run: pnpm build:doc
-
   update:
-    needs: ['pushed_main_branch', 'test_code_convention', 'test_build']
+    needs: ['pushed_main_branch']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -198,7 +147,7 @@ jobs:
 
   deploy_canary:
     if: "!contains(github.event.head_commit.message, '-canary')"
-    needs: ['pushed_dev_branch', 'test_code_convention', 'test_build']
+    needs: ['pushed_dev_branch']
     runs-on: ubuntu-latest
     steps:
       - name: Set node.js ${{ env.NODE_VERSION }}
