@@ -1,4 +1,6 @@
 /// <reference types="react" />
 import type { HTMLTagProps } from '@types';
-export type TooltipContentProps = HTMLTagProps<'div'>;
-export declare const TooltipContent: ({ children, className, onMouseEnter, onMouseLeave, style, ...restDivProps }: TooltipContentProps) => import("react").ReactPortal | null;
+export interface TooltipContentProps extends Omit<HTMLTagProps<'div'>, 'styles'> {
+    style?: Omit<React.CSSProperties, 'left' | 'top'>;
+}
+export declare const TooltipContent: ({ style, children, className, onMouseEnter, onMouseLeave, ...restDivProps }: TooltipContentProps) => import("react").ReactPortal | null;

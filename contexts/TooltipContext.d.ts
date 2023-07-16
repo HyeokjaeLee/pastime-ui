@@ -1,21 +1,8 @@
 /// <reference types="react" />
-import type { DebouncedFunc } from 'lodash-es';
-interface Location {
-    top: number;
-    left: number;
-}
-type TooltipDisplay = boolean | 'closing';
-type MouseEventHandler = React.MouseEventHandler<HTMLDivElement>;
+import type { OpeningTransitionState, TooltipLocationState } from '@hooks';
 interface TooltipContextValue {
-    display: TooltipDisplay;
-    locationState: [
-        Location,
-        DebouncedFunc<React.Dispatch<React.MouseEvent<HTMLDivElement, MouseEvent>>>
-    ];
-    mouseEventHandler: {
-        handleMouseEnter: MouseEventHandler;
-        handleMouseLeave: MouseEventHandler;
-    };
+    locationState: TooltipLocationState;
+    tooltipState: OpeningTransitionState;
 }
 export interface TooltipContextProviderProps {
     children?: React.ReactNode;

@@ -12,19 +12,6 @@ export declare const DARK_MODE: {
         };
     };
 };
-/**
- * @deprecated 안씀
- */
-export declare const THEME: {
-    options: string[];
-    control: string;
-    description: string;
-    table: {
-        defaultValue: {
-            summary: string;
-        };
-    };
-};
 export declare const SIZE: {
     options: string[];
     control: string;

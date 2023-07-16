@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import type { OpenStatus } from './useSelectOpenStatus';
+import { OPENING_TRANSITION } from './useOpeningTransitionState';
 export type ValidOptionValue = string | number;
 interface UseOpenStatusParams {
-    openStatus: OpenStatus;
+    openingTransition: OPENING_TRANSITION;
     options?: {
         label: string;
         value: ValidOptionValue;
@@ -10,5 +10,5 @@ interface UseOpenStatusParams {
     selectRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
-export declare const useIndexForSelect: ({ openStatus, options, selectRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
+export declare const useIndexForSelect: ({ openingTransition, options, selectRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
 export {};

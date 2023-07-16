@@ -1,0 +1,2 @@
+const o=()=>{const e=window.matchMedia("(prefers-color-scheme: dark)").matches,s=document.documentElement.classList.contains("pastime:dark");return{isDarkMode:!document.documentElement.classList.contains("pastime:light")&&(s||e),setDarkMode:t=>{t?(document.documentElement.classList.add("pastime:dark"),document.documentElement.classList.remove("pastime:light")):(document.documentElement.classList.add("pastime:light"),document.documentElement.classList.remove("pastime:dark"))}}};export{o as u};
+//# sourceMappingURL=useDarkMode-9d18891c.js.map
