@@ -1,7 +1,13 @@
 import { useRef } from 'react';
 import { Check } from 'react-feather';
 
-import { useDarkMode, useIndexForSelect, useSelectOpenStatus } from '@hooks';
+import {
+  useDarkMode,
+  useIndexForSelect,
+  useOpeningTransitionState,
+  OPENING_TRANSITION,
+  useMountedEffect,
+} from '@hooks';
 import type { ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
@@ -43,25 +49,37 @@ export const Select = <
   className,
   ...restSectionProps
 }: SelectProps<OptionValue, Multiple>) => {
-  const openStatus = useSelectOpenStatus(opened);
+  const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
+    openingTransition:
+      opened === true ? OPENING_TRANSITION.OPENED : OPENING_TRANSITION.CLOSED,
+    openingDuration: 200,
+    closingDuration: 200,
+  });
+
+  useMountedEffect(
+    () => setOpeningTransition(opened),
+    [opened, setOpeningTransition],
+  );
 
   const { isDarkMode } = useDarkMode();
 
   const selectRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const [indexForSelect, setIndexForSelect] = useIndexForSelect({
-    openStatus,
+    openingTransition,
     options,
     selectRefs,
     onKeyDown,
   });
 
-  return openStatus && options?.length ? (
+  return openingTransition && options?.length ? (
     <section
       {...restSectionProps}
       className={cleanClassName(
         `${styles.select} ${isDarkMode && styles.dark} ${styles[float]} ${
-          typeof openStatus === 'string' && styles[openStatus]
+          openingTransition === OPENING_TRANSITION.CLOSING && styles.closing
+        } ${
+          openingTransition === OPENING_TRANSITION.OPENING && styles.opening
         } ${className}`,
       )}
     >

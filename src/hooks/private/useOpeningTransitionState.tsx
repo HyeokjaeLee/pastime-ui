@@ -1,6 +1,4 @@
-import { useEffect, useRef } from 'react';
-
-import { useSubscribedState } from './useSubscribedState';
+import { useEffect, useRef, useState } from 'react';
 
 export enum OPENING_TRANSITION {
   OPENING = 1,
@@ -20,7 +18,7 @@ export const useOpeningTransitionState = ({
   openingDuration,
   closingDuration,
 }: UseOpeningStatusParams) => {
-  const [status, setStatus] = useSubscribedState(openingTransition);
+  const [status, setStatus] = useState(openingTransition);
 
   useEffect(() => {
     switch (status) {

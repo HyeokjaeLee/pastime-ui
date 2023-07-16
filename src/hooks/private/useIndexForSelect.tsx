@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 
 import { INITIAL } from '@constants';
 
-import type { OpenStatus } from './useSelectOpenStatus';
+import { OPENING_TRANSITION } from './useOpeningTransitionState';
 
 export type ValidOptionValue = string | number;
 
 interface UseOpenStatusParams {
-  openStatus: OpenStatus;
+  openingTransition: OPENING_TRANSITION;
   options?: {
     label: string;
     value: ValidOptionValue;
@@ -17,7 +17,7 @@ interface UseOpenStatusParams {
 }
 
 export const useIndexForSelect = ({
-  openStatus,
+  openingTransition,
   options,
   selectRefs,
   onKeyDown,
@@ -26,7 +26,7 @@ export const useIndexForSelect = ({
   const [, setIndexForSelect] = indexForSelectState;
 
   useEffect(() => {
-    if (openStatus === true && options) {
+    if (openingTransition === OPENING_TRANSITION.OPENED && options) {
       const keyboardEvent = (event: KeyboardEvent) => {
         onKeyDown?.(event);
         switch (event.key) {
@@ -64,7 +64,7 @@ export const useIndexForSelect = ({
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [onKeyDown, openStatus, options, selectRefs, setIndexForSelect]);
+  }, [onKeyDown, openingTransition, options, selectRefs, setIndexForSelect]);
 
   return indexForSelectState;
 };
