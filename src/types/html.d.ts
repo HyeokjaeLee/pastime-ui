@@ -1,3 +1,11 @@
+import {
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LiHTMLAttributes,
+} from 'react';
+
 type HTMLTags =
   | 'section'
   | 'dt'
@@ -9,21 +17,21 @@ type HTMLTags =
   | 'div'
   | 'input';
 
-type OverwritedTagProps<T> = Omit<
-  React.DetailedHTMLProps<React.HTMLAttributes<T>, T>,
+type CleanedTagProps<TAttributes extends HTMLAttributes<infer TElement>> = Omit<
+  DetailedHTMLProps<TAttributes, TElement>,
   'ref'
 >;
 
 export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
-  ? OverwritedTagProps<HTMLDListElement>
+  ? CleanedTagProps<HTMLAttributes<HTMLDListElement>>
   : T extends 'ul'
-  ? OverwritedTagProps<HTMLUListElement>
+  ? CleanedTagProps<HTMLAttributes<HTMLUListElement>>
   : T extends 'button'
-  ? OverwritedTagProps<HTMLButtonElement>
+  ? CleanedTagProps<ButtonHTMLAttributes<HTMLButtonElement>>
   : T extends 'li'
-  ? OverwritedTagProps<HTMLLIElement>
+  ? CleanedTagProps<LiHTMLAttributes<HTMLLIElement>>
   : T extends 'div'
-  ? OverwritedTagProps<HTMLDivElement>
+  ? CleanedTagProps<HTMLAttributes<HTMLDivElement>>
   : T extends 'input'
-  ? OverwritedTagProps<HTMLInputElement>
-  : OverwritedTagProps<HTMLElement>;
+  ? CleanedTagProps<InputHTMLAttributes<HTMLInputElement>>
+  : CleanedTagProps<HTMLAttributes<HTMLElement>>;

@@ -46,7 +46,6 @@ const meta: Meta<typeof Searchbox> = {
     },
     onChange: STORY_META.HIDDEN,
     style: STORY_META.HIDDEN,
-    ref: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
     float: STORY_META.OPTIONS_FLOAT,
   },
