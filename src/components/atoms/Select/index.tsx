@@ -22,6 +22,7 @@ export type SelectProps<
   options?: {
     label: string;
     value: OptionValue;
+    decoration?: React.ReactNode;
   }[];
   multiple?: Multiple;
   value?: Multiple extends true ? OptionValue[] : OptionValue;
