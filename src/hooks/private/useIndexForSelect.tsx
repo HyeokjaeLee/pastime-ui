@@ -31,6 +31,8 @@ export const useIndexForSelect = ({
 
   useEffect(() => {
     if (openingTransition === OPENING_TRANSITION.OPENED && options) {
+      const prevFocusedElement = document.activeElement;
+
       const keyboardEvent = (event: KeyboardEvent) => {
         onKeyDown?.(event);
         switch (event.key) {
@@ -64,6 +66,11 @@ export const useIndexForSelect = ({
               optionItemRefs.current[indexForSelect]?.click();
 
             break;
+          }
+
+          default: {
+            if (prevFocusedElement instanceof HTMLElement)
+              prevFocusedElement?.focus();
           }
         }
       };
