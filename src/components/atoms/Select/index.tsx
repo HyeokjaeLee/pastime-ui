@@ -64,12 +64,12 @@ export const Select = <
 
   const { isDarkMode } = useDarkMode();
 
-  const selectRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const optionItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const [indexForSelect, setIndexForSelect] = useIndexForSelect({
     openingTransition,
     options,
-    selectRefs,
+    optionItemRefs,
     onKeyDown,
   });
 
@@ -102,7 +102,7 @@ export const Select = <
                 name="select-option-item"
                 type="button"
                 ref={(element) => {
-                  selectRefs.current[index] = element;
+                  optionItemRefs.current[index] = element;
                 }}
                 className={cleanClassName(
                   `${styles['select-option-item']} ${

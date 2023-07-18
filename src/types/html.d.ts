@@ -9,34 +9,21 @@ type HTMLTags =
   | 'div'
   | 'input';
 
+type OverwritedTagProps<T> = Omit<
+  React.DetailedHTMLProps<React.HTMLAttributes<T>, T>,
+  'ref'
+>;
+
 export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDListElement>,
-      HTMLDListElement
-    >
+  ? OverwritedTagProps<HTMLDListElement>
   : T extends 'ul'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLUListElement>,
-      HTMLUListElement
-    >
+  ? OverwritedTagProps<HTMLUListElement>
   : T extends 'button'
-  ? React.DetailedHTMLProps<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
-    >
+  ? OverwritedTagProps<HTMLButtonElement>
   : T extends 'li'
-  ? React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLLIElement>,
-      HTMLLIElement
-    >
+  ? OverwritedTagProps<HTMLLIElement>
   : T extends 'div'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
+  ? OverwritedTagProps<HTMLDivElement>
   : T extends 'input'
-  ? React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    >
-  : React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+  ? OverwritedTagProps<HTMLInputElement>
+  : OverwritedTagProps<HTMLElement>;

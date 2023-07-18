@@ -12,14 +12,14 @@ interface UseOpenStatusParams {
     label: string;
     value: ValidOptionValue;
   }[];
-  selectRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
+  optionItemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
   onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export const useIndexForSelect = ({
   openingTransition,
   options,
-  selectRefs,
+  optionItemRefs,
   onKeyDown,
 }: UseOpenStatusParams) => {
   const indexForSelectState = useState(INITIAL.INDEX);
@@ -35,7 +35,7 @@ export const useIndexForSelect = ({
             return setIndexForSelect((prevIndex) => {
               if (prevIndex > 0) {
                 const nextIndex = prevIndex - 1;
-                selectRefs.current[nextIndex]?.focus();
+                optionItemRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -46,7 +46,7 @@ export const useIndexForSelect = ({
             return setIndexForSelect((prevIndex) => {
               if (prevIndex < options.length - 1) {
                 const nextIndex = prevIndex + 1;
-                selectRefs.current[nextIndex]?.focus();
+                optionItemRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -54,7 +54,7 @@ export const useIndexForSelect = ({
           case 'Enter':
             event.preventDefault();
             return setIndexForSelect((index) => {
-              if (index >= 0) selectRefs.current[index]?.click();
+              if (index >= 0) optionItemRefs.current[index]?.click();
               return index;
             });
           default:
@@ -64,7 +64,13 @@ export const useIndexForSelect = ({
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [onKeyDown, openingTransition, options, selectRefs, setIndexForSelect]);
+  }, [
+    onKeyDown,
+    openingTransition,
+    options,
+    optionItemRefs,
+    setIndexForSelect,
+  ]);
 
   return indexForSelectState;
 };
