@@ -75,15 +75,14 @@
 
 .select-option-item {
   display: flex;
-  gap: 4px;
+  gap: 1em;
   align-items: center;
-  justify-content: space-between;
 
   min-width: 100%;
   max-width: 100%;
   padding: 0.7em 0.8em;
   border: 0;
-  border-radius: libs.$BORDER-RADIUS-SM;
+  border-radius: libs.$BORDER-RADIUS-MD;
 
   background-color: transparent;
   outline: none;
@@ -104,7 +103,8 @@
 }
 
 .icon-wrap {
-  margin-top: 0.2em;
+  margin: 0.2em;
+  margin-left: auto;
 
   visibility: hidden;
   &.show {

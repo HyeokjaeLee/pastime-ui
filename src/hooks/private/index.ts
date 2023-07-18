@@ -11,4 +11,3 @@ export * from './useTabOverflowX';
 export * from './useOpeningTransitionState';
 export * from './useTooltipLocationState';
 export * from './useTooltipCloseOnScroll';
-export * from './useSyncedRef';

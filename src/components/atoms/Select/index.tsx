@@ -85,7 +85,7 @@ export const Select = <
       )}
     >
       <ul className={cleanClassName(styles['select-container'])}>
-        {options?.map(({ label, value }, index) => {
+        {options?.map(({ label, value, decoration }, index) => {
           const isHovered = index === indexForSelect;
           const isSelected = (() => {
             if (selectedValue === undefined) return false;
@@ -141,13 +141,14 @@ export const Select = <
                   setIndexForSelect(index);
                 }}
               >
+                {decoration ? <div>{decoration}</div> : null}
                 <div>{label}</div>
                 <div
                   className={cleanClassName(
                     `${styles['icon-wrap']} ${isSelected && styles.show}`,
                   )}
                 >
-                  {<Check size="1em" />}
+                  {<Check size="1.2em" />}
                 </div>
               </button>
             </li>

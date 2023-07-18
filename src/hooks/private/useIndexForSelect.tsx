@@ -1,3 +1,5 @@
+import { useGetter } from 'hooks';
+
 import { useState, useEffect } from 'react';
 
 import { INITIAL } from '@constants';
@@ -23,7 +25,9 @@ export const useIndexForSelect = ({
   onKeyDown,
 }: UseOpenStatusParams) => {
   const indexForSelectState = useState(INITIAL.INDEX);
-  const [, setIndexForSelect] = indexForSelectState;
+  const [indexForSelect, setIndexForSelect] = indexForSelectState;
+
+  const getIndexForSelect = useGetter(indexForSelect);
 
   useEffect(() => {
     if (openingTransition === OPENING_TRANSITION.OPENED && options) {
@@ -32,6 +36,7 @@ export const useIndexForSelect = ({
         switch (event.key) {
           case 'ArrowUp':
             event.preventDefault();
+
             return setIndexForSelect((prevIndex) => {
               if (prevIndex > 0) {
                 const nextIndex = prevIndex - 1;
@@ -51,13 +56,15 @@ export const useIndexForSelect = ({
               }
               return prevIndex;
             });
-          case 'Enter':
+
+          case 'Enter': {
             event.preventDefault();
-            return setIndexForSelect((index) => {
-              if (index >= 0) optionItemRefs.current[index]?.click();
-              return index;
-            });
-          default:
+            const indexForSelect = getIndexForSelect();
+            if (indexForSelect !== INITIAL.INDEX)
+              optionItemRefs.current[indexForSelect]?.click();
+
+            break;
+          }
         }
       };
 
@@ -65,6 +72,7 @@ export const useIndexForSelect = ({
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
   }, [
+    getIndexForSelect,
     onKeyDown,
     openingTransition,
     options,
