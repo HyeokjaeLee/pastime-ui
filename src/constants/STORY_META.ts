@@ -36,3 +36,25 @@ export const VALIDATION = {
   description:
     'The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.\n\n함수의 `argument`는 입력값이며, 리턴값이 에러 메시지가 됩니다. `undefined`를 리턴하면 검증을 통과한 것으로 간주됩니다.',
 };
+
+export const PLACEHOLDER = {
+  description: 'The placeholder of the component.\n\n컴포넌트의 placeholder',
+  control: 'text',
+  table: {
+    type: {
+      summary: 'string',
+    },
+  },
+};
+
+export const INPUT_DISABLED = {
+  description:
+    'Whether the input is disabled or not.\n\n입력이 비활성화되었는지 여부',
+  options: ['readonly', true, false],
+  control: {
+    type: 'radio',
+  },
+  table: {
+    defaultValue: { summary: false },
+  },
+};

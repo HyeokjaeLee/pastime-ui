@@ -13,7 +13,7 @@ export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
 };
 
 export const InputWrap = ({
-  //* Input.Container props
+  //* Input.Wrap props
   size = 'medium',
   validationMessage,
 

@@ -1,6 +1,6 @@
 import type { InputProps, InputWrapProps } from '@components/atoms';
 import { Input } from '@components/atoms';
-import { useDarkMode, useSubscribedState, useValidationMessage } from '@hooks';
+import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler, InputType } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -9,14 +9,14 @@ import styles from './index.module.scss';
 export interface TextboxProps
   extends Omit<InputProps, 'className' | 'size' | 'style'>,
     Pick<InputWrapProps, 'size' | 'className' | 'style'> {
-  unit?: React.ReactNode;
+  decoration?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
   validation?: ValidateHandler<TextboxProps['value']>;
 }
 
 export const Textbox = ({
   //* Textbox props
-  unit,
+  decoration,
   validation,
   type,
 
@@ -39,8 +39,6 @@ export const Textbox = ({
     id,
   });
 
-  const { isDarkMode } = useDarkMode();
-
   return (
     <Input.Wrap
       size={size}
@@ -60,13 +58,9 @@ export const Textbox = ({
           onChange?.(value);
         }}
       />
-      {unit ? (
-        <div
-          className={cleanClassName(
-            `${styles.unit} ${isDarkMode && styles.dark}`,
-          )}
-        >
-          {unit}
+      {decoration ? (
+        <div className={cleanClassName(`${styles.decoration}`)}>
+          {decoration}
         </div>
       ) : null}
     </Input.Wrap>

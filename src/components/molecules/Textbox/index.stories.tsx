@@ -20,10 +20,9 @@ const meta: Meta<typeof Textbox> = {
     value: {
       control: 'text',
     },
-    unit: {
+    decoration: {
       control: 'text',
     },
-    ref: STORY_META.HIDDEN,
     onChange: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
@@ -45,14 +44,14 @@ export const Default: Story = {};
 
 export const WithUnit: Story = {
   args: {
-    unit: '원',
+    decoration: '원',
     type: 'large-number',
     value: '-10000.95',
   },
   render: (args) => (
     <>
       <Textbox {...args} />
-      <Textbox {...args} unit={<Percent size="1.2em" />} />
+      <Textbox {...args} decoration={<Percent size="1.2em" />} />
     </>
   ),
 };
@@ -60,7 +59,7 @@ export const WithUnit: Story = {
 export const WithValidation: Story = {
   args: {
     validation: (value) => String(value),
-    unit: '원',
+    decoration: '원',
     type: 'large-number',
   },
 };
