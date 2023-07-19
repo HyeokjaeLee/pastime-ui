@@ -32,7 +32,6 @@ export default {
   },
   argTypes: {
     //* Input.Container
-    ref: STORY_META.HIDDEN,
     onChange: STORY_META.HIDDEN,
     validationMessage: {
       ...GROUPS.WRAP,
