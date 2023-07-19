@@ -1,9 +1,8 @@
-import { cloneDeepWith } from 'lodash-es';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_META, STORY_STYLES } from '@constants';
 import { useSubscribedState } from '@hooks';
+import { cloneDeepWith } from '@utils';
 
 import { Input } from '.';
 

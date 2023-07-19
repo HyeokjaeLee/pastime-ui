@@ -74,6 +74,9 @@
   &.size-large {
     @include size(18px, 48px);
   }
+  &.size-fit-content {
+    @include size(0, fit-content);
+  }
 
   &.error {
     @include libs.border(libs.$ROSE-500, 2.2px);

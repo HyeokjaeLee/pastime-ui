@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   InputHTMLAttributes,
   LiHTMLAttributes,
+  TextareaHTMLAttributes,
 } from 'react';
 
 type HTMLTags =
@@ -15,7 +16,8 @@ type HTMLTags =
   | 'li'
   | 'button'
   | 'div'
-  | 'input';
+  | 'input'
+  | 'textarea';
 
 type CleanedTagProps<TAttributes extends HTMLAttributes<infer TElement>> = Omit<
   DetailedHTMLProps<TAttributes, TElement>,
@@ -34,4 +36,6 @@ export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
   ? CleanedTagProps<HTMLAttributes<HTMLDivElement>>
   : T extends 'input'
   ? CleanedTagProps<InputHTMLAttributes<HTMLInputElement>>
+  : T extends 'textarea'
+  ? CleanedTagProps<TextareaHTMLAttributes<HTMLTextAreaElement>>
   : CleanedTagProps<HTMLAttributes<HTMLElement>>;

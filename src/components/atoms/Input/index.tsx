@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-
-import { useInputContext } from '@contexts/InputContext';
 import { useFormatInputValue } from '@hooks';
 import type { InputType } from '@hooks';
 import type { HTMLTagProps } from '@types';
@@ -14,11 +11,10 @@ export type { InputWrapProps } from './inputWrap';
 export interface InputProps
   extends Omit<
     HTMLTagProps<'input'>,
-    'type' | 'value' | 'disabled' | 'onChange' | 'width' | 'height'
+    'type' | 'value' | 'onChange' | 'width' | 'height'
   > {
   type?: InputType;
   value?: number | string;
-  disabled?: boolean | 'readonly';
   onChange?: (value: string) => void;
 }
 
@@ -27,7 +23,6 @@ export const Input = Object.assign(
     //* Input props
     type = 'text',
     value,
-    disabled = false,
     onChange,
 
     //* HTML input props
@@ -37,11 +32,6 @@ export const Input = Object.assign(
     onBlur,
     ...restInputProps
   }: InputProps) => {
-    const { setReadonly } = useInputContext();
-    const isReadonly = disabled === 'readonly';
-
-    useEffect(() => setReadonly(isReadonly), [isReadonly, setReadonly]);
-
     const {
       formattedValue,
       displayFormattedValue,
@@ -72,7 +62,6 @@ export const Input = Object.assign(
             !value && styles.empty
           } ${className}`,
         )}
-        disabled={!!disabled}
         onChange={({ target: { value } }) => {
           const convertedValue = convertChangeHandlerParam(value);
           if (convertedValue !== null) onChange?.(convertedValue);

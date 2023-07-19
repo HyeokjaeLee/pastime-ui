@@ -11,3 +11,5 @@ export * from './useTabOverflowX';
 export * from './useOpeningTransitionState';
 export * from './useTooltipLocationState';
 export * from './useTooltipCloseOnScroll';
+export * from './useInputWrapDeclaredSize';
+export * from './useTextareaDynamicHeight';

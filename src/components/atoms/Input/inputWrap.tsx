@@ -1,21 +1,20 @@
-import { useState } from 'react';
-
-import { InputContext } from '@contexts/InputContext';
 import { useDarkMode, useInputMessageDynamicHeight } from '@hooks';
-import type { HTMLTagProps } from '@types';
+import type { HTMLTagProps, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './InputWrap.module.scss';
 
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
-  size?: 'small' | 'medium' | 'large';
+  size?: Size | 'fit-content';
   validationMessage?: string;
+  readonly?: boolean;
 };
 
 export const InputWrap = ({
   //* Input.Wrap props
   size = 'medium',
   validationMessage,
+  readonly = false,
 
   //* HTML div props
   children,
@@ -23,8 +22,6 @@ export const InputWrap = ({
 }: InputWrapProps) => {
   const { messageRef, messageWrapHeight } =
     useInputMessageDynamicHeight(validationMessage);
-
-  const [readonly, setReadonly] = useState(false);
 
   const { isDarkMode } = useDarkMode();
 
@@ -37,9 +34,7 @@ export const InputWrap = ({
           } ${styles[`size-${size}`]} ${readonly && styles.readonly}`,
         )}
       >
-        <InputContext.Provider value={setReadonly}>
-          {children}
-        </InputContext.Provider>
+        {children}
       </div>
       <div
         className={cleanClassName(
