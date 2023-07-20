@@ -33,7 +33,7 @@ export interface SelectboxProps<
     Pick<InputWrapProps, 'reversed' | 'className' | 'style'>,
     Pick<
       SelectProps<TValidOptionValue, TMultiple>,
-      'options' | 'float' | 'onChange' | 'value' | 'multiple'
+      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'cancelable'
     > {
   disabled?: InputDisabled;
   size?: Size;
@@ -73,7 +73,15 @@ export const Selectbox = <
 }: SelectboxProps<TValidOptionValue, TMultiple>) => {
   const [selectedValue, setSelectedValue] = useSubscribedState(value);
 
-  const selectedOption = options?.find(({ value }) => value === selectedValue);
+  const selectedOption = multiple
+    ? options?.filter(({ value }) =>
+        (selectedValue as TValidOptionValue[])?.includes(value),
+      )
+    : options?.find(({ value }) => value === selectedValue);
+
+  const displayedValue = Array.isArray(selectedOption)
+    ? selectedOption.map(({ label }) => label).join(', ')
+    : selectedOption?.label;
 
   const { validationMessage, validateValue } = useValidationMessage({
     validateHandler: validation,
@@ -86,9 +94,11 @@ export const Selectbox = <
     setClosableOnClick,
   } = useClosableOnClickOpeningState();
 
+  const changeOpened = () => setOpened((prev) => !prev);
+
   const decoration = children ?? (
     <ChevronDown
-      onClick={disabled ? undefined : () => setOpened((prev) => !prev)}
+      onClick={disabled ? undefined : () => changeOpened()}
       className={cleanClassName(
         `${styles['selectbox-icon']} ${
           (float === 'top' ? !opened : opened) && styles.reversed
@@ -114,9 +124,9 @@ export const Selectbox = <
         type="button"
         onClick={(e) => {
           onClick?.(e);
-          setOpened((prev) => !prev);
+          changeOpened();
         }}
-        value={selectedOption?.label}
+        value={displayedValue}
         disabled={!!disabled}
         placeholder={placeholder}
       />
