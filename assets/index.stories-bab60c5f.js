@@ -1,0 +1,8 @@
+import{h as l,V as n,I as d,c as S,b as u,H as e,S as E,d as I,a as h}from"./STORY_META-e745fb7d.js";import{S as T}from"./cleanClassName-02d9776f.js";import{S as O}from"./index-b6ed31de.js";import"./jsx-runtime-94f6e698.js";import"./index-8db94870.js";import"./_commonjsHelpers-042e6b4d.js";import"./useSubscribedState-f477a4b7.js";import"./_Uint8Array-a89bc7b3.js";import"./index-ded462de.js";import"./index-98974bb7.js";import"./useDarkMode-9d18891c.js";import"./index-f08c19b6.js";import"./index-c53cb9c6.js";import"./index-1fc0ca9a.js";import"./index-96c3baf1.js";import"./index-8ce4a492.js";import"./index-8c97ad0a.js";const w={title:"molecules/Searchbox",component:O,decorators:l,args:{placeholder:"Searchbox",filterByKeyword:!0,options:T,validation:a=>a?void 0:"Value is required"},argTypes:{validation:n,placeholder:d,filterByKeyword:{description:`It is whether to filter the options by search term.
+
+옵션을 검색어로 필터링할지 여부입니다.`},options:S,disabled:u,onChange:e,style:e,size:E,float:I,children:h}},r={},o={args:{validation:a=>a}};var t,i,s;r.parameters={...r.parameters,docs:{...(t=r.parameters)==null?void 0:t.docs,source:{originalSource:"{}",...(s=(i=r.parameters)==null?void 0:i.docs)==null?void 0:s.source}}};var p,m,c;o.parameters={...o.parameters,docs:{...(p=o.parameters)==null?void 0:p.docs,source:{originalSource:`{
+  args: {
+    validation: value => value
+  }
+}`,...(c=(m=o.parameters)==null?void 0:m.docs)==null?void 0:c.source}}};const B=["Default","WithValidation"];export{r as Default,o as WithValidation,B as __namedExportsOrder,w as default};
+//# sourceMappingURL=index.stories-bab60c5f.js.map
