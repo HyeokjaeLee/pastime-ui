@@ -9,7 +9,7 @@ import { Input } from '.';
 import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'validationMessage' | 'size'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed'>;
 
 enum CATEGORY {
   INPUT = 'Input',
@@ -40,6 +40,11 @@ export default {
         },
       },
     },
+
+    reversed: cloneDeepWith(STORY_META.INPUT_REVERSED, (reversed) => {
+      reversed.table.category = CATEGORY.INPUT_WRAP;
+      return reversed;
+    }),
 
     //* Input
     onChange: STORY_META.HIDDEN,

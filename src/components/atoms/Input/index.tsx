@@ -11,7 +11,7 @@ export type { InputWrapProps } from './inputWrap';
 export interface InputProps
   extends Omit<
     HTMLTagProps<'input'>,
-    'type' | 'value' | 'onChange' | 'width' | 'height'
+    'type' | 'value' | 'onChange' | 'width' | 'height' | 'size'
   > {
   type?: InputType;
   value?: number | string;

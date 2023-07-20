@@ -18,10 +18,33 @@ export const SIZE = {
   description: 'The size of the component.\n\n컴포넌트의 크기',
   table: {
     defaultValue: { summary: 'medium' },
+    type: {
+      summary: '"small" | "medium" | "large"',
+    },
   },
 };
 
-export const OPTIONS_FLOAT = {
+export const SELECT_OPTIONS = {
+  description: 'The options to provide.\n\n제공할 옵션',
+  control: 'object',
+};
+
+export const SELECT_MULTIPLE = {
+  control: 'boolean',
+  description:
+    'Whether multiple selection is possible or not.\n\n다중 선택이 가능한지 여부',
+  table: {
+    defaultValue: { summary: false },
+  },
+};
+
+export const SELECT_CANCELABLE = {
+  control: 'boolean',
+  description:
+    'Whether it is possible to cancel by re-selecting the already selected option.\n\n이미 선택된 옵션을 다시 선택하여 취소할 수 있는지 여부',
+};
+
+export const SELECT_OPTIONS_FLOAT = {
   options: ['bottom', 'top'],
   control: 'radio',
   description:
@@ -30,6 +53,21 @@ export const OPTIONS_FLOAT = {
     defaultValue: { summary: 'bottom' },
   },
 };
+
+export const SELECT_USED_DECORATORS = [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (Story: any) => (
+    <article
+      className="story-container"
+      style={{
+        height: 650,
+        alignItems: 'center',
+      }}
+    >
+      <Story />
+    </article>
+  ),
+];
 
 export const VALIDATION = {
   control: false,
@@ -55,6 +93,9 @@ export const INPUT_DISABLED = {
     type: 'radio',
   },
   table: {
+    type: {
+      summary: 'boolean | "readonly"',
+    },
     defaultValue: { summary: false },
   },
 };
@@ -66,5 +107,16 @@ export const INPUT_CHILDREN = {
     type: {
       summary: 'React.ReactNode',
     },
+  },
+};
+
+export const INPUT_REVERSED = {
+  description: `Whether to reverse the position of the children.\n\nchildren의 위치를 반전시킬지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
   },
 };

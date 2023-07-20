@@ -1,52 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_META } from '@constants';
+import { STORY_META, STORY_DUUMMY } from '@constants';
 
 import { Searchbox } from '.';
 
 const meta: Meta<typeof Searchbox> = {
   title: 'molecules/Searchbox',
   component: Searchbox,
-  decorators: [
-    (Story) => (
-      <article
-        className="story-container"
-        style={{
-          height: 650,
-          alignItems: 'center',
-        }}
-      >
-        <Story />
-      </article>
-    ),
-  ],
+  decorators: STORY_META.SELECT_USED_DECORATORS,
   args: {
     placeholder: 'Searchbox',
     filterByKeyword: true,
 
-    options: Array.from(
-      { length: 10 },
-      (_, index) =>
-        `Test label ${index}${
-          index % 7 === 0
-            ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
-            : ''
-        }`,
-    ),
+    options: STORY_DUUMMY.STRING_OPTIONS,
 
     validation: (value) => (value ? undefined : 'Value is required'),
   },
 
   argTypes: {
     validation: STORY_META.VALIDATION,
+    placeholder: STORY_META.INPUT_PLACEHOLDER,
     filterByKeyword: {
-      description: '옵션을 검색어로 필터링할지 여부입니다.',
+      description:
+        'It is whether to filter the options by search term.\n\n옵션을 검색어로 필터링할지 여부입니다.',
     },
+    options: STORY_META.SELECT_OPTIONS,
     disabled: STORY_META.INPUT_DISABLED,
     onChange: STORY_META.HIDDEN,
     style: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
-    float: STORY_META.OPTIONS_FLOAT,
+    float: STORY_META.SELECT_OPTIONS_FLOAT,
     children: STORY_META.INPUT_CHILDREN,
   },
 };

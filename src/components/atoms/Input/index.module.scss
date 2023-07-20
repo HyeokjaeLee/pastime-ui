@@ -24,6 +24,12 @@
 
   text-overflow: ellipsis;
 
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
   &.empty {
     color: libs.$GRAY-300;
   }

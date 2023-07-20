@@ -16,26 +16,12 @@ const meta: Meta<typeof Select> = {
       control: 'boolean',
       description: "Whether it's open or not.\n\n열려있는지 여부",
     },
-    float: STORY_META.OPTIONS_FLOAT,
-    options: {
-      control: 'object',
-      description: 'The options to provide.\n\n제공할 옵션',
-    },
-    multiple: {
-      control: 'boolean',
-      description:
-        'Whether multiple selection is possible or not.\n\n다중 선택이 가능한지 여부',
-      table: {
-        defaultValue: { summary: false },
-      },
-    },
+    float: STORY_META.SELECT_OPTIONS_FLOAT,
+    options: STORY_META.SELECT_OPTIONS,
+    multiple: STORY_META.SELECT_MULTIPLE,
     onChange: STORY_META.HIDDEN,
     onKeyDown: STORY_META.HIDDEN,
-    cancelable: {
-      control: 'boolean',
-      description:
-        'Whether it is possible to cancel by re-selecting the already selected option.\n\n이미 선택된 옵션을 다시 선택하여 취소할 수 있는지 여부',
-    },
+    cancelable: STORY_META.SELECT_CANCELABLE,
     value: {
       description: 'The value of the selected option.\n\n선택된 옵션의 값',
     },
@@ -43,12 +29,7 @@ const meta: Meta<typeof Select> = {
 
   args: {
     opened: true,
-    options: Array.from({ length: 10 }, (_, index) => ({
-      label: `Test label ${index}${
-        index % 7 === 0 ? ` is long text: ${STORY_DUUMMY.LONG_TEXT}` : ''
-      }`,
-      value: `${index}번 옵션이 선택`,
-    })),
+    options: STORY_DUUMMY.OPTIONS,
     float: 'bottom',
     multiple: false,
     cancelable: true,
