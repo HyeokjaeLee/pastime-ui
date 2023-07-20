@@ -8,21 +8,22 @@ const meta: Meta<typeof Selectbox> = {
   title: 'molecules/Selectbox',
   component: Selectbox,
   argTypes: {
+    placeholder: STORY_META.INPUT_PLACEHOLDER,
+    size: STORY_META.SIZE,
     options: STORY_META.SELECT_OPTIONS,
     float: STORY_META.SELECT_OPTIONS_FLOAT,
     reversed: STORY_META.INPUT_REVERSED,
     disabled: STORY_META.INPUT_DISABLED,
+    cancelable: STORY_META.SELECT_CANCELABLE,
+    onChange: STORY_META.HIDDEN,
+    validation: STORY_META.VALIDATION,
+    multiple: STORY_META.SELECT_MULTIPLE,
+    children: STORY_META.INPUT_CHILDREN,
   },
   decorators: STORY_META.SELECT_USED_DECORATORS,
   args: {
     placeholder: 'Selectbox',
     options: STORY_DUUMMY.OPTIONS,
-
-    validation: (value) => {
-      if (!value) return 'Value is required';
-
-      if (value === '0번 옵션이 선택') return '0번 옵션은 선택할 수 없습니다.';
-    },
   },
 };
 

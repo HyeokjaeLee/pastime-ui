@@ -33,7 +33,7 @@ export interface SelectboxProps<
     Pick<InputWrapProps, 'reversed' | 'className' | 'style'>,
     Pick<
       SelectProps<TValidOptionValue, TMultiple>,
-      'options' | 'float' | 'onChange' | 'value' | 'multiple'
+      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'cancelable'
     > {
   disabled?: InputDisabled;
   size?: Size;
