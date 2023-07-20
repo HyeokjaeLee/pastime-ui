@@ -15,30 +15,31 @@ import { cleanClassName } from '@utils';
 import styles from './index.module.scss';
 
 export type SelectProps<
-  OptionValue extends ValidOptionValue = ValidOptionValue,
-  Multiple extends boolean = false,
+  TOptionValue extends ValidOptionValue = ValidOptionValue,
+  TMultiple extends boolean = false,
 > = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
   opened?: boolean;
   options?: {
     label: string;
-    value: OptionValue;
+    value: TOptionValue;
+    decoration?: React.ReactNode;
   }[];
-  multiple?: Multiple;
-  value?: Multiple extends true ? OptionValue[] : OptionValue;
-  onChange?: (value: SelectProps<OptionValue, Multiple>['value']) => void;
+  multiple?: TMultiple;
+  value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
+  onChange?: (value: SelectProps<TOptionValue, TMultiple>['value']) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   cancelable?: boolean;
 };
 
 export const Select = <
-  OptionValue extends ValidOptionValue = ValidOptionValue,
-  Multiple extends boolean = false,
+  TOptionValue extends ValidOptionValue = ValidOptionValue,
+  TMultiple extends boolean = false,
 >({
   //* Select props
   opened = false,
   options,
-  multiple = false as Multiple,
+  multiple = false as TMultiple,
   value: selectedValue,
   onChange,
   onKeyDown,
@@ -48,7 +49,7 @@ export const Select = <
   //* HTML section props
   className,
   ...restSectionProps
-}: SelectProps<OptionValue, Multiple>) => {
+}: SelectProps<TOptionValue, TMultiple>) => {
   const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
     openingTransition:
       opened === true ? OPENING_TRANSITION.OPENED : OPENING_TRANSITION.CLOSED,
@@ -63,12 +64,12 @@ export const Select = <
 
   const { isDarkMode } = useDarkMode();
 
-  const selectRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const optionItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const [indexForSelect, setIndexForSelect] = useIndexForSelect({
     openingTransition,
     options,
-    selectRefs,
+    optionItemRefs,
     onKeyDown,
   });
 
@@ -84,7 +85,7 @@ export const Select = <
       )}
     >
       <ul className={cleanClassName(styles['select-container'])}>
-        {options?.map(({ label, value }, index) => {
+        {options?.map(({ label, value, decoration }, index) => {
           const isHovered = index === indexForSelect;
           const isSelected = (() => {
             if (selectedValue === undefined) return false;
@@ -101,7 +102,7 @@ export const Select = <
                 name="select-option-item"
                 type="button"
                 ref={(element) => {
-                  selectRefs.current[index] = element;
+                  optionItemRefs.current[index] = element;
                 }}
                 className={cleanClassName(
                   `${styles['select-option-item']} ${
@@ -111,10 +112,10 @@ export const Select = <
                 onClick={() => {
                   if (multiple) {
                     let valuesForSelect = (selectedValue ??
-                      []) as OptionValue[];
+                      []) as TOptionValue[];
 
                     const handleChange = onChange as
-                      | ((values: OptionValue[]) => void)
+                      | ((values: TOptionValue[]) => void)
                       | undefined;
 
                     if (cancelable) {
@@ -128,7 +129,7 @@ export const Select = <
                     handleChange?.(valuesForSelect);
                   } else {
                     const handleChange = onChange as
-                      | ((value?: OptionValue) => void)
+                      | ((value?: TOptionValue) => void)
                       | undefined;
 
                     handleChange?.(
@@ -140,13 +141,14 @@ export const Select = <
                   setIndexForSelect(index);
                 }}
               >
+                {decoration ? <div>{decoration}</div> : null}
                 <div>{label}</div>
                 <div
                   className={cleanClassName(
                     `${styles['icon-wrap']} ${isSelected && styles.show}`,
                   )}
                 >
-                  {<Check size="1em" />}
+                  {<Check size="1.2em" />}
                 </div>
               </button>
             </li>

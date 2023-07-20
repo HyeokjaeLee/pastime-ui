@@ -9,6 +9,11 @@
   background-color: white;
 
   color: libs.$GRAY-700;
+  @layer {
+    & {
+      width: libs.$INPUT_DEFAULT_WIDTH;
+    }
+  }
 }
 
 .dark {

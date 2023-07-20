@@ -2,7 +2,7 @@ import { Percent } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_META, STORY_STYLES } from '@constants';
+import { STORY_META } from '@constants';
 
 import { Textbox } from '..';
 
@@ -10,23 +10,19 @@ const meta: Meta<typeof Textbox> = {
   title: 'molecules/Textbox',
   component: Textbox,
   args: {
-    placeholder: 'placeholder',
+    placeholder: 'Textbox',
     value: '',
-    style: {
-      width: STORY_STYLES.INPUT_WIDTH,
-    },
   },
   argTypes: {
     value: {
       control: 'text',
     },
-    unit: {
-      control: 'text',
-    },
-    ref: STORY_META.HIDDEN,
+    placeholder: STORY_META.INPUT_PLACEHOLDER,
+    children: STORY_META.INPUT_CHILDREN,
     onChange: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
+    disabled: STORY_META.INPUT_DISABLED,
   },
   decorators: [
     (Story) => (
@@ -45,14 +41,16 @@ export const Default: Story = {};
 
 export const WithUnit: Story = {
   args: {
-    unit: '원',
+    children: '원',
     type: 'large-number',
     value: '-10000.95',
   },
   render: (args) => (
     <>
       <Textbox {...args} />
-      <Textbox {...args} unit={<Percent size="1.2em" />} />
+      <Textbox {...args}>
+        <Percent size="1.2em" />
+      </Textbox>
     </>
   ),
 };
@@ -60,7 +58,7 @@ export const WithUnit: Story = {
 export const WithValidation: Story = {
   args: {
     validation: (value) => String(value),
-    unit: '원',
+    children: '원',
     type: 'large-number',
   },
 };

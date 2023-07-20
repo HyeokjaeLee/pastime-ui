@@ -3,6 +3,7 @@ import { Search } from 'react-feather';
 
 import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler } from '@hooks';
+import { InputDisabled } from '@types';
 
 import styles from './index.module.scss';
 import { Select, Input } from '../../atoms';
@@ -10,8 +11,18 @@ import { Select, Input } from '../../atoms';
 import type { InputProps, InputWrapProps, SelectProps } from '../../atoms';
 
 export interface SearchboxProps
-  extends Omit<InputProps, 'size' | 'value' | 'onChange' | 'type' | 'onSelect'>,
-    Pick<InputWrapProps, 'size'>,
+  extends Omit<
+      InputProps,
+      | 'size'
+      | 'value'
+      | 'onChange'
+      | 'type'
+      | 'onSelect'
+      | 'className'
+      | 'style'
+      | 'disabled'
+    >,
+    Pick<InputWrapProps, 'size' | 'reversed' | 'style' | 'className'>,
     Pick<SelectProps<string, false>, 'float'> {
   filterByKeyword?: boolean;
   validation?: ValidateHandler<SearchboxProps['value']>;
@@ -21,6 +32,8 @@ export interface SearchboxProps
   onSelect?: (value: string) => {
     preventDefault?: boolean;
   } | void;
+  children?: React.ReactNode;
+  disabled?: InputDisabled;
 }
 
 type SearchboxFocusEvent = React.FocusEvent<
@@ -28,6 +41,7 @@ type SearchboxFocusEvent = React.FocusEvent<
   Element & HTMLButtonElement
 >;
 
+// TODO: 추후 추상화 필요
 export const Searchbox = ({
   //* Searchbox props
   filterByKeyword = true,
@@ -35,13 +49,14 @@ export const Searchbox = ({
   options,
   value,
   onSelect,
-
-  //* FocusLayer props
-  className,
-  style,
+  children = <Search size="1.5em" strokeWidth="2px" />,
+  disabled,
 
   //* Input.Wrap props
   size,
+  className,
+  style,
+  reversed,
 
   //* Select props
   float,
@@ -102,9 +117,12 @@ export const Searchbox = ({
       validationMessage={validationMessage}
       className={className}
       style={style}
+      reversed={reversed}
+      readonly={disabled === 'readonly'}
     >
       <Input
         {...restInputProps}
+        disabled={!!disabled}
         id={id}
         name={name}
         onChange={(value) => {
@@ -129,7 +147,7 @@ export const Searchbox = ({
         }}
         value={inputValue}
       />
-      <Search className={styles['search-icon']} />
+      {children ? <div className={styles.decoration}>{children}</div> : null}
       <Select
         opened={opened}
         options={filteredSelect}

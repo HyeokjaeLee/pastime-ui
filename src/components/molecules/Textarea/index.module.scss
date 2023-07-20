@@ -1,0 +1,49 @@
+@use 'src/styles/libs' as libs;
+
+@include libs.input-decoration;
+
+.textarea-wrap {
+  position: relative;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: fit-content;
+  padding: 0;
+  //*Size
+  &.size-small {
+    margin: 4px 14px;
+  }
+  &.size-medium {
+    margin: 8px 16px;
+  }
+  &.size-large {
+    margin: 12px 18px;
+  }
+}
+
+.textarea {
+  flex: 1;
+
+  min-height: 1.5em;
+  padding: 0;
+  border: none;
+
+  background-color: inherit;
+  outline: none;
+
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+
+  resize: none;
+
+  transition: height 0.3s;
+
+  &::placeholder {
+    color: rgba(libs.$BLUE-GRAY-300, 0.5);
+  }
+}

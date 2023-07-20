@@ -14,10 +14,6 @@
 
   transition: color 0.3s;
 
-  &:not(.readonly):disabled {
-    cursor: not-allowed;
-  }
-
   &::placeholder {
     color: rgba(libs.$BLUE-GRAY-300, 0.5);
   }
@@ -27,6 +23,12 @@
   overflow: hidden;
 
   text-overflow: ellipsis;
+
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
 
   &.empty {
     color: libs.$GRAY-300;

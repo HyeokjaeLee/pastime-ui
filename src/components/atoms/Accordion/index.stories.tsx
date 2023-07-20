@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_DUUMMY, STORY_META, STORY_STYLES } from '@constants';
+import { STORY_DUUMMY, STORY_META } from '@constants';
 
 import { Accordion } from '.';
 
@@ -24,7 +24,6 @@ const meta: Meta<MetaProps> = {
   component: Accordion,
   args: {
     size: 'medium',
-    style: { width: STORY_STYLES.INPUT_WIDTH },
     titleChildren: 'Accordion Title',
     contentsChildren: STORY_DUUMMY.LONG_TEXT,
   },

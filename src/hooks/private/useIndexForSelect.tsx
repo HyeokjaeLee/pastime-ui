@@ -1,3 +1,5 @@
+import { useGetter } from 'hooks';
+
 import { useState, useEffect } from 'react';
 
 import { INITIAL } from '@constants';
@@ -12,30 +14,35 @@ interface UseOpenStatusParams {
     label: string;
     value: ValidOptionValue;
   }[];
-  selectRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
+  optionItemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
   onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export const useIndexForSelect = ({
   openingTransition,
   options,
-  selectRefs,
+  optionItemRefs,
   onKeyDown,
 }: UseOpenStatusParams) => {
   const indexForSelectState = useState(INITIAL.INDEX);
-  const [, setIndexForSelect] = indexForSelectState;
+  const [indexForSelect, setIndexForSelect] = indexForSelectState;
+
+  const getIndexForSelect = useGetter(indexForSelect);
 
   useEffect(() => {
     if (openingTransition === OPENING_TRANSITION.OPENED && options) {
+      const prevFocusedElement = document.activeElement;
+
       const keyboardEvent = (event: KeyboardEvent) => {
         onKeyDown?.(event);
         switch (event.key) {
           case 'ArrowUp':
             event.preventDefault();
+
             return setIndexForSelect((prevIndex) => {
               if (prevIndex > 0) {
                 const nextIndex = prevIndex - 1;
-                selectRefs.current[nextIndex]?.focus();
+                optionItemRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
@@ -46,25 +53,39 @@ export const useIndexForSelect = ({
             return setIndexForSelect((prevIndex) => {
               if (prevIndex < options.length - 1) {
                 const nextIndex = prevIndex + 1;
-                selectRefs.current[nextIndex]?.focus();
+                optionItemRefs.current[nextIndex]?.focus();
                 return nextIndex;
               }
               return prevIndex;
             });
-          case 'Enter':
+
+          case 'Enter': {
             event.preventDefault();
-            return setIndexForSelect((index) => {
-              if (index >= 0) selectRefs.current[index]?.click();
-              return index;
-            });
-          default:
+            const indexForSelect = getIndexForSelect();
+            if (indexForSelect !== INITIAL.INDEX)
+              optionItemRefs.current[indexForSelect]?.click();
+
+            break;
+          }
+
+          default: {
+            if (prevFocusedElement instanceof HTMLElement)
+              prevFocusedElement?.focus();
+          }
         }
       };
 
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [onKeyDown, openingTransition, options, selectRefs, setIndexForSelect]);
+  }, [
+    getIndexForSelect,
+    onKeyDown,
+    openingTransition,
+    options,
+    optionItemRefs,
+    setIndexForSelect,
+  ]);
 
   return indexForSelectState;
 };

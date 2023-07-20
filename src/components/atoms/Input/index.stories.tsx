@@ -1,73 +1,74 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_META, STORY_STYLES } from '@constants';
+import { STORY_META } from '@constants';
 import { useSubscribedState } from '@hooks';
+import { cloneDeepWith } from '@utils';
 
 import { Input } from '.';
 
 import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'validationMessage' | 'size'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed'>;
 
-const GROUPS = {
-  INPUT: {
-    table: {
-      category: 'Input',
-    },
-  },
-  WRAP: {
-    table: {
-      category: 'Input.Wrap',
-    },
-  },
-};
+enum CATEGORY {
+  INPUT = 'Input',
+  INPUT_WRAP = 'Input.Wrap',
+}
 
 export default {
   title: 'atoms/Input',
   component: Input,
   args: {
-    placeholder: 'placeholder',
+    placeholder: 'Input',
     validationMessage: '',
   },
   argTypes: {
-    //* Input.Container
-    ref: STORY_META.HIDDEN,
-    onChange: STORY_META.HIDDEN,
-    validationMessage: {
-      ...GROUPS.WRAP,
-    },
-
     //* Input.Wrap
-    size: {
-      ...STORY_META.SIZE,
+    size: cloneDeepWith(STORY_META.SIZE, (size) => {
+      size.table.category = CATEGORY.INPUT_WRAP;
+      return size;
+    }),
+
+    validationMessage: {
+      description: 'The validation message to display.\n\n유효성 검사 메시지',
+
       table: {
-        ...STORY_META.SIZE.table,
-        ...GROUPS.WRAP.table,
+        category: CATEGORY.INPUT_WRAP,
+        type: {
+          summary: 'string',
+        },
       },
     },
 
+    reversed: cloneDeepWith(STORY_META.INPUT_REVERSED, (reversed) => {
+      reversed.table.category = CATEGORY.INPUT_WRAP;
+      return reversed;
+    }),
+
     //* Input
-    placeholder: {
-      ...GROUPS.INPUT,
-      control: 'text',
-      description: 'placeholder',
-    },
+    onChange: STORY_META.HIDDEN,
+
+    placeholder: cloneDeepWith(STORY_META.INPUT_PLACEHOLDER, (placeholder) => {
+      placeholder.table.category = CATEGORY.INPUT;
+      return placeholder;
+    }),
     type: {
-      ...GROUPS.INPUT,
+      table: {
+        category: CATEGORY.INPUT,
+      },
       control: 'select',
     },
     value: {
-      ...GROUPS.INPUT,
+      table: {
+        category: CATEGORY.INPUT,
+      },
       control: 'text',
     },
-    disabled: {
-      ...GROUPS.INPUT,
-      options: ['readonly', true, false],
-      control: {
-        type: 'radio',
-      },
-    },
+    disabled: cloneDeepWith(STORY_META.INPUT_DISABLED, (disabled) => {
+      disabled.table.category = CATEGORY.INPUT;
+      return disabled;
+    }),
   },
 } satisfies Meta<MetaProps>;
 
@@ -88,13 +89,7 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Wrap
-        validationMessage={validationMessage}
-        size={size}
-        style={{
-          width: STORY_STYLES.INPUT_WIDTH,
-        }}
-      >
+      <Input.Wrap validationMessage={validationMessage} size={size}>
         <Input
           {...args}
           value={inputValue}

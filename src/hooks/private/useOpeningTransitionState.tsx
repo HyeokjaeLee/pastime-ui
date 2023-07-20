@@ -32,9 +32,10 @@ export const useOpeningTransitionState = ({
 
       case OPENING_TRANSITION.OPENING: {
         const openTimer = setTimeout(
-          () => OPENING_TRANSITION.OPENED,
+          () => setStatus(OPENING_TRANSITION.OPENED),
           openingDuration,
         );
+
         return () => clearTimeout(openTimer);
       }
     }

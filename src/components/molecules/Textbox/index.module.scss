@@ -1,33 +1,3 @@
 @use 'src/styles/libs' as libs;
 
-.unit {
-  position: absolute;
-  right: 0;
-  display: flex;
-  align-items: center;
-
-  box-sizing: border-box;
-  height: 100%;
-  padding: 0 1em;
-  border-top-right-radius: libs.$BORDER-RADIUS-MD;
-  border-bottom-right-radius: libs.$BORDER-RADIUS-MD;
-
-  background: linear-gradient(
-    to right,
-    rgba(libs.$GRAY-300, 0.01) 5%,
-    rgba(libs.$GRAY-300, 0.2) 60%
-  );
-
-  &.dark {
-    background: linear-gradient(
-      to right,
-      rgba(libs.$GRAY-100, 0.01) 5%,
-      rgba(libs.$GRAY-100, 0.2) 60%
-    );
-  }
-
-  color: libs.$GRAY-400;
-  font-weight: 700;
-  font-size: 0.7em;
-  white-space: nowrap;
-}
+@include libs.input-decoration;

@@ -1,27 +1,31 @@
 import type { InputProps, InputWrapProps } from '@components/atoms';
 import { Input } from '@components/atoms';
-import { useDarkMode, useSubscribedState, useValidationMessage } from '@hooks';
+import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler, InputType } from '@hooks';
+import { InputDisabled, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
 export interface TextboxProps
-  extends Omit<InputProps, 'className' | 'size' | 'style'>,
-    Pick<InputWrapProps, 'size' | 'className' | 'style'> {
-  unit?: React.ReactNode;
+  extends Omit<InputProps, 'className' | 'size' | 'style' | 'disabled'>,
+    Pick<InputWrapProps, 'className' | 'style'> {
+  children?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
+  size?: Size;
   validation?: ValidateHandler<TextboxProps['value']>;
+  disabled?: InputDisabled;
 }
 
 export const Textbox = ({
   //* Textbox props
-  unit,
-  validation,
+  children,
   type,
+  size,
+  validation,
+  disabled,
 
   //* Input.Wrap props
-  size,
   className,
   style,
 
@@ -39,35 +43,29 @@ export const Textbox = ({
     id,
   });
 
-  const { isDarkMode } = useDarkMode();
-
   return (
     <Input.Wrap
       size={size}
       validationMessage={validationMessage}
       className={className}
       style={style}
+      readonly={disabled === 'readonly'}
     >
       <Input
         {...restInputProps}
+        disabled={!!disabled}
         type={type}
         value={inputValue}
         id={id}
         name={name}
         onChange={(value) => {
-          validateValue(value);
           setInputValue(value);
           onChange?.(value);
+          validateValue(value);
         }}
       />
-      {unit ? (
-        <div
-          className={cleanClassName(
-            `${styles.unit} ${isDarkMode && styles.dark}`,
-          )}
-        >
-          {unit}
-        </div>
+      {children ? (
+        <div className={cleanClassName(`${styles.decoration}`)}>{children}</div>
       ) : null}
     </Input.Wrap>
   );

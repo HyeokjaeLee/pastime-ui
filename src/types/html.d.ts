@@ -1,3 +1,12 @@
+import {
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LiHTMLAttributes,
+  TextareaHTMLAttributes,
+} from 'react';
+
 type HTMLTags =
   | 'section'
   | 'dt'
@@ -7,36 +16,26 @@ type HTMLTags =
   | 'li'
   | 'button'
   | 'div'
-  | 'input';
+  | 'input'
+  | 'textarea';
+
+type CleanedTagProps<TAttributes extends HTMLAttributes<infer TElement>> = Omit<
+  DetailedHTMLProps<TAttributes, TElement>,
+  'ref'
+>;
 
 export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDListElement>,
-      HTMLDListElement
-    >
+  ? CleanedTagProps<HTMLAttributes<HTMLDListElement>>
   : T extends 'ul'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLUListElement>,
-      HTMLUListElement
-    >
+  ? CleanedTagProps<HTMLAttributes<HTMLUListElement>>
   : T extends 'button'
-  ? React.DetailedHTMLProps<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
-    >
+  ? CleanedTagProps<ButtonHTMLAttributes<HTMLButtonElement>>
   : T extends 'li'
-  ? React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLLIElement>,
-      HTMLLIElement
-    >
+  ? CleanedTagProps<LiHTMLAttributes<HTMLLIElement>>
   : T extends 'div'
-  ? React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
+  ? CleanedTagProps<HTMLAttributes<HTMLDivElement>>
   : T extends 'input'
-  ? React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    >
-  : React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+  ? CleanedTagProps<InputHTMLAttributes<HTMLInputElement>>
+  : T extends 'textarea'
+  ? CleanedTagProps<TextareaHTMLAttributes<HTMLTextAreaElement>>
+  : CleanedTagProps<HTMLAttributes<HTMLElement>>;

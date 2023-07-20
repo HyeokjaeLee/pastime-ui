@@ -47,14 +47,14 @@
   &.dark {
     background-color: libs.$GRAY-800;
   }
-}
 
-@layer default {
-  .tooltip-message-wrap {
-    width: fit-content;
-    padding: 8px 10px;
+  @layer {
+    & {
+      width: fit-content;
+      padding: 8px 10px;
 
-    font-size: small;
-    white-space: pre;
+      font-size: small;
+      white-space: pre;
+    }
   }
 }
