@@ -1,2 +1,3 @@
 export * from './cleanClassName';
-export * from './createValidationStore';
+export * from './isRefObject';
+export * from './cloneDeepWith';

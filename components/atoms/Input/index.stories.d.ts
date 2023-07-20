@@ -1,71 +1,51 @@
 /// <reference types="react" />
 import type { StoryObj } from '@storybook/react';
 import type { InputProps, InputWrapProps } from '.';
-type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size'>;
+type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed'>;
+declare enum CATEGORY {
+    INPUT = "Input",
+    INPUT_WRAP = "Input.Wrap"
+}
 declare const _default: {
     title: string;
-    component: (({ type, value, disabled, onChange, placeholder, className, onFocus, onBlur, ...restInputProps }: InputProps) => JSX.Element) & {
-        Wrap: ({ size, validationMessage, children, ...restDivProps }: InputWrapProps) => JSX.Element;
+    component: (({ type, value, onChange, placeholder, className, onFocus, onBlur, ...restInputProps }: InputProps) => JSX.Element) & {
+        Wrap: ({ size, validationMessage, readonly, reversed, children, className, ...restDivProps }: InputWrapProps) => JSX.Element;
     };
     args: {
         placeholder: string;
         validationMessage: string;
     };
     argTypes: {
-        ref: {
+        size: any;
+        validationMessage: {
+            description: string;
             table: {
-                disable: boolean;
+                category: CATEGORY;
+                type: {
+                    summary: string;
+                };
             };
         };
+        reversed: any;
         onChange: {
             table: {
                 disable: boolean;
             };
         };
-        validationMessage: {
-            table: {
-                category: string;
-            };
-        };
-        size: {
-            table: {
-                category: string;
-                defaultValue: {
-                    summary: string;
-                };
-            };
-            options: string[];
-            control: string;
-            description: string;
-        };
-        placeholder: {
-            control: string;
-            description: string;
-            table: {
-                category: string;
-            };
-        };
+        placeholder: any;
         type: {
-            control: string;
             table: {
-                category: string;
+                category: CATEGORY;
             };
+            control: string;
         };
         value: {
+            table: {
+                category: CATEGORY;
+            };
             control: string;
-            table: {
-                category: string;
-            };
         };
-        disabled: {
-            options: (string | boolean)[];
-            control: {
-                type: string;
-            };
-            table: {
-                category: string;
-            };
-        };
+        disabled: any;
     };
 };
 export default _default;

@@ -7,8 +7,8 @@ interface UseOpenStatusParams {
         label: string;
         value: ValidOptionValue;
     }[];
-    selectRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
+    optionItemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
-export declare const useIndexForSelect: ({ openingTransition, options, selectRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
+export declare const useIndexForSelect: ({ openingTransition, options, optionItemRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
 export {};
