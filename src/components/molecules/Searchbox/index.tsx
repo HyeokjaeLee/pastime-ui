@@ -21,6 +21,7 @@ export interface SearchboxProps
   onSelect?: (value: string) => {
     preventDefault?: boolean;
   } | void;
+  children?: React.ReactNode;
 }
 
 type SearchboxFocusEvent = React.FocusEvent<
@@ -35,6 +36,7 @@ export const Searchbox = ({
   options,
   value,
   onSelect,
+  children = <Search size="1.5em" strokeWidth="2px" />,
 
   //* FocusLayer props
   className,
@@ -129,7 +131,7 @@ export const Searchbox = ({
         }}
         value={inputValue}
       />
-      <Search className={styles['search-icon']} />
+      {children ? <div className={styles.decoration}>{children}</div> : null}
       <Select
         opened={opened}
         options={filteredSelect}

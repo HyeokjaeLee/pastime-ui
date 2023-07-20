@@ -18,6 +18,7 @@ export const InputWrap = ({
 
   //* HTML div props
   children,
+  className,
   ...restDivProps
 }: InputWrapProps) => {
   const { messageRef, messageWrapHeight } =
@@ -26,7 +27,10 @@ export const InputWrap = ({
   const { isDarkMode } = useDarkMode();
 
   return (
-    <div {...restDivProps}>
+    <div
+      {...restDivProps}
+      className={cleanClassName(`${styles['default-width']} ${className}`)}
+    >
       <div
         className={cleanClassName(
           `${styles['input-wrap']} ${isDarkMode && styles.dark} ${

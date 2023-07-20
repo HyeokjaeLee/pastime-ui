@@ -59,9 +59,9 @@ export const Textbox = ({
         id={id}
         name={name}
         onChange={(value) => {
-          validateValue(value);
           setInputValue(value);
           onChange?.(value);
+          validateValue(value);
         }}
       />
       {children ? (

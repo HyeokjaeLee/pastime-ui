@@ -1,5 +1,11 @@
 @use 'src/styles/libs' as libs;
 
+@layer {
+  .default-width {
+    width: libs.$INPUT_DEFAULT_WIDTH;
+  }
+}
+
 @mixin default-theme($color, $backgroundColor, $borderColor) {
   color: $color;
   @include libs.border($borderColor, 1px);

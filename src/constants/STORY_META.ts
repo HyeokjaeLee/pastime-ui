@@ -37,7 +37,7 @@ export const VALIDATION = {
     'The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.\n\n함수의 `argument`는 입력값이며, 리턴값이 에러 메시지가 됩니다. `undefined`를 리턴하면 검증을 통과한 것으로 간주됩니다.',
 };
 
-export const PLACEHOLDER = {
+export const INPUT_PLACEHOLDER = {
   description: 'The placeholder of the component.\n\n컴포넌트의 placeholder',
   control: 'text',
   table: {
@@ -56,5 +56,15 @@ export const INPUT_DISABLED = {
   },
   table: {
     defaultValue: { summary: false },
+  },
+};
+
+export const INPUT_CHILDREN = {
+  description: `The content to display on the right inside the component.\n\n컴포넌트 내부 우측에 표시할 내용`,
+  control: 'text',
+  table: {
+    type: {
+      summary: 'React.ReactNode',
+    },
   },
 };

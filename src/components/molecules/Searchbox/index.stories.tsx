@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_META, STORY_STYLES } from '@constants';
+import { STORY_META } from '@constants';
 
 import { Searchbox } from '.';
 
@@ -23,9 +23,7 @@ const meta: Meta<typeof Searchbox> = {
   args: {
     placeholder: 'Searchbox',
     filterByKeyword: true,
-    style: {
-      width: STORY_STYLES.INPUT_WIDTH,
-    },
+
     options: Array.from(
       { length: 10 },
       (_, index) =>
@@ -44,10 +42,12 @@ const meta: Meta<typeof Searchbox> = {
     filterByKeyword: {
       description: '옵션을 검색어로 필터링할지 여부입니다.',
     },
+    disabled: STORY_META.INPUT_DISABLED,
     onChange: STORY_META.HIDDEN,
     style: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
     float: STORY_META.OPTIONS_FLOAT,
+    children: STORY_META.INPUT_CHILDREN,
   },
 };
 

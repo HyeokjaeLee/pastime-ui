@@ -2,10 +2,10 @@
 
 .tooltip {
   cursor: help;
-}
 
-@layer default {
-  .tooltip {
-    width: fit-content;
+  @layer {
+    & {
+      width: fit-content;
+    }
   }
 }

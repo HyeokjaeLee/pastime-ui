@@ -9,9 +9,18 @@ const meta: Meta<typeof Textarea> = {
   component: Textarea,
   args: {
     size: 'medium',
+    placeholder: 'Textarea',
   },
   argTypes: {
+    value: {
+      control: 'text',
+    },
     disabled: STORY_META.INPUT_DISABLED,
+    children: STORY_META.INPUT_CHILDREN,
+    placeholder: STORY_META.INPUT_PLACEHOLDER,
+    onChange: STORY_META.HIDDEN,
+    size: STORY_META.SIZE,
+    validation: STORY_META.VALIDATION,
   },
 };
 

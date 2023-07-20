@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_META, STORY_STYLES } from '@constants';
+import { STORY_META } from '@constants';
 import { useSubscribedState } from '@hooks';
 import { cloneDeepWith } from '@utils';
 
@@ -20,7 +20,7 @@ export default {
   title: 'atoms/Input',
   component: Input,
   args: {
-    placeholder: 'placeholder',
+    placeholder: 'Input',
     validationMessage: '',
   },
   argTypes: {
@@ -44,7 +44,7 @@ export default {
     //* Input
     onChange: STORY_META.HIDDEN,
 
-    placeholder: cloneDeepWith(STORY_META.PLACEHOLDER, (placeholder) => {
+    placeholder: cloneDeepWith(STORY_META.INPUT_PLACEHOLDER, (placeholder) => {
       placeholder.table.category = CATEGORY.INPUT;
       return placeholder;
     }),
@@ -84,13 +84,7 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
     return (
-      <Input.Wrap
-        validationMessage={validationMessage}
-        size={size}
-        style={{
-          width: STORY_STYLES.INPUT_WIDTH,
-        }}
-      >
+      <Input.Wrap validationMessage={validationMessage} size={size}>
         <Input
           {...args}
           value={inputValue}
