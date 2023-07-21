@@ -54,7 +54,8 @@ const meta: Meta<typeof Button> = {
     },
 
     isLoading: {
-      description: 'The loading state of the button.\n\n버튼의 로딩 상태',
+      description:
+        'Whether the button is loading or not, submit, click handlers do not work while loading.\n\n버튼의 로딩 여부, 로딩 중에는 submit, click 핸들러가 동작하지 않습니다.',
       defaultValue: false,
     },
 
@@ -151,6 +152,22 @@ export const Delay: Story = {
       <Button {...args} />
       <Button {...args} theme="ghost" />
       <Button {...args} theme="clear" />
+    </>
+  ),
+};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+  render: (args) => (
+    <>
+      <Button {...args} shape="pill" />
+      <Button {...args} />
+      <Button {...args} shape="sharp-corner" />
+      <Button {...args} icon={<Trash2 />} iconDirection="left" />
+      <Button {...args} icon={<Trash2 />} iconDirection="right" />
+      <Button {...omit(args, 'children')} icon={<Trash2 />} />
     </>
   ),
 };
