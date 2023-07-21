@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_META } from '@constants';
+import { useSubscribedState } from '@hooks';
 
 import { Pagination } from '.';
-import { useSubscribedState } from '../../../hooks';
 
 const meta: Meta<typeof Pagination> = {
-  title: 'molecules/Pagination',
+  title: 'organisms/Pagination',
   component: Pagination,
   argTypes: {
     page: {

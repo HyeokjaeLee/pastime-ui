@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .pagination {
   display: flex;
@@ -6,8 +6,8 @@
 
   width: fit-content;
   padding: 0;
-  border: 1px solid rgba($GRAY-400, 0.4);
-  border-radius: $BORDER-RADIUS-MD;
+  border: 1px solid rgba(libs.$GRAY-400, 0.4);
+  border-radius: libs.$BORDER-RADIUS-MD;
 
   list-style: none;
 
@@ -15,7 +15,7 @@
 }
 
 .pagination-item-border {
-  border-right: 1px solid rgba($GRAY-400, 0.1);
+  border-right: 1px solid rgba(libs.$GRAY-400, 0.1);
 }
 
 .hidden {

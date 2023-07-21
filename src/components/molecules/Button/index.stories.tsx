@@ -11,7 +11,7 @@ import { Button } from '.';
 import type { ButtonProps } from '.';
 
 const meta: Meta<typeof Button> = {
-  title: 'atoms/Button',
+  title: 'molecules/Button',
   component: Button,
   decorators: [
     (Story) => (
