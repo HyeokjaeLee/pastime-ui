@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export const useSpinnerZeroSize = (transitionSize: boolean) => {
-  const [isSizeZero, setIsSizeZero] = useState(transitionSize);
+export const useSpinnerZeroSize = (sizeTransition: boolean) => {
+  const [isSizeZero, setIsSizeZero] = useState(sizeTransition);
 
   useEffect(() => {
-    if (transitionSize) setTimeout(() => setIsSizeZero(false));
-  }, [transitionSize]);
+    if (sizeTransition) setTimeout(() => setIsSizeZero(false));
+  }, [sizeTransition]);
 
   return isSizeZero;
 };

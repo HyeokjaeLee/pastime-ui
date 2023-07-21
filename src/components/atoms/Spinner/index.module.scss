@@ -28,8 +28,10 @@ $BACKGROUND_COLOR: rgba(libs.$BLUE-GRAY-300, 0.5);
     @include size(0);
   }
 
-  transition: width $RESIZE_DURATION ease-in-out,
-    height $RESIZE_DURATION ease-in-out;
+  &.size-transition {
+    transition: width $RESIZE_DURATION ease-in-out,
+      height $RESIZE_DURATION ease-in-out;
+  }
 
   @include libs.scale-up-center($RESIZE_DURATION);
 }

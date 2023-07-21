@@ -7,27 +7,27 @@ import styles from './index.module.scss';
 export interface SpinnerProps
   extends Omit<HTMLTagProps<'div'>, 'children' | 'size'> {
   size?: Size;
-  transitionSize?: boolean;
+  sizeTransition?: boolean;
 }
 
 export const Spinner = ({
   //* Spinner props
-  size = 'large',
-  transitionSize = false,
+  size = 'medium',
+  sizeTransition = false,
 
   //* HTML div props
   className,
   ...restDivProps
 }: SpinnerProps) => {
-  const isSizeZero = useSpinnerZeroSize(transitionSize);
+  const isSizeZero = useSpinnerZeroSize(sizeTransition);
 
   return (
     <div
       {...restDivProps}
       className={cleanClassName(
         `${styles['spinner-wrap']} ${
-          styles[`size-${isSizeZero ? 'zero' : size}`]
-        } ${className}`,
+          sizeTransition && styles['size-transition']
+        } ${styles[`size-${isSizeZero ? 'zero' : size}`]} ${className}`,
       )}
     >
       <div className={styles.spinner}>
