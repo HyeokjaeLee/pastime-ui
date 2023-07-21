@@ -15,3 +15,4 @@ export * from './useInputWrapDeclaredSize';
 export * from './useTextareaDynamicHeight';
 export * from './useClosableOnClickOpeningState';
 export * from './useSpinnerZeroSize';
+export * from './useButtonLoading';

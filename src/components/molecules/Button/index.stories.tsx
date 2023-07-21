@@ -46,10 +46,16 @@ const meta: Meta<typeof Button> = {
 
     icon: {
       description: 'The icon of the button.\n\n버튼의 아이콘',
+      control: 'text',
     },
 
     iconDirection: {
       description: 'The display position of the icon.\n\n아이콘 표시 위치',
+    },
+
+    isLoading: {
+      description: 'The loading state of the button.\n\n버튼의 로딩 상태',
+      defaultValue: false,
     },
 
     disabled: {
