@@ -1,7 +1,7 @@
 @use 'src/styles/libs' as libs;
 
-$RESIZE_DURATION: 1s;
-$BACKGROUND_COLOR: rgba(libs.$BLUE-GRAY-300, 0.5);
+$RESIZE_DURATION: 0.2s;
+$BACKGROUND_COLOR: libs.$COOL-GRAY-300;
 
 @mixin size($size) {
   width: $size;

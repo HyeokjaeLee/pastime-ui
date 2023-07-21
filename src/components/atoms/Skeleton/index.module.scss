@@ -4,7 +4,7 @@
   position: relative;
   overflow: hidden;
 
-  background-color: rgba(libs.$BLUE-GRAY-300, 0.8);
+  background-color: rgba(libs.$COOL-GRAY-300, 0.8);
   @include libs.fade-in(0.2s);
 
   @layer {
@@ -24,17 +24,17 @@
   width: 100%;
   height: 100%;
 
-  animation: shining 2.5s infinite;
+  animation: shining 1.5s infinite;
 }
 
 .light-reflection {
   width: 50%;
   height: 100%;
 
-  background-color: rgba(white, 0.5);
-  box-shadow: 0 0 30px 30px rgba(white, 0.4);
+  background-color: rgba(libs.$COOL-GRAY-100, 0.4);
+  box-shadow: 0 0 30px 30px rgba(libs.$COOL-GRAY-100, 0.3);
 
-  transform: skewX(-15deg);
+  transform: skewX(-20deg);
 }
 
 @keyframes shining {
