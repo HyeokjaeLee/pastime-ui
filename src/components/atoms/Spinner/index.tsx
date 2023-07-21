@@ -31,7 +31,7 @@ export const Spinner = ({
       )}
     >
       <div className={styles.spinner}>
-        <span className={styles.satellite} />
+        <span className={`${styles.satellite} ${styles[`size-${size}`]}`} />
       </div>
     </div>
   );

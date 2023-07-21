@@ -96,6 +96,163 @@ $BACKGROUND_COLOR: libs.$COOL-GRAY-300;
   }
 }
 
+@mixin animation-3-4-small($size) {
+  @-webkit-keyframes animation-3-small {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-small {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-small {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-small {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin animation-3-4-medium($size) {
+  @-webkit-keyframes animation-3-medium {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-medium {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-medium {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-medium {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin animation-3-4-large($size) {
+  @-webkit-keyframes animation-3-large {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-large {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-large {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-large {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin satellite-animation($animation-3, $animation-4) {
+  &::before,
+  &::after {
+    -webkit-animation: $animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: $animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+
+  &::after {
+    -webkit-animation: $animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: $animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+
 .satellite {
   position: absolute;
   top: 0;
@@ -128,13 +285,21 @@ $BACKGROUND_COLOR: libs.$COOL-GRAY-300;
 
     background-color: $BACKGROUND_COLOR;
 
-    -webkit-animation: animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-    animation: animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    &.size-small {
+      @include size(12px);
+    }
   }
 
-  &::after {
-    -webkit-animation: animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-    animation: animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  &.size-small {
+    @include satellite-animation(animation-3-small, animation-4-small);
+  }
+
+  &.size-medium {
+    @include satellite-animation(animation-3-medium, animation-4-medium);
+  }
+
+  &.size-large {
+    @include satellite-animation(animation-3-large, animation-4-large);
   }
 }
 
@@ -162,48 +327,6 @@ $BACKGROUND_COLOR: libs.$COOL-GRAY-300;
   }
 }
 
-@-webkit-keyframes animation-3 {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    -webkit-transform: translate3d(-16px, 0, 0) scale(0.5);
-  }
-  100% {
-    -webkit-transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-@keyframes animation-3 {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(-16px, 0, 0) scale(0.5);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@-webkit-keyframes animation-4 {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    -webkit-transform: translate3d(16px, 0, 0) scale(0.5);
-  }
-  100% {
-    -webkit-transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-@keyframes animation-4 {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(16px, 0, 0) scale(0.5);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
+@include animation-3-4-small(9px);
+@include animation-3-4-medium(12px);
+@include animation-3-4-large(16px);
