@@ -53,7 +53,7 @@ const meta: Meta<typeof Button> = {
       description: 'The display position of the icon.\n\n아이콘 표시 위치',
     },
 
-    isLoading: {
+    loading: {
       description:
         'Whether the button is loading or not, submit, click handlers do not work while loading.\n\n버튼의 로딩 여부, 로딩 중에는 submit, click 핸들러가 동작하지 않습니다.',
       defaultValue: false,
@@ -158,7 +158,7 @@ export const Delay: Story = {
 
 export const Loading: Story = {
   args: {
-    isLoading: true,
+    loading: true,
   },
   render: (args) => (
     <>
