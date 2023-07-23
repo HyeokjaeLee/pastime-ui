@@ -1,0 +1,58 @@
+@use 'src/styles/libs' as libs;
+
+.background-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  &.blurred {
+    backdrop-filter: blur(4px);
+
+    background-color: rgba(libs.$COOL-GRAY-800, 0.3);
+  }
+}
+
+.modal {
+  background-color: libs.$BLUE-100;
+  @layer {
+    & {
+      width: fit-content;
+      height: fit-content;
+      min-height: 300px;
+      min-height: 80vh;
+    }
+  }
+}
+
+@mixin stack-index($index) {
+  &.background-layer {
+    z-index: $index * 100;
+  }
+
+  &.modal {
+    z-index: ($index * 100) + 50;
+  }
+}
+
+.stack-index-1 {
+  @include stack-index(1);
+}
+
+.stack-index-2 {
+  @include stack-index(2);
+}
+
+.stack-index-3 {
+  @include stack-index(3);
+}
+
+.stack-index-4 {
+  @include stack-index(4);
+}
+
+.stack-index-5 {
+  @include stack-index(5);
+}

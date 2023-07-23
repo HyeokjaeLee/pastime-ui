@@ -21,7 +21,7 @@ export interface ButtonProps extends HTMLTagProps<'button'> {
   icon?: React.ReactNode;
   iconDirection?: ButtonIconDirection;
   shape?: 'sharp-corner' | 'rounded' | 'pill';
-  isLoading?: boolean;
+  loading?: boolean;
 }
 
 export const Button = ({
@@ -32,7 +32,7 @@ export const Button = ({
   shape = 'rounded',
   iconDirection = 'left',
   icon,
-  isLoading = false,
+  loading = false,
 
   //* HTML button props
   type = 'button',
@@ -58,7 +58,7 @@ export const Button = ({
 
   const { leftLoadingSpinner, rightLoadingSpinner, iconLoadingSpinner } =
     useButtonLoading({
-      isLoading,
+      loading,
       childrenType,
       iconDirection,
     });
@@ -66,8 +66,8 @@ export const Button = ({
   return (
     <button
       {...restButtonProps}
-      onClick={isLoading ? undefined : onClick}
-      type={isLoading && type === 'submit' ? 'button' : type}
+      onClick={loading ? undefined : onClick}
+      type={loading && type === 'submit' ? 'button' : type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles[`shape-${shape}`]

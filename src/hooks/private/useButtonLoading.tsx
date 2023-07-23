@@ -3,17 +3,17 @@ import { Spinner } from '@components/atoms';
 export type ButtonIconDirection = 'left' | 'right';
 
 interface UseButtonLoadingParams {
-  isLoading: boolean;
+  loading: boolean;
   iconDirection: ButtonIconDirection;
   childrenType: 'icon' | 'text' | 'both';
 }
 
 export const useButtonLoading = ({
-  isLoading,
+  loading,
   iconDirection,
   childrenType,
 }: UseButtonLoadingParams) => {
-  if (isLoading) {
+  if (loading) {
     const LoadingSpinner = <Spinner size="small" sizeTransition />;
     if (childrenType === 'icon') {
       return {
