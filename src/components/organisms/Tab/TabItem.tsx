@@ -1,5 +1,5 @@
-import { Button } from '@components/atoms';
-import type { ButtonProps } from '@components/atoms';
+import { Button } from '@components/molecules';
+import type { ButtonProps } from '@components/molecules';
 import { useTabContext } from '@contexts/TabContext';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';

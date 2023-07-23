@@ -1,4 +1,4 @@
-import type { ButtonProps } from '@components/atoms';
+import type { ButtonProps } from '@components/molecules';
 import { TabContextProvider } from '@contexts/TabContext';
 import { useDarkMode, useTabOverflowX } from '@hooks';
 import { HTMLTagProps } from '@types';

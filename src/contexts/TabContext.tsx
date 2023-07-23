@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import type { ButtonProps } from '@components/atoms';
+import type { ButtonProps } from '@components/molecules';
 
 const TabContext = createContext<ButtonProps['size']>(undefined);
 

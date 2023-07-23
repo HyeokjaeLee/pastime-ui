@@ -11,7 +11,7 @@ import { Button } from '.';
 import type { ButtonProps } from '.';
 
 const meta: Meta<typeof Button> = {
-  title: 'atoms/Button',
+  title: 'molecules/Button',
   component: Button,
   decorators: [
     (Story) => (
@@ -46,10 +46,17 @@ const meta: Meta<typeof Button> = {
 
     icon: {
       description: 'The icon of the button.\n\n버튼의 아이콘',
+      control: 'text',
     },
 
     iconDirection: {
       description: 'The display position of the icon.\n\n아이콘 표시 위치',
+    },
+
+    loading: {
+      description:
+        'Whether the button is loading or not, submit, click handlers do not work while loading.\n\n버튼의 로딩 여부, 로딩 중에는 submit, click 핸들러가 동작하지 않습니다.',
+      defaultValue: false,
     },
 
     disabled: {
@@ -145,6 +152,22 @@ export const Delay: Story = {
       <Button {...args} />
       <Button {...args} theme="ghost" />
       <Button {...args} theme="clear" />
+    </>
+  ),
+};
+
+export const Loading: Story = {
+  args: {
+    loading: true,
+  },
+  render: (args) => (
+    <>
+      <Button {...args} shape="pill" />
+      <Button {...args} />
+      <Button {...args} shape="sharp-corner" />
+      <Button {...args} icon={<Trash2 />} iconDirection="left" />
+      <Button {...args} icon={<Trash2 />} iconDirection="right" />
+      <Button {...omit(args, 'children')} icon={<Trash2 />} />
     </>
   ),
 };

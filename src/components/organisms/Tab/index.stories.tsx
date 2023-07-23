@@ -20,7 +20,7 @@ const createTabDummyData = (length: number) =>
   Array.from({ length }, (_, index) => `Tab ${index + 1}`);
 
 const meta: Meta<MetaProps> = {
-  title: 'molecules/Tab',
+  title: 'organisms/Tab',
   component: Tab,
   args: {
     size: 'medium',

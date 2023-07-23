@@ -101,18 +101,6 @@
   }
 
   @layer {
-    &.children-type-text {
-      padding: 0 16px;
-    }
-
-    &.children-type-icon {
-      padding: 0;
-    }
-
-    &.children-type-both {
-      padding: 0 10px;
-    }
-
     //* Size
     &.size-small {
       height: 32px;
@@ -133,6 +121,18 @@
       &.children-type-icon {
         width: 48px;
       }
+    }
+
+    &.children-type-text {
+      padding: 0 16px;
+    }
+
+    &.children-type-icon {
+      padding: 0;
+    }
+
+    &.children-type-both {
+      padding: 0 10px;
     }
 
     //* Shape

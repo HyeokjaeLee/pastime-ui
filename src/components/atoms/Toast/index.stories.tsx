@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from '@components/atoms';
+import { Button } from '@components/molecules';
 import { STORY_DUUMMY } from '@constants';
 import { ToastOption } from '@contexts/ToastContext';
 import { useToast } from '@hooks';

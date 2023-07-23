@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
-import type { ButtonProps } from '@components/atoms';
-import { Button } from '@components/atoms';
+import { Button } from '@components/molecules';
+import type { ButtonProps } from '@components/molecules';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 

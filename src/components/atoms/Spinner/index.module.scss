@@ -1,0 +1,332 @@
+@use 'src/styles/libs' as libs;
+
+$RESIZE_DURATION: 0.2s;
+$BACKGROUND_COLOR: libs.$COOL-GRAY-300;
+
+@mixin size($size) {
+  width: $size;
+  height: $size;
+}
+
+.spinner-wrap {
+  position: relative;
+  display: inline-block;
+
+  &.size-small {
+    @include size(28px);
+  }
+
+  &.size-medium {
+    @include size(36px);
+  }
+
+  &.size-large {
+    @include size(48px);
+  }
+
+  &.size-zero {
+    @include size(0);
+  }
+
+  &.size-transition {
+    transition: width $RESIZE_DURATION ease-in-out,
+      height $RESIZE_DURATION ease-in-out;
+  }
+
+  @include libs.scale-up-center($RESIZE_DURATION);
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+
+    width: 35%;
+    height: 35%;
+    margin: auto;
+    border-radius: 50%;
+
+    background-color: $BACKGROUND_COLOR;
+
+    -webkit-animation: animation-1 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: animation-1 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+
+@-webkit-keyframes animation-1 {
+  0% {
+    opacity: 0;
+
+    -webkit-transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+
+    -webkit-transform: scale(0);
+  }
+}
+@keyframes animation-1 {
+  0% {
+    opacity: 0;
+
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+
+    transform: scale(0);
+  }
+}
+
+@mixin animation-3-4-small($size) {
+  @-webkit-keyframes animation-3-small {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-small {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-small {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-small {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin animation-3-4-medium($size) {
+  @-webkit-keyframes animation-3-medium {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-medium {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-medium {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-medium {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin animation-3-4-large($size) {
+  @-webkit-keyframes animation-3-large {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-3-large {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-$size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @-webkit-keyframes animation-4-large {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      -webkit-transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  @keyframes animation-4-large {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d($size, 0, 0) scale(0.5);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+@mixin satellite-animation($animation-3, $animation-4) {
+  &::before,
+  &::after {
+    -webkit-animation: $animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: $animation-3 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+
+  &::after {
+    -webkit-animation: $animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: $animation-4 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+
+.satellite {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+  margin: auto;
+
+  -webkit-animation: animation-2 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  animation: animation-2 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+
+    width: 35%;
+    height: 35%;
+    margin: auto;
+    border-radius: 50%;
+
+    background-color: $BACKGROUND_COLOR;
+
+    &.size-small {
+      @include size(12px);
+    }
+  }
+
+  &.size-small {
+    @include satellite-animation(animation-3-small, animation-4-small);
+  }
+
+  &.size-medium {
+    @include satellite-animation(animation-3-medium, animation-4-medium);
+  }
+
+  &.size-large {
+    @include satellite-animation(animation-3-large, animation-4-large);
+  }
+}
+
+@-webkit-keyframes animation-2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes animation-2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@include animation-3-4-small(9px);
+@include animation-3-4-medium(12px);
+@include animation-3-4-large(16px);
