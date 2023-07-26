@@ -51,16 +51,14 @@ export const Select = <
   ...restSectionProps
 }: SelectProps<TOptionValue, TMultiple>) => {
   const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
-    openingTransition:
-      opened === true ? OPENING_TRANSITION.OPENED : OPENING_TRANSITION.CLOSED,
+    openingTransition: opened
+      ? OPENING_TRANSITION.OPENED
+      : OPENING_TRANSITION.CLOSED,
     openingDuration: 200,
     closingDuration: 200,
   });
 
-  useMountedEffect(
-    () => setOpeningTransition(opened),
-    [opened, setOpeningTransition],
-  );
+  useMountedEffect(() => setOpeningTransition(opened), [opened]);
 
   const { isDarkMode } = useDarkMode();
 

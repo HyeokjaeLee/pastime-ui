@@ -1,58 +1,93 @@
 @use 'src/styles/libs' as libs;
 
-.background-layer {
+@mixin stack-index($index) {
+  z-index: $index * 100;
+}
+
+.modal-container {
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include libs.fade-in(0.2s);
+
+  &.closing {
+    @include libs.fade-out(0.2s);
+  }
 
   width: 100vw;
   height: 100vh;
+  &.stack-index-1 {
+    @include stack-index(1);
+  }
+
+  &.stack-index-2 {
+    @include stack-index(2);
+  }
+
+  &.stack-index-3 {
+    @include stack-index(3);
+  }
+
+  &.stack-index-4 {
+    @include stack-index(4);
+  }
+
+  &.stack-index-5 {
+    @include stack-index(5);
+  }
+}
+
+.background-layer {
+  position: absolute;
+  z-index: -1;
+
+  width: 100%;
+  height: 100%;
 
   &.blurred {
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(3px);
 
-    background-color: rgba(libs.$COOL-GRAY-800, 0.3);
+    background-color: rgba(libs.$COOL-GRAY-800, 0.5);
   }
 }
 
 .modal {
-  background-color: libs.$BLUE-100;
+  display: flex;
+  flex-direction: column;
+
+  border-radius: libs.$BORDER-RADIUS-MD;
+
+  background-color: white;
+
   @layer {
     & {
       width: fit-content;
+      min-width: 300px;
+      max-width: calc(100vw - 1rem);
       height: fit-content;
       min-height: 300px;
-      min-height: 80vh;
+      max-height: calc(100vh - 1rem);
     }
   }
 }
 
-@mixin stack-index($index) {
-  &.background-layer {
-    z-index: $index * 100;
+.main {
+  flex: 1;
+  overflow: auto;
+}
+
+//* HEADER
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  @layer {
+    & {
+      padding: 5px;
+    }
   }
-
-  &.modal {
-    z-index: ($index * 100) + 50;
-  }
-}
-
-.stack-index-1 {
-  @include stack-index(1);
-}
-
-.stack-index-2 {
-  @include stack-index(2);
-}
-
-.stack-index-3 {
-  @include stack-index(3);
-}
-
-.stack-index-4 {
-  @include stack-index(4);
-}
-
-.stack-index-5 {
-  @include stack-index(5);
 }
