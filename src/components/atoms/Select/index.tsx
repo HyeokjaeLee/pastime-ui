@@ -14,6 +14,16 @@ import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
+type ButtonMouseEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
+interface SelectChangeEvent<T> extends Omit<ButtonMouseEvent, 'target'> {
+  target: ButtonMouseEvent['target'] & {
+    value: T;
+  };
+}
+
+type SelectChangeEventHandler<T> = (event: SelectChangeEvent<T>) => void;
+
 export type SelectProps<
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
@@ -26,7 +36,9 @@ export type SelectProps<
   }[];
   multiple?: TMultiple;
   value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
-  onChange?: (value: SelectProps<TOptionValue, TMultiple>['value']) => void;
+  onChange?: SelectChangeEventHandler<
+    SelectProps<TOptionValue, TMultiple>['value']
+  >;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   cancelable?: boolean;
@@ -107,37 +119,45 @@ export const Select = <
                     isHovered && styles.hovered
                   }`,
                 )}
-                onClick={() => {
+                onClick={(event) => {
                   if (multiple) {
-                    let valuesForSelect = (selectedValue ??
-                      []) as TOptionValue[];
+                    type MultipleSelectProps = SelectProps<TOptionValue, true>;
+                    let valuesForSelect =
+                      (selectedValue as MultipleSelectProps['value']) ?? [];
 
-                    const handleChange = onChange as
-                      | ((values: TOptionValue[]) => void)
-                      | undefined;
+                    const handleChange =
+                      onChange as MultipleSelectProps['onChange'];
 
                     if (cancelable) {
                       valuesForSelect = isSelected
-                        ? valuesForSelect.filter(
+                        ? valuesForSelect?.filter(
                             (selectedValue) => selectedValue !== value,
                           )
                         : [...valuesForSelect, value];
                     }
 
-                    handleChange?.(valuesForSelect);
+                    handleChange?.({
+                      ...event,
+                      target: {
+                        ...event.target,
+                        value: valuesForSelect,
+                      },
+                    });
                   } else {
-                    const handleChange = onChange as
-                      | ((value?: TOptionValue) => void)
-                      | undefined;
+                    type SingleSelectProps = SelectProps<TOptionValue, false>;
+                    const handleChange =
+                      onChange as SingleSelectProps['onChange'];
 
-                    handleChange?.(
-                      isSelected && cancelable ? undefined : value,
-                    );
+                    handleChange?.({
+                      ...event,
+                      target: {
+                        ...event.target,
+                        value: isSelected && cancelable ? undefined : value,
+                      },
+                    });
                   }
                 }}
-                onMouseEnter={() => {
-                  setIndexForSelect(index);
-                }}
+                onMouseEnter={() => setIndexForSelect(index)}
               >
                 {decoration ? <div>{decoration}</div> : null}
                 <div>{label}</div>

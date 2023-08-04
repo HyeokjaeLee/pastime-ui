@@ -28,7 +28,7 @@ export const Switch = ({
   //* HTML input props
   ...restInputProps
 }: SwitchProps) => {
-  const [turned, setTurned] = useSubscribedState(value);
+  const [turned, setTurned, disableSetter] = useSubscribedState(() => value);
 
   const sizeClassName = styles[`size-${size}`];
   const turnedClassName = turned ? styles.on : styles.off;
@@ -48,7 +48,12 @@ export const Switch = ({
         type="checkbox"
         className={styles['switch-input']}
         checked={turned}
-        onChange={({ target: { checked } }) => {
+        onChange={(event) => {
+          const newEvent = {
+            ...event,
+          };
+          disableSetter();
+
           setTurned(checked);
           onChange?.(checked);
         }}

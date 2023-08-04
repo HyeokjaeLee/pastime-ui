@@ -93,9 +93,9 @@ export const Default: Story = {
         <Input
           {...args}
           value={inputValue}
-          onChange={(value) => {
-            setInputValue(value);
-            onChange?.(value);
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            onChange?.(event);
           }}
         />
       </Input.Wrap>

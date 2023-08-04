@@ -11,11 +11,10 @@ export type { InputWrapProps } from './inputWrap';
 export interface InputProps
   extends Omit<
     HTMLTagProps<'input'>,
-    'type' | 'value' | 'onChange' | 'width' | 'height' | 'size'
+    'type' | 'value' | 'width' | 'height' | 'size'
   > {
   type?: InputType;
   value?: number | string;
-  onChange?: (value: string) => void;
 }
 
 export const Input = Object.assign(
@@ -23,13 +22,13 @@ export const Input = Object.assign(
     //* Input props
     type = 'text',
     value,
-    onChange,
 
     //* HTML input props
     placeholder,
     className,
     onFocus,
     onBlur,
+    onChange,
     ...restInputProps
   }: InputProps) => {
     const {
@@ -62,9 +61,14 @@ export const Input = Object.assign(
             !value && styles.empty
           } ${className}`,
         )}
-        onChange={({ target: { value } }) => {
-          const convertedValue = convertChangeHandlerParam(value);
-          if (convertedValue !== null) onChange?.(convertedValue);
+        onChange={(event) => {
+          const { target } = event;
+          const convertedValue = convertChangeHandlerParam(target.value);
+
+          if (convertedValue !== null) {
+            target.value = convertedValue;
+            onChange?.(event);
+          }
         }}
       />
     );
