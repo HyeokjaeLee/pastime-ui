@@ -1,14 +1,8 @@
 import { useSubscribedState } from '@hooks';
-import type { DisableSetter } from '@hooks';
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps, InnerStateChangeEventHandler } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
-
-export interface SwitchChangeEvent {
-  value: boolean;
-  preventInnerStateChange: DisableSetter;
-}
 
 export interface SwitchProps
   extends Pick<HTMLTagProps<'div'>, 'className' | 'style'>,
@@ -18,7 +12,7 @@ export interface SwitchProps
     > {
   size?: 'small' | 'medium' | 'large';
   value?: boolean;
-  onChange?: (event: SwitchChangeEvent) => void;
+  onChange?: InnerStateChangeEventHandler<boolean>;
 }
 
 export const Switch = ({

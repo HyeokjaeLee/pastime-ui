@@ -33,40 +33,44 @@ export const useIndexForSelect = ({
     if (openingTransition === OPENING_TRANSITION.OPENED && options) {
       const prevFocusedElement = document.activeElement;
 
+      const focusOptionItem = (indexForSelect: number) => {
+        optionItemRefs.current[indexForSelect]?.focus();
+        setIndexForSelect(indexForSelect);
+      };
+
       const keyboardEvent = (event: KeyboardEvent) => {
         onKeyDown?.(event);
+
+        let indexForSelect = getIndexForSelect();
+
         switch (event.key) {
           case 'ArrowUp':
             event.preventDefault();
 
-            return setIndexForSelect((prevIndex) => {
-              if (prevIndex > 0) {
-                const nextIndex = prevIndex - 1;
-                optionItemRefs.current[nextIndex]?.focus();
-                return nextIndex;
-              }
-              return prevIndex;
-            });
+            if (indexForSelect > 0) {
+              indexForSelect -= 1;
+              focusOptionItem(indexForSelect);
+            }
+
+            break;
 
           case 'ArrowDown':
             event.preventDefault();
-            return setIndexForSelect((prevIndex) => {
-              if (prevIndex < options.length - 1) {
-                const nextIndex = prevIndex + 1;
-                optionItemRefs.current[nextIndex]?.focus();
-                return nextIndex;
-              }
-              return prevIndex;
-            });
 
-          case 'Enter': {
+            if (indexForSelect < options.length - 1) {
+              indexForSelect += 1;
+              focusOptionItem(indexForSelect);
+            }
+
+            break;
+
+          case 'Enter':
             event.preventDefault();
-            const indexForSelect = getIndexForSelect();
+
             if (indexForSelect !== INITIAL.INDEX)
               optionItemRefs.current[indexForSelect]?.click();
 
             break;
-          }
 
           default: {
             if (prevFocusedElement instanceof HTMLElement)

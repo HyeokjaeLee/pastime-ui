@@ -17,6 +17,7 @@ import styles from './index.module.scss';
 export type SelectProps<
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 > = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
   opened?: boolean;
   options?: {
@@ -25,33 +26,38 @@ export type SelectProps<
     decoration?: React.ReactNode;
   }[];
   multiple?: TMultiple;
+  cancelable?: TCancelable;
   value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
   onChange?: (event: {
-    value: SelectProps<TOptionValue, TMultiple>['value'];
+    value: TMultiple extends true
+      ? TOptionValue[]
+      : TCancelable extends true
+      ? TOptionValue | undefined
+      : TOptionValue;
   }) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  cancelable?: boolean;
 };
 
 export const Select = <
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 >({
   //* Select props
   opened = false,
   options,
   multiple = false as TMultiple,
+  cancelable = true as TCancelable,
   value: selectedValue,
   onChange,
   onKeyDown,
   float = 'bottom',
-  cancelable = true,
 
   //* HTML section props
   className,
   ...restSectionProps
-}: SelectProps<TOptionValue, TMultiple>) => {
+}: SelectProps<TOptionValue, TMultiple, TCancelable>) => {
   const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
     openingTransition: opened
       ? OPENING_TRANSITION.OPENED
