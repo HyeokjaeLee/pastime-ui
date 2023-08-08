@@ -72,7 +72,7 @@ export const Default: Story = {
         {...props}
         value={value}
         onChange={(event) => {
-          setValue(event.target.value);
+          setValue(event.value);
           props.onChange?.(event);
         }}
       />

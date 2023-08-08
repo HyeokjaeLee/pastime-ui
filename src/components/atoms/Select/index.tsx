@@ -14,16 +14,6 @@ import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
-type ButtonMouseEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
-
-interface SelectChangeEvent<T> extends Omit<ButtonMouseEvent, 'target'> {
-  target: ButtonMouseEvent['target'] & {
-    value: T;
-  };
-}
-
-type SelectChangeEventHandler<T> = (event: SelectChangeEvent<T>) => void;
-
 export type SelectProps<
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
@@ -36,9 +26,9 @@ export type SelectProps<
   }[];
   multiple?: TMultiple;
   value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
-  onChange?: SelectChangeEventHandler<
-    SelectProps<TOptionValue, TMultiple>['value']
-  >;
+  onChange?: (event: {
+    value: SelectProps<TOptionValue, TMultiple>['value'];
+  }) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   cancelable?: boolean;
@@ -119,7 +109,7 @@ export const Select = <
                     isHovered && styles.hovered
                   }`,
                 )}
-                onClick={(event) => {
+                onClick={() => {
                   if (multiple) {
                     type MultipleSelectProps = SelectProps<TOptionValue, true>;
                     let valuesForSelect =
@@ -137,11 +127,7 @@ export const Select = <
                     }
 
                     handleChange?.({
-                      ...event,
-                      target: {
-                        ...event.target,
-                        value: valuesForSelect,
-                      },
+                      value: valuesForSelect,
                     });
                   } else {
                     type SingleSelectProps = SelectProps<TOptionValue, false>;
@@ -149,11 +135,7 @@ export const Select = <
                       onChange as SingleSelectProps['onChange'];
 
                     handleChange?.({
-                      ...event,
-                      target: {
-                        ...event.target,
-                        value: isSelected && cancelable ? undefined : value,
-                      },
+                      value: isSelected && cancelable ? undefined : value,
                     });
                   }
                 }}

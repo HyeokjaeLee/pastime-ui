@@ -1,6 +1,6 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
-@include libs.input-decoration;
+@include input-decoration;
 
 .textarea-wrap {
   position: relative;
@@ -44,6 +44,6 @@
   transition: height 0.3s;
 
   &::placeholder {
-    color: rgba(libs.$BLUE-GRAY-300, 0.5);
+    color: rgba($BLUE-GRAY-300, 0.5);
   }
 }

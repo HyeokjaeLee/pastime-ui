@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .tab {
   display: flex;
@@ -8,7 +8,7 @@
   margin: 0 1em;
   padding: 0.5em 0.5em 0;
   padding-top: 0.5em;
-  border-radius: libs.$BORDER-RADIUS-SM;
+  border-radius: $BORDER-RADIUS-SM;
 
   list-style: none;
 

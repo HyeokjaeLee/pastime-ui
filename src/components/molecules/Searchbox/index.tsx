@@ -1,14 +1,19 @@
 import { useMemo, useRef, useState } from 'react';
 import { Search } from 'react-feather';
 
+import type {
+  InputProps,
+  InputWrapProps,
+  SelectProps,
+} from '@components/atoms';
+import { Select, Input } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler } from '@hooks';
-import { InputDisabled } from '@types';
+import { ChangeEvent, InputDisabled } from '@types';
 
 import styles from './index.module.scss';
-import { Select, Input } from '../../atoms';
 
-import type { InputProps, InputWrapProps, SelectProps } from '../../atoms';
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export interface SearchboxProps
   extends Omit<
@@ -28,10 +33,7 @@ export interface SearchboxProps
   validation?: ValidateHandler<SearchboxProps['value']>;
   options?: string[];
   value?: string;
-  onChange?: (value: string) => void;
-  onSelect?: (value: string) => {
-    preventDefault?: boolean;
-  } | void;
+  onChange?: (event: ChangeEvent<InputChangeEvent>) => void;
   children?: React.ReactNode;
   disabled?: InputDisabled;
 }
@@ -48,7 +50,6 @@ export const Searchbox = ({
   validation,
   options,
   value,
-  onSelect,
   children = <Search size="1.5em" strokeWidth="2px" />,
   disabled,
 
@@ -71,7 +72,8 @@ export const Searchbox = ({
   ...restInputProps
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
-  const [inputValue, setInputValue] = useSubscribedState(value);
+  const [inputValue, setInputValue, preventChangeInnerState] =
+    useSubscribedState(value);
 
   const labeledSelect = useMemo(
     () => options?.map((value) => ({ label: value, value })),
@@ -102,14 +104,23 @@ export const Searchbox = ({
     validateHandler: validation,
   });
 
-  const handleChange: typeof onChange = (value) => {
+  const handleChange = ({ target, ...event }: InputChangeEvent) => {
+    const { value } = target;
+
     setInputValue(value);
-    onChange?.(value);
+    onChange?.({
+      ...event,
+      target: {
+        ...target,
+        preventChangeInnerState,
+      },
+    });
     validateValue(value);
   };
 
-  const tempSearchboxFocusEvent = useRef<SearchboxFocusEvent>();
   let isRefocus = false;
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Input.Wrap
@@ -122,12 +133,13 @@ export const Searchbox = ({
     >
       <Input
         {...restInputProps}
+        ref={inputRef}
         disabled={!!disabled}
         id={id}
         name={name}
-        onChange={(value) => {
+        onChange={(event) => {
           setOpened(true);
-          handleChange(value);
+          handleChange(event);
         }}
         onFocus={(e) => {
           if (isRefocus) isRefocus = false;
@@ -138,9 +150,7 @@ export const Searchbox = ({
           onClick?.(e);
         }}
         onBlur={(e: SearchboxFocusEvent) => {
-          if (e.relatedTarget?.name === 'select-option-item')
-            tempSearchboxFocusEvent.current = e;
-          else {
+          if (e.relatedTarget?.name !== 'select-option-item') {
             setOpened(false);
             onBlur?.(e);
           }
@@ -153,7 +163,17 @@ export const Searchbox = ({
         options={filteredSelect}
         value={inputValue}
         cancelable={false}
-        onChange={(value) => {
+        onChange={(event) => {
+          const { current: inputElement } = inputRef;
+
+          if (!inputElement) return;
+
+          handleChange({
+            ...event,
+            target: inputElement,
+          });
+
+          handleChange(event);
           const { preventDefault } = onSelect?.(value ?? '') ?? {};
           if (!preventDefault) handleChange(value ?? '');
           isRefocus = true;

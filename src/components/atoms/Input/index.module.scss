@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .input {
   width: 100%;
@@ -16,7 +16,7 @@
   transition: color 0.3s;
 
   &::placeholder {
-    color: rgba(libs.$BLUE-GRAY-300, 0.5);
+    color: rgba($BLUE-GRAY-300, 0.5);
   }
 }
 
@@ -32,6 +32,6 @@
   }
 
   &.empty {
-    color: libs.$GRAY-300;
+    color: $GRAY-300;
   }
 }

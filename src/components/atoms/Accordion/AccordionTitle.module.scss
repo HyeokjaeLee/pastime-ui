@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .accordian-title-wrap {
   width: 100%;
@@ -21,7 +21,7 @@
   cursor: pointer;
 
   &:hover > .chevron-down-icon {
-    color: rgba(libs.$GRAY-400, 0.8);
+    color: rgba($GRAY-400, 0.8);
   }
 }
 
@@ -60,7 +60,7 @@
 .chevron-down-icon {
   width: 1.2em;
 
-  color: rgba(libs.$GRAY-400, 0.4);
+  color: rgba($GRAY-400, 0.4);
 
   transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
   stroke-width: 2;

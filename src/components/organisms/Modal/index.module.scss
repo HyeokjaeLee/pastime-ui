@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 @mixin stack-index($index) {
   z-index: $index * 100;
@@ -12,10 +12,10 @@
   align-items: center;
   justify-content: center;
 
-  @include libs.fade-in(0.2s);
+  @include fade-in(0.2s);
 
   &.closing {
-    @include libs.fade-out(0.2s);
+    @include fade-out(0.2s);
   }
 
   width: 100vw;
@@ -51,7 +51,7 @@
   &.blurred {
     backdrop-filter: blur(3px);
 
-    background-color: rgba(libs.$COOL-GRAY-800, 0.5);
+    background-color: rgba($COOL-GRAY-800, 0.5);
   }
 }
 
@@ -59,7 +59,7 @@
   display: flex;
   flex-direction: column;
 
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-MD;
 
   background-color: white;
 

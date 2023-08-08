@@ -120,3 +120,28 @@ export const INPUT_REVERSED = {
     defaultValue: { summary: false },
   },
 };
+
+export const INNER_STATE_CHANGE_HANDLER = {
+  description: `
+  #### Inner State usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        inputValues.value = e.value;
+      };
+    </code>
+  </pre>
+  #### preventInnerStateChange usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        e.preventInnerStateChange();
+        setValue(e.value);
+      };
+    </code>
+  </pre>
+  Component's Change handler supports inner State, and you can deactivate the inner State by calling the preventInnerStateChange function.
+  
+  컴포넌트의 Change 핸들러는 내부 State를 지원하며, preventInnerStateChange 함수를 호출하여 내부 State를 비활성화할 수 있습니다.`,
+  control: false,
+};

@@ -1,7 +1,7 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 $RESIZE_DURATION: 0.2s;
-$BACKGROUND_COLOR: libs.$COOL-GRAY-300;
+$BACKGROUND_COLOR: $COOL-GRAY-300;
 
 @mixin size($size) {
   width: $size;
@@ -33,7 +33,7 @@ $BACKGROUND_COLOR: libs.$COOL-GRAY-300;
       height $RESIZE_DURATION ease-in-out;
   }
 
-  @include libs.scale-up-center($RESIZE_DURATION);
+  @include scale-up-center($RESIZE_DURATION);
 }
 
 .spinner {

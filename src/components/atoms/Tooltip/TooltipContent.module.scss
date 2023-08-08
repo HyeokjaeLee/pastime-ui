@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .tooltip-message-container {
   position: fixed;
@@ -8,9 +8,9 @@
   align-items: center;
 
   transition: left 0.3s, top 0.3s;
-  @include libs.fade-in(0.1s);
+  @include fade-in(0.1s);
   &.closing {
-    @include libs.fade-out(0.1s);
+    @include fade-out(0.1s);
   }
 }
 
@@ -24,10 +24,10 @@
   border-width: 0 7.5px;
   border-style: solid;
   border-bottom-width: 5px;
-  border-bottom-color: libs.$GRAY-400;
+  border-bottom-color: $GRAY-400;
 
   &.dark {
-    border-bottom-color: libs.$GRAY-800;
+    border-bottom-color: $GRAY-800;
   }
 }
 
@@ -36,16 +36,16 @@
   z-index: 2;
 
   margin-top: 4px;
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-MD;
 
-  background-color: libs.$GRAY-800;
-  background-color: libs.$GRAY-400;
-  box-shadow: libs.$BOX_SHADOW;
+  background-color: $GRAY-800;
+  background-color: $GRAY-400;
+  box-shadow: $BOX_SHADOW;
 
   color: white;
 
   &.dark {
-    background-color: libs.$GRAY-800;
+    background-color: $GRAY-800;
   }
 
   @layer {
