@@ -14,10 +14,22 @@ import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
+export interface SelectChangeEvent<
+  TOptionValue extends ValidOptionValue,
+  TMultiple extends boolean,
+  TCancelable extends boolean,
+> {
+  value: TMultiple extends true
+    ? TOptionValue[]
+    : TCancelable extends true
+    ? TOptionValue | undefined
+    : TOptionValue;
+}
+
 export type SelectProps<
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
-  TCancelable extends boolean = true,
+  TCancelable extends boolean = false,
 > = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
   opened?: boolean;
   options?: {
@@ -27,14 +39,10 @@ export type SelectProps<
   }[];
   multiple?: TMultiple;
   cancelable?: TCancelable;
-  value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
-  onChange?: (event: {
-    value: TMultiple extends true
-      ? TOptionValue[]
-      : TCancelable extends true
-      ? TOptionValue | undefined
-      : TOptionValue;
-  }) => void;
+  value?: TMultiple extends true ? TOptionValue[] : TOptionValue | undefined;
+  onChange?: (
+    event: SelectChangeEvent<TOptionValue, TMultiple, TCancelable>,
+  ) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
 };
@@ -42,13 +50,13 @@ export type SelectProps<
 export const Select = <
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
-  TCancelable extends boolean = true,
+  TCancelable extends boolean = false,
 >({
   //* Select props
   opened = false,
   options,
   multiple = false as TMultiple,
-  cancelable = true as TCancelable,
+  cancelable = false as TCancelable,
   value: selectedValue,
   onChange,
   onKeyDown,
@@ -117,7 +125,11 @@ export const Select = <
                 )}
                 onClick={() => {
                   if (multiple) {
-                    type MultipleSelectProps = SelectProps<TOptionValue, true>;
+                    type MultipleSelectProps = SelectProps<
+                      TOptionValue,
+                      true,
+                      TCancelable
+                    >;
                     let valuesForSelect =
                       (selectedValue as MultipleSelectProps['value']) ?? [];
 
@@ -136,13 +148,17 @@ export const Select = <
                       value: valuesForSelect,
                     });
                   } else {
-                    type SingleSelectProps = SelectProps<TOptionValue, false>;
+                    type SingleSelectProps = SelectProps<
+                      TOptionValue,
+                      false,
+                      TCancelable
+                    >;
                     const handleChange =
                       onChange as SingleSelectProps['onChange'];
 
                     handleChange?.({
                       value: isSelected && cancelable ? undefined : value,
-                    });
+                    } as SelectChangeEvent<TOptionValue, false, TCancelable>);
                   }
                 }}
                 onMouseEnter={() => setIndexForSelect(index)}
