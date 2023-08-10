@@ -6,6 +6,7 @@
   cursor: pointer;
 
   transition: transform 0.2s ease-in-out;
+
   &.reversed {
     transform: rotate(180deg);
   }

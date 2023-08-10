@@ -8,7 +8,9 @@
   align-items: center;
 
   transition: left 0.3s, top 0.3s;
+
   @include fade-in(0.1s);
+
   &.closing {
     @include fade-out(0.1s);
   }

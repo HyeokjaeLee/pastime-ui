@@ -67,28 +67,33 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
 
     -webkit-transform: scale(0);
   }
+
   50% {
     opacity: 1;
 
     -webkit-transform: scale(1);
   }
+
   100% {
     opacity: 0;
 
     -webkit-transform: scale(0);
   }
 }
+
 @keyframes animation-1 {
   0% {
     opacity: 0;
 
     transform: scale(0);
   }
+
   50% {
     opacity: 1;
 
     transform: scale(1);
   }
+
   100% {
     opacity: 0;
 
@@ -101,20 +106,25 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-3-small {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
@@ -124,45 +134,54 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-4-small {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
   }
 }
-
 @mixin animation-3-4-medium($size) {
   @-webkit-keyframes animation-3-medium {
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-3-medium {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
@@ -172,45 +191,54 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-4-medium {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
   }
 }
-
 @mixin animation-3-4-large($size) {
   @-webkit-keyframes animation-3-large {
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-3-large {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d(-$size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
@@ -220,26 +248,30 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
     0% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       -webkit-transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   @keyframes animation-4-large {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     50% {
       transform: translate3d($size, 0, 0) scale(0.5);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
   }
 }
-
 @mixin satellite-animation($animation-3, $animation-4) {
   &::before,
   &::after {
@@ -307,9 +339,11 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
   0% {
     -webkit-transform: rotate(0deg);
   }
+
   50% {
     -webkit-transform: rotate(180deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
   }
@@ -319,9 +353,11 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
   0% {
     transform: rotate(0deg);
   }
+
   50% {
     transform: rotate(180deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

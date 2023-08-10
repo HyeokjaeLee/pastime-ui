@@ -5,6 +5,7 @@
   overflow: hidden;
 
   background-color: rgba($COOL-GRAY-300, 0.8);
+
   @include fade-in(0.2s);
 
   @layer {
@@ -41,9 +42,11 @@
   0% {
     transform: translateX(-150%);
   }
+
   50% {
     transform: translateX(-60%);
   }
+
   100% {
     transform: translate(150%);
   }

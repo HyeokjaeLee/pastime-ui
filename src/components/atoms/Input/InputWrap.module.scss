@@ -8,6 +8,7 @@
 
 @mixin default-theme($color, $backgroundColor, $borderColor) {
   color: $color;
+
   @include border($borderColor, 1px);
 
   &:not(&:has(:disabled)) {
@@ -18,7 +19,6 @@
     color: $color;
   }
 }
-
 @mixin disabled-theme($color, $backgroundColor) {
   &:has(:disabled) {
     background-color: $backgroundColor;
@@ -26,19 +26,16 @@
     color: $color;
   }
 }
-
 @mixin focus-border($borderColor) {
   &:not(&:has(:disabled)):has(:focus) {
     @include border($borderColor, 2px);
   }
 }
-
 @mixin hover-border($borderColor) {
   &:not(&:has(:disabled)):hover {
     @include border($borderColor, 1px);
   }
 }
-
 @mixin size($paddingX, $height) {
   height: $height;
   padding: 0 $paddingX;
@@ -78,12 +75,15 @@
   &.size-small {
     @include size(14px, 32px);
   }
+
   &.size-medium {
     @include size(16px, 40px);
   }
+
   &.size-large {
     @include size(18px, 48px);
   }
+
   &.size-fit-content {
     @include size(0, fit-content);
   }

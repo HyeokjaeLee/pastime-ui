@@ -46,6 +46,7 @@
   }
 
   transition: margin 0.2s linear;
+
   &.size-small {
     width: 12px;
     height: 12px;
@@ -84,6 +85,7 @@
 
   opacity: 0;
   cursor: pointer;
+
   &:disabled {
     cursor: not-allowed;
   }

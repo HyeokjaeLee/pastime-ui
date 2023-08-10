@@ -20,6 +20,7 @@
 
   width: 100vw;
   height: 100vh;
+
   &.stack-index-1 {
     @include stack-index(1);
   }
@@ -81,10 +82,10 @@
 }
 
 //* HEADER
-
 .header {
   display: flex;
   justify-content: space-between;
+
   @layer {
     & {
       padding: 5px;

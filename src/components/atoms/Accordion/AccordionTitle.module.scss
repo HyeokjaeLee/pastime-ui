@@ -4,6 +4,19 @@
   width: 100%;
 }
 
+.chevron-down-icon {
+  width: 1.2em;
+
+  color: rgba($GRAY-400, 0.4);
+
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  stroke-width: 2;
+
+  &.opened {
+    transform: rotate(180deg);
+  }
+}
+
 .accordian-title {
   display: flex;
   align-items: center;
@@ -32,6 +45,7 @@
 }
 
 //*Size
+
 @mixin sizeClasses {
   .size-small {
     @include size(14px, 32px);
@@ -55,16 +69,4 @@
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.chevron-down-icon {
-  width: 1.2em;
-
-  color: rgba($GRAY-400, 0.4);
-
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  stroke-width: 2;
-  &.opened {
-    transform: rotate(180deg);
-  }
 }

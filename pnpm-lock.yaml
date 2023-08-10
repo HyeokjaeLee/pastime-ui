@@ -17,14 +17,14 @@ devDependencies:
     specifier: ^7.21.8
     version: 7.21.8
   '@hyeokjaelee/eslint-config':
-    specifier: ^1.3.1
-    version: 1.3.1(@babel/core@7.21.8)(eslint@8.39.0)
+    specifier: ^1.3.3
+    version: 1.3.3(@babel/core@7.21.8)(eslint@8.39.0)
   '@hyeokjaelee/prettier-config':
-    specifier: ^1.3.1
-    version: 1.3.1(prettier@2.8.8)
+    specifier: ^1.3.3
+    version: 1.3.3(prettier@2.8.8)
   '@hyeokjaelee/stylelint-config':
-    specifier: ^1.3.1
-    version: 1.3.1(postcss-syntax@0.36.2)(postcss@8.4.23)(stylelint@15.6.1)
+    specifier: ^1.3.3
+    version: 1.3.3(postcss@8.4.23)(stylelint@15.6.1)
   '@storybook/addon-actions':
     specifier: ^7.1.0
     version: 7.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -2351,8 +2351,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@hyeokjaelee/eslint-config@1.3.1(@babel/core@7.21.8)(eslint@8.39.0):
-    resolution: {integrity: sha512-IVzttf/CDnAc/ohZvXU5uwmcLPZDw7n/xWjpa9t3PPpkSC9995ep3Npv2oY3VhPf1icA4XP8MCTR8YCCkR+eQQ==}
+  /@hyeokjaelee/eslint-config@1.3.3(@babel/core@7.21.8)(eslint@8.39.0):
+    resolution: {integrity: sha512-r+EZhPq1bTSLD+ajH9XcmuTBoT1V61uSpIiSx2FBCS/kbEy7HaOKO1zYffU6aIuJX3GvKR/4XbTX/acjP0byxQ==}
     peerDependencies:
       eslint: ^8.0.0
     dependencies:
@@ -2384,27 +2384,26 @@ packages:
       - supports-color
     dev: true
 
-  /@hyeokjaelee/prettier-config@1.3.1(prettier@2.8.8):
-    resolution: {integrity: sha512-qrE/SsWT2ynvJeITToh2EKO7dZ7E1EFJuJx3w6XyCoLSM+DI+ZJUp3dF7NQlqZRUAZzxfX6fvjOjM/BbLGZW0Q==}
+  /@hyeokjaelee/prettier-config@1.3.3(prettier@2.8.8):
+    resolution: {integrity: sha512-zqb6zagH7ZpBsc+fKOimQG7c6wNTvnnW7EU7wf6TPIC7fjrHJUWZZMtQFGeNOXU2aJY8pL/JzSZ8cn8aK10M1g==}
     peerDependencies:
       prettier: ^2.0.0
     dependencies:
       prettier: 2.8.8
     dev: true
 
-  /@hyeokjaelee/stylelint-config@1.3.1(postcss-syntax@0.36.2)(postcss@8.4.23)(stylelint@15.6.1):
-    resolution: {integrity: sha512-ao9vNvljrcn8CUKXuh9YTYL9f6PR398PVyhbDQPJDylmnxyB+/UrNWaZHD+qSVx27lT27aR6gQhnqWPTyW268g==}
+  /@hyeokjaelee/stylelint-config@1.3.3(postcss@8.4.23)(stylelint@15.6.1):
+    resolution: {integrity: sha512-rOqSLNDzhVb6/nFlxo4856Ag6sGf7JUbIFrEf3cD0s/6i+YfIrYtmzI3lBwzeNY4NL/2W1zcwqFykf1YL7cSiQ==}
     peerDependencies:
       stylelint: ^15.6.0
     dependencies:
-      '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2)(postcss@8.4.23)
+      postcss-scss: 4.0.6(postcss@8.4.23)
       stylelint: 15.6.1
       stylelint-config-recommended-scss: 11.0.0(postcss@8.4.23)(stylelint@15.6.1)
       stylelint-order: 6.0.3(stylelint@15.6.1)
+      stylelint-scss: 5.1.0(stylelint@15.6.1)
     transitivePeerDependencies:
       - postcss
-      - postcss-syntax
-      - supports-color
     dev: true
 
   /@isaacs/cliui@8.0.2:
@@ -3595,20 +3594,6 @@ packages:
       '@types/babel__core': 7.20.0
       '@types/express': 4.17.17
       file-system-cache: 2.3.0
-    dev: true
-
-  /@stylelint/postcss-css-in-js@0.38.0(postcss-syntax@0.36.2)(postcss@8.4.23):
-    resolution: {integrity: sha512-XOz5CAe49kS95p5yRd+DAIWDojTjfmyAQ4bbDlXMdbZTQ5t0ThjSLvWI6JI2uiS7MFurVBkZ6zUqcimzcLTBoQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-    peerDependencies:
-      postcss: '>=7.0.0'
-      postcss-syntax: '>=0.36.2'
-    dependencies:
-      '@babel/core': 7.21.8
-      postcss: 8.4.23
-      postcss-syntax: 0.36.2(postcss@8.4.23)
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@swc/core-darwin-arm64@1.3.56:
@@ -8478,34 +8463,18 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
+  /postcss-selector-parser@6.0.13:
+    resolution: {integrity: sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==}
+    engines: {node: '>=4'}
+    dependencies:
+      cssesc: 3.0.0
+      util-deprecate: 1.0.2
+    dev: true
+
   /postcss-sorting@8.0.2(postcss@8.4.23):
     resolution: {integrity: sha512-M9dkSrmU00t/jK7rF6BZSZauA5MAaBW4i5EnJXspMwt4iqTh/L9j6fgMnbElEOfyRyfLfVbIHj/R52zHzAPe1Q==}
     peerDependencies:
       postcss: ^8.4.20
-    dependencies:
-      postcss: 8.4.23
-    dev: true
-
-  /postcss-syntax@0.36.2(postcss@8.4.23):
-    resolution: {integrity: sha512-nBRg/i7E3SOHWxF3PpF5WnJM/jQ1YpY9000OaVXlAQj6Zp/kIqJxEDWIZ67tAd7NLuk7zqN4yqe9nc0oNAOs1w==}
-    peerDependencies:
-      postcss: '>=5.0.0'
-      postcss-html: '*'
-      postcss-jsx: '*'
-      postcss-less: '*'
-      postcss-markdown: '*'
-      postcss-scss: '*'
-    peerDependenciesMeta:
-      postcss-html:
-        optional: true
-      postcss-jsx:
-        optional: true
-      postcss-less:
-        optional: true
-      postcss-markdown:
-        optional: true
-      postcss-scss:
-        optional: true
     dependencies:
       postcss: 8.4.23
     dev: true
@@ -9532,6 +9501,18 @@ packages:
       postcss-media-query-parser: 0.2.3
       postcss-resolve-nested-selector: 0.1.1
       postcss-selector-parser: 6.0.12
+      postcss-value-parser: 4.2.0
+      stylelint: 15.6.1
+    dev: true
+
+  /stylelint-scss@5.1.0(stylelint@15.6.1):
+    resolution: {integrity: sha512-E+KlQFXv1Euha43qw3q+wKBSli557wxbbo6/39DWhRNXlUa9Cz+FYrcgz+PT6ag0l6UisCYjAGCNhoSl4FcwlA==}
+    peerDependencies:
+      stylelint: ^14.5.1 || ^15.0.0
+    dependencies:
+      postcss-media-query-parser: 0.2.3
+      postcss-resolve-nested-selector: 0.1.1
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
       stylelint: 15.6.1
     dev: true

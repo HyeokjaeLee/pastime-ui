@@ -9,6 +9,7 @@
   background-color: white;
 
   color: $GRAY-700;
+
   @layer {
     & {
       width: $INPUT_DEFAULT_WIDTH;

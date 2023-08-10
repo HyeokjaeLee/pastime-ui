@@ -43,7 +43,9 @@
     top: 10px;
     bottom: 10px;
   }
+
   @include fade-out-top(0.3s);
+
   &.opened {
     @include fade-in-top(0.3s);
   }
