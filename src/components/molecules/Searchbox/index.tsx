@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Search } from 'react-feather';
 
 import type {
@@ -7,16 +7,19 @@ import type {
   SelectProps,
 } from '@components/atoms';
 import { Select, Input } from '@components/atoms';
-import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { ValidateHandler } from '@hooks';
-import { InnerStateChangeEventHandler, InputDisabled } from '@types';
+import {
+  useSubscribedState,
+  useValidationMessage,
+  useFilteredSearchOptions,
+} from '@hooks';
+import type { ValidateHandler, UseFilteredSearchOptionsParams } from '@hooks';
+import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
 
 import styles from './index.module.scss';
 
 export interface SearchboxProps
   extends Omit<
       InputProps,
-      | 'size'
       | 'value'
       | 'onChange'
       | 'type'
@@ -25,11 +28,11 @@ export interface SearchboxProps
       | 'style'
       | 'disabled'
     >,
-    Pick<InputWrapProps, 'size' | 'reversed' | 'style' | 'className'>,
-    Pick<SelectProps<string, false>, 'float'> {
-  filterByKeyword?: boolean;
+    Pick<InputWrapProps, 'reversed' | 'style' | 'className'>,
+    Pick<SelectProps<string, false, false>, 'float'>,
+    Pick<UseFilteredSearchOptionsParams, 'filterByKeyword' | 'options'> {
+  size?: Size;
   validation?: ValidateHandler<SearchboxProps['value']>;
-  options?: string[];
   value?: string;
   onChange?: InnerStateChangeEventHandler<string>;
   children?: React.ReactNode;
@@ -41,9 +44,9 @@ type SearchboxFocusEvent = React.FocusEvent<
   Element & HTMLButtonElement
 >;
 
-// TODO: 추후 추상화 필요
 export const Searchbox = ({
   //* Searchbox props
+  size,
   filterByKeyword = true,
   validation,
   options,
@@ -53,7 +56,6 @@ export const Searchbox = ({
   disabled,
 
   //* Input.Wrap props
-  size,
   className,
   style,
   reversed,
@@ -73,28 +75,11 @@ export const Searchbox = ({
   const [inputValue, setInputValue, preventInnerStateChange] =
     useSubscribedState(value);
 
-  const labeledSelect = useMemo(
-    () => options?.map((value) => ({ label: value, value })),
-    [options],
-  );
-
-  let filteredSelect = labeledSelect;
-
-  if (filterByKeyword && filteredSelect && inputValue) {
-    const standardizeString = (value: string) =>
-      value.toLowerCase().replace(/[^a-z0-9가-힣]/gi, '');
-
-    const standardizeInputTextArray = inputValue
-      .split(' ')
-      .map((value) => standardizeString(value));
-
-    filteredSelect = filteredSelect.filter(({ value }) => {
-      const standardizeOption = standardizeString(value);
-      return standardizeInputTextArray.every((inputText) =>
-        standardizeOption.includes(inputText),
-      );
-    });
-  }
+  const filteredOptions = useFilteredSearchOptions({
+    options,
+    filterByKeyword,
+    inputValue,
+  });
 
   const { validationMessage, validateValue } = useValidationMessage({
     id,
@@ -152,7 +137,7 @@ export const Searchbox = ({
       {children ? <div className={styles.decoration}>{children}</div> : null}
       <Select
         opened={opened}
-        options={filteredSelect}
+        options={filteredOptions}
         value={inputValue}
         cancelable={false}
         onChange={({ value }) => {
