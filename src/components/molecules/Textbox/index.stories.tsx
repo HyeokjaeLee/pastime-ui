@@ -42,7 +42,7 @@ type Story = StoryObj<typeof Textbox>;
 
 export const Default: Story = {};
 
-export const WithUnit: Story = {
+export const WithChildren: Story = {
   args: {
     children: '원',
     type: 'large-number',
