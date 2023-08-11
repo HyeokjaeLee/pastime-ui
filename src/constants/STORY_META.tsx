@@ -60,7 +60,7 @@ export const SELECT_USED_DECORATORS = [
     <article
       className="story-container"
       style={{
-        height: 650,
+        height: 700,
         alignItems: 'center',
       }}
     >
@@ -106,6 +106,16 @@ export const INPUT_CHILDREN = {
   table: {
     type: {
       summary: 'React.ReactNode',
+    },
+  },
+};
+
+export const INPUT_LABEL = {
+  description: `The label text of the component.\n\n컴포넌트의 라벨 텍스트`,
+  control: 'text',
+  table: {
+    type: {
+      summary: 'string',
     },
   },
 };

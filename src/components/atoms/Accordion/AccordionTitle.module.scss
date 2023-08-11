@@ -48,15 +48,15 @@
 
 @mixin sizeClasses {
   .size-small {
-    @include size(14px, 32px);
+    @include size(12px, 32px);
   }
 
   .size-medium {
-    @include size(16px, 40px);
+    @include size(14px, 40px);
   }
 
   .size-large {
-    @include size(18px, 48px);
+    @include size(16px, 48px);
   }
 }
 

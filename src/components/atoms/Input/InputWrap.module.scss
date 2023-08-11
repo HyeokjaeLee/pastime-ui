@@ -41,21 +41,25 @@
   padding: 0 $paddingX;
 }
 
+.label {
+  margin: {
+    top: 0.5em;
+    right: 1em;
+    bottom: 0;
+    left: 1em;
+  }
+  color: $COOL-GRAY-400;
+  font-size: small;
+}
+
 .input-wrap {
-  position: relative;
   z-index: 1;
   display: flex;
-  gap: 0.8em;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 
   box-sizing: border-box;
   width: 100%;
   border-radius: $BORDER-RADIUS-MD;
-
-  &.reversed {
-    flex-direction: row-reverse;
-  }
 
   transition: box-shadow 0.3s, background-color 0.3s;
 
@@ -71,25 +75,40 @@
     @include focus-border($COOL-GRAY-400);
   }
 
+  &.error {
+    @include border($ROSE-500, 2.2px);
+  }
+}
+
+.input-wrap-content {
+  position: relative;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+
+  &.reversed {
+    flex-direction: row-reverse;
+  }
+
   //*Size
   &.size-small {
-    @include size(14px, 32px);
+    @include size(12px, 32px);
   }
 
   &.size-medium {
-    @include size(16px, 40px);
+    @include size(14px, 40px);
   }
 
   &.size-large {
-    @include size(18px, 48px);
+    @include size(16px, 48px);
   }
 
   &.size-fit-content {
     @include size(0, fit-content);
-  }
-
-  &.error {
-    @include border($ROSE-500, 2.2px);
   }
 }
 
