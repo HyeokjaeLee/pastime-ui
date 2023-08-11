@@ -46,3 +46,5 @@ export function useSubscribedState<T>(
 
   return [value, setter, disableSetter];
 }
+
+export type SubscribedState<T> = ReturnType<typeof useSubscribedState<T>>;
