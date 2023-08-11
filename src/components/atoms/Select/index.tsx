@@ -6,7 +6,6 @@ import {
   useIndexForSelect,
   useOpeningTransitionState,
   OPENING_TRANSITION,
-  useMountedEffect,
 } from '@hooks';
 import type { ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
@@ -66,15 +65,13 @@ export const Select = <
   className,
   ...restSectionProps
 }: SelectProps<TOptionValue, TMultiple, TCancelable>) => {
-  const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
+  const [openingTransition] = useOpeningTransitionState({
     openingTransition: opened
       ? OPENING_TRANSITION.OPENED
       : OPENING_TRANSITION.CLOSED,
     openingDuration: 200,
     closingDuration: 200,
   });
-
-  useMountedEffect(() => setOpeningTransition(opened), [opened]);
 
   const { isDarkMode } = useDarkMode();
 
