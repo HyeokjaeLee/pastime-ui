@@ -32,7 +32,7 @@ export interface SelectboxProps<
       | 'type'
       | 'disabled'
     >,
-    Pick<InputWrapProps, 'reversed' | 'className' | 'style'>,
+    Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>,
     Pick<
       SelectProps<TValidOptionValue, TMultiple, TCancelable>,
       'options' | 'float' | 'value' | 'multiple' | 'cancelable'
@@ -63,6 +63,7 @@ export const Selectbox = <
   reversed,
   className,
   style,
+  label,
 
   //* Select props
   options,
@@ -123,6 +124,7 @@ export const Selectbox = <
       className={className}
       reversed={reversed}
       readonly={disabled === 'readonly'}
+      label={label}
       onMouseEnter={() => setClosableOnClick(false)}
       onMouseLeave={() => setClosableOnClick(true)}
     >

@@ -12,6 +12,11 @@
   width: 100%;
   height: fit-content;
   padding: 0;
+
+  &.reversed {
+    flex-direction: row-reverse;
+  }
+
   //*Size
   &.size-small {
     margin: 4px 12px;

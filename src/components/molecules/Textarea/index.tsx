@@ -12,11 +12,12 @@ import type {
   InputDisabled,
   Size,
 } from '@types';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
 interface TextareaProps
-  extends Pick<InputWrapProps, 'className' | 'style'>,
+  extends Pick<InputWrapProps, 'className' | 'style' | 'label' | 'reversed'>,
     Omit<
       HTMLTagProps<'textarea'>,
       'resize' | 'disabled' | 'className' | 'style' | 'rows' | 'onChange'
@@ -41,6 +42,8 @@ export const Textarea = ({
   //* InputWrap props
   className,
   style,
+  label,
+  reversed,
 
   //* HTML textarea props
   id,
@@ -63,8 +66,15 @@ export const Textarea = ({
       style={style}
       readonly={disabled === 'readonly'}
       validationMessage={validationMessage}
+      label={label}
     >
-      <div className={`${styles['textarea-wrap']} ${styles[`size-${size}`]}`}>
+      <div
+        className={cleanClassName(
+          `${styles['textarea-wrap']} ${styles[`size-${size}`]} ${
+            reversed && styles.reversed
+          }`,
+        )}
+      >
         <textarea
           {...restTextareaProps}
           value={textareaValue}

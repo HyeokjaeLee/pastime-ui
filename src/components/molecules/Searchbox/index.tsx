@@ -28,7 +28,7 @@ export interface SearchboxProps
       | 'style'
       | 'disabled'
     >,
-    Pick<InputWrapProps, 'reversed' | 'style' | 'className'>,
+    Pick<InputWrapProps, 'reversed' | 'style' | 'className' | 'label'>,
     Pick<SelectProps<string, false, false>, 'float'>,
     Pick<UseFilteredSearchOptionsParams, 'filterByKeyword' | 'options'> {
   size?: Size;
@@ -59,6 +59,7 @@ export const Searchbox = ({
   className,
   style,
   reversed,
+  label,
 
   //* Select props
   float,
@@ -104,6 +105,7 @@ export const Searchbox = ({
       size={size}
       validationMessage={validationMessage}
       className={className}
+      label={label}
       style={style}
       reversed={reversed}
       readonly={disabled === 'readonly'}

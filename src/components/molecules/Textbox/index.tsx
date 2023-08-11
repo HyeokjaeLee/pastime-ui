@@ -12,7 +12,7 @@ export interface TextboxProps
       InputProps,
       'className' | 'size' | 'style' | 'disabled' | 'value' | 'onChange'
     >,
-    Pick<InputWrapProps, 'className' | 'style'> {
+    Pick<InputWrapProps, 'className' | 'style' | 'reversed' | 'label'> {
   value?: string;
   onChange?: InnerStateChangeEventHandler<string>;
   validation?: ValidateHandler<TextboxProps['value']>;
@@ -35,6 +35,8 @@ export const Textbox = ({
   //* Input.Wrap props
   className,
   style,
+  reversed,
+  label,
 
   //* Input props
   id,
@@ -56,6 +58,8 @@ export const Textbox = ({
       className={className}
       style={style}
       readonly={disabled === 'readonly'}
+      reversed={reversed}
+      label={label}
     >
       <Input
         {...restInputProps}

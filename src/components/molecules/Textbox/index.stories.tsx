@@ -12,14 +12,16 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'Textbox',
     value: '',
+    label: 'Textbox label',
   },
   argTypes: {
     value: {
       control: 'text',
     },
+    reversed: STORY_META.INPUT_REVERSED,
     placeholder: STORY_META.INPUT_PLACEHOLDER,
     children: STORY_META.INPUT_CHILDREN,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
     disabled: STORY_META.INPUT_DISABLED,
