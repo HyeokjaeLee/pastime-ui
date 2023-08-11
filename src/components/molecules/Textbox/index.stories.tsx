@@ -25,6 +25,7 @@ const meta: Meta<typeof Textbox> = {
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
     disabled: STORY_META.INPUT_DISABLED,
+    label: STORY_META.INPUT_LABEL,
   },
   decorators: [
     (Story) => (
