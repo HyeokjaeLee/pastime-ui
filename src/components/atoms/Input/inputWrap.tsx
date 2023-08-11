@@ -30,33 +30,29 @@ export const InputWrap = ({
 
   const { isDarkMode } = useDarkMode();
 
-  const inputWrapClassName = cleanClassName(
-    `${styles['input-wrap']} ${isDarkMode && styles.dark} ${
-      validationMessage && styles.error
-    } ${readonly && styles.readonly}`,
-  );
-
-  const inputWrapContentClassName = cleanClassName(
-    `${styles['input-wrap-content']} ${styles[`size-${size}`]} ${
-      reversed && styles.reversed
-    }`,
-  );
-
   return (
     <div
       {...restDivProps}
       className={cleanClassName(`${styles['default-width']} ${className}`)}
     >
-      {label ? (
-        <label className={inputWrapClassName}>
-          <p className={styles.label}>{label}</p>
-          <div className={inputWrapContentClassName}>{children}</div>
-        </label>
-      ) : (
-        <div className={inputWrapClassName}>
-          <div className={inputWrapContentClassName}>{children}</div>
+      <label
+        className={cleanClassName(
+          `${styles['input-wrap']} ${isDarkMode && styles.dark} ${
+            validationMessage && styles.error
+          } ${readonly && styles.readonly}`,
+        )}
+      >
+        {label ? <p className={styles.label}>{label}</p> : null}
+        <div
+          className={cleanClassName(
+            `${styles['input-wrap-content']} ${styles[`size-${size}`]} ${
+              reversed && styles.reversed
+            }`,
+          )}
+        >
+          {children}
         </div>
-      )}
+      </label>
       <div
         className={cleanClassName(
           `${styles['validation-message-wrap']} ${

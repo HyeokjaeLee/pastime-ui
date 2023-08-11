@@ -103,11 +103,8 @@ export const Selectbox = <
     setClosableOnClick,
   } = useClosableOnClickOpeningState();
 
-  const changeOpened = () => setOpened((prev) => !prev);
-
   const decoration = children ?? (
     <ChevronDown
-      onClick={disabled ? undefined : () => changeOpened()}
       className={cleanClassName(
         `${styles['selectbox-icon']} ${
           (float === 'top' ? !opened : opened) && styles.reversed
@@ -134,7 +131,7 @@ export const Selectbox = <
         type="button"
         onClick={(e) => {
           onClick?.(e);
-          changeOpened();
+          setOpened((prev) => !prev);
         }}
         value={displayedValue}
         disabled={!!disabled}
