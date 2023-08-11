@@ -2,27 +2,34 @@ import type { InputProps, InputWrapProps } from '@components/atoms';
 import { Input } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler, InputType } from '@hooks';
-import { InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
 export interface TextboxProps
-  extends Omit<InputProps, 'className' | 'size' | 'style' | 'disabled'>,
+  extends Omit<
+      InputProps,
+      'className' | 'size' | 'style' | 'disabled' | 'value' | 'onChange'
+    >,
     Pick<InputWrapProps, 'className' | 'style'> {
+  value?: string;
+  onChange?: InnerStateChangeEventHandler<string>;
+  validation?: ValidateHandler<TextboxProps['value']>;
   children?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
   size?: Size;
-  validation?: ValidateHandler<TextboxProps['value']>;
   disabled?: InputDisabled;
 }
 
 export const Textbox = ({
   //* Textbox props
+  value,
+  onChange,
+  validation,
   children,
   type,
   size,
-  validation,
   disabled,
 
   //* Input.Wrap props
@@ -30,13 +37,12 @@ export const Textbox = ({
   style,
 
   //* Input props
-  onChange,
-  value,
   id,
   name,
   ...restInputProps
 }: TextboxProps) => {
-  const [inputValue, setInputValue] = useSubscribedState(value);
+  const [inputValue, setInputValue, preventInnerStateChange] =
+    useSubscribedState(value);
   const { validationMessage, validateValue } = useValidationMessage({
     validateHandler: validation,
     value: inputValue,
@@ -58,9 +64,12 @@ export const Textbox = ({
         value={inputValue}
         id={id}
         name={name}
-        onChange={(value) => {
+        onChange={({ value }) => {
+          onChange?.({
+            value,
+            preventInnerStateChange,
+          });
           setInputValue(value);
-          onChange?.(value);
           validateValue(value);
         }}
       />

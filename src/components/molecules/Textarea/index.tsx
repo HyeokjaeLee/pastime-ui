@@ -6,7 +6,12 @@ import {
   useValidationMessage,
 } from '@hooks';
 import type { ValidateHandler } from '@hooks';
-import type { HTMLTagProps, InputDisabled, Size } from '@types';
+import type {
+  HTMLTagProps,
+  InnerStateChangeEventHandler,
+  InputDisabled,
+  Size,
+} from '@types';
 
 import styles from './index.module.scss';
 
@@ -19,7 +24,7 @@ interface TextareaProps
   size?: Size;
   disabled?: InputDisabled;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: InnerStateChangeEventHandler<string>;
   children?: React.ReactNode;
   validation?: ValidateHandler<TextareaProps['value']>;
 }
@@ -42,7 +47,9 @@ export const Textarea = ({
   ...restTextareaProps
 }: TextareaProps) => {
   const { textareaRef, handleTextareaHeight } = useTextareaDynamicHeight();
-  const [textareaValue, setTextareaValue] = useSubscribedState(value);
+  const [textareaValue, setTextareaValue, preventInnerStateChange] =
+    useSubscribedState(value);
+
   const { validationMessage, validateValue } = useValidationMessage({
     validateHandler: validation,
     value: textareaValue,
@@ -67,8 +74,11 @@ export const Textarea = ({
           ref={textareaRef}
           onChange={({ target }) => {
             const { value } = target;
+            onChange?.({
+              value,
+              preventInnerStateChange,
+            });
             setTextareaValue(value);
-            onChange?.(value);
             validateValue(value);
             handleTextareaHeight(target);
           }}
