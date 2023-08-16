@@ -6,12 +6,18 @@ import {
   useValidationMessage,
 } from '@hooks';
 import type { ValidateHandler } from '@hooks';
-import type { HTMLTagProps, InputDisabled, Size } from '@types';
+import type {
+  HTMLTagProps,
+  InnerStateChangeEventHandler,
+  InputDisabled,
+  Size,
+} from '@types';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
 interface TextareaProps
-  extends Pick<InputWrapProps, 'className' | 'style'>,
+  extends Pick<InputWrapProps, 'className' | 'style' | 'label' | 'reversed'>,
     Omit<
       HTMLTagProps<'textarea'>,
       'resize' | 'disabled' | 'className' | 'style' | 'rows' | 'onChange'
@@ -19,7 +25,7 @@ interface TextareaProps
   size?: Size;
   disabled?: InputDisabled;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: InnerStateChangeEventHandler<string>;
   children?: React.ReactNode;
   validation?: ValidateHandler<TextareaProps['value']>;
 }
@@ -36,13 +42,17 @@ export const Textarea = ({
   //* InputWrap props
   className,
   style,
+  label,
+  reversed,
 
   //* HTML textarea props
   id,
   ...restTextareaProps
 }: TextareaProps) => {
   const { textareaRef, handleTextareaHeight } = useTextareaDynamicHeight();
-  const [textareaValue, setTextareaValue] = useSubscribedState(value);
+  const [textareaValue, setTextareaValue, preventInnerStateChange] =
+    useSubscribedState(value);
+
   const { validationMessage, validateValue } = useValidationMessage({
     validateHandler: validation,
     value: textareaValue,
@@ -56,8 +66,15 @@ export const Textarea = ({
       style={style}
       readonly={disabled === 'readonly'}
       validationMessage={validationMessage}
+      label={label}
     >
-      <div className={`${styles['textarea-wrap']} ${styles[`size-${size}`]}`}>
+      <div
+        className={cleanClassName(
+          `${styles['textarea-wrap']} ${styles[`size-${size}`]} ${
+            reversed && styles.reversed
+          }`,
+        )}
+      >
         <textarea
           {...restTextareaProps}
           value={textareaValue}
@@ -67,8 +84,11 @@ export const Textarea = ({
           ref={textareaRef}
           onChange={({ target }) => {
             const { value } = target;
+            onChange?.({
+              value,
+              preventInnerStateChange,
+            });
             setTextareaValue(value);
-            onChange?.(value);
             validateValue(value);
             handleTextareaHeight(target);
           }}

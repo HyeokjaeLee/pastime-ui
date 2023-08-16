@@ -1,7 +1,20 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .accordian-title-wrap {
   width: 100%;
+}
+
+.chevron-down-icon {
+  width: 1.2em;
+
+  color: rgba($GRAY-400, 0.4);
+
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  stroke-width: 2;
+
+  &.opened {
+    transform: rotate(180deg);
+  }
 }
 
 .accordian-title {
@@ -16,11 +29,12 @@
 
   color: inherit;
   font-size: inherit;
+  font-family: inherit;
 
   cursor: pointer;
 
   &:hover > .chevron-down-icon {
-    color: rgba(libs.$GRAY-400, 0.8);
+    color: rgba($GRAY-400, 0.8);
   }
 }
 
@@ -31,17 +45,18 @@
 }
 
 //*Size
+
 @mixin sizeClasses {
   .size-small {
-    @include size(14px, 32px);
+    @include size(12px, 32px);
   }
 
   .size-medium {
-    @include size(16px, 40px);
+    @include size(14px, 40px);
   }
 
   .size-large {
-    @include size(18px, 48px);
+    @include size(16px, 48px);
   }
 }
 
@@ -54,16 +69,4 @@
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.chevron-down-icon {
-  width: 1.2em;
-
-  color: rgba(libs.$GRAY-400, 0.4);
-
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  stroke-width: 2;
-  &.opened {
-    transform: rotate(180deg);
-  }
 }

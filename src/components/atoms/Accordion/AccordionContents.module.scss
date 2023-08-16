@@ -1,5 +1,5 @@
 @use './AccordionTitle.module.scss' as title;
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .accordian-contents-wrap {
   overflow: hidden;
@@ -19,18 +19,18 @@
   padding: 0;
   border: none;
 
-  background-color: libs.$COOL-GRAY-300;
+  background-color: $COOL-GRAY-300;
 
   &.dark {
-    background-color: libs.$COOL-GRAY-500;
+    background-color: $COOL-GRAY-500;
   }
 
   &.opened {
-    @include libs.fade-in(0.3s, 0.2s);
+    @include fade-in(0.3s, 0.2s);
   }
 
   &.closed {
-    @include libs.fade-out(0.2s);
+    @include fade-out(0.2s);
   }
 }
 
@@ -43,8 +43,10 @@
     top: 10px;
     bottom: 10px;
   }
-  @include libs.fade-out-top(0.3s);
+
+  @include fade-out-top(0.3s);
+
   &.opened {
-    @include libs.fade-in-top(0.3s);
+    @include fade-in-top(0.3s);
   }
 }

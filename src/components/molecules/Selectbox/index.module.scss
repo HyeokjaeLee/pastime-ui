@@ -1,11 +1,12 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
-@include libs.input-decoration;
+@include input-decoration;
 
 .selectbox-icon {
   cursor: pointer;
 
   transition: transform 0.2s ease-in-out;
+
   &.reversed {
     transform: rotate(180deg);
   }

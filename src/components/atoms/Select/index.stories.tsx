@@ -67,6 +67,15 @@ export const Default: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<ValidOptionValue | ValidOptionValue[]>();
 
-    return <Select {...props} value={value} onChange={setValue} />;
+    return (
+      <Select
+        {...props}
+        value={value}
+        onChange={(event) => {
+          setValue(event.value);
+          props.onChange?.(event);
+        }}
+      />
+    );
   },
 };

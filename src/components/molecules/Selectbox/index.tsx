@@ -4,6 +4,7 @@ import type {
   InputProps,
   SelectProps,
   InputWrapProps,
+  SelectChangeEvent,
 } from '@components/atoms';
 import { Select, Input } from '@components/atoms';
 import type { ValidOptionValue, ValidateHandler } from '@hooks';
@@ -12,7 +13,7 @@ import {
   useValidationMessage,
   useClosableOnClickOpeningState,
 } from '@hooks';
-import { InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -20,6 +21,7 @@ import styles from './index.module.scss';
 export interface SelectboxProps<
   TValidOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 > extends Omit<
       InputProps,
       | 'style'
@@ -30,22 +32,26 @@ export interface SelectboxProps<
       | 'type'
       | 'disabled'
     >,
-    Pick<InputWrapProps, 'reversed' | 'className' | 'style'>,
+    Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>,
     Pick<
-      SelectProps<TValidOptionValue, TMultiple>,
-      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'cancelable'
+      SelectProps<TValidOptionValue, TMultiple, TCancelable>,
+      'options' | 'float' | 'value' | 'multiple' | 'cancelable'
     > {
   disabled?: InputDisabled;
   size?: Size;
   validation?: ValidateHandler<
-    SelectboxProps<TValidOptionValue, TMultiple>['value']
+    SelectProps<TValidOptionValue, TMultiple, TCancelable>['value']
   >;
   children?: React.ReactNode;
+  onChange?: InnerStateChangeEventHandler<
+    SelectChangeEvent<TValidOptionValue, TMultiple, TCancelable>['value']
+  >;
 }
 
 export const Selectbox = <
   TValidOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 >({
   //* Selectbox props
   disabled,
@@ -57,6 +63,7 @@ export const Selectbox = <
   reversed,
   className,
   style,
+  label,
 
   //* Select props
   options,
@@ -64,14 +71,16 @@ export const Selectbox = <
   onChange,
   value,
   multiple,
+  cancelable,
 
   //* Input props
   onClick,
   placeholder,
   id,
   ...restInputProps
-}: SelectboxProps<TValidOptionValue, TMultiple>) => {
-  const [selectedValue, setSelectedValue] = useSubscribedState(value);
+}: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => {
+  const [selectedValue, setSelectedValue, preventInnerStateChange] =
+    useSubscribedState(value);
 
   const selectedOption = multiple
     ? options?.filter(({ value }) =>
@@ -94,11 +103,8 @@ export const Selectbox = <
     setClosableOnClick,
   } = useClosableOnClickOpeningState();
 
-  const changeOpened = () => setOpened((prev) => !prev);
-
   const decoration = children ?? (
     <ChevronDown
-      onClick={disabled ? undefined : () => changeOpened()}
       className={cleanClassName(
         `${styles['selectbox-icon']} ${
           (float === 'top' ? !opened : opened) && styles.reversed
@@ -115,6 +121,7 @@ export const Selectbox = <
       className={className}
       reversed={reversed}
       readonly={disabled === 'readonly'}
+      label={label}
       onMouseEnter={() => setClosableOnClick(false)}
       onMouseLeave={() => setClosableOnClick(true)}
     >
@@ -124,7 +131,7 @@ export const Selectbox = <
         type="button"
         onClick={(e) => {
           onClick?.(e);
-          changeOpened();
+          setOpened((prev) => !prev);
         }}
         value={displayedValue}
         disabled={!!disabled}
@@ -138,11 +145,15 @@ export const Selectbox = <
         options={options}
         multiple={multiple}
         value={selectedValue}
+        cancelable={cancelable}
         float={float}
-        onChange={(value) => {
+        onChange={({ value }) => {
+          onChange?.({
+            value,
+            preventInnerStateChange,
+          });
           setSelectedValue(value);
           validateValue(value);
-          onChange?.(value);
           setOpened(false);
         }}
       />

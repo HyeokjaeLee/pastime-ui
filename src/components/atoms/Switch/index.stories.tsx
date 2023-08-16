@@ -13,7 +13,7 @@ const meta: Meta<typeof Switch> = {
   },
   argTypes: {
     size: STORY_META.SIZE,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
     value: {
       description: 'Switch의 상태',
     },

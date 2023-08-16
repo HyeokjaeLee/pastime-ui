@@ -1,4 +1,4 @@
-import { useEffect as createEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useMountedEffect(
   effect: React.EffectCallback,
@@ -6,7 +6,8 @@ export function useMountedEffect(
 ) {
   const isMounted = useRef(false);
 
-  createEffect(
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(
     isMounted.current
       ? effect
       : () => {

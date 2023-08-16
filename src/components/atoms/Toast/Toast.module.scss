@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .toast {
   display: flex;
@@ -6,19 +6,20 @@
 
   width: fit-content;
   height: 0;
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-MD;
 
   background-color: white;
-  box-shadow: libs.$BOX_SHADOW;
+  box-shadow: $BOX_SHADOW;
 
-  color: libs.$GRAY-700;
+  color: $GRAY-700;
   font-weight: normal;
-  font-size: libs.$FONT-SIZE-SM;
+  font-size: $FONT-SIZE-SM;
 
   transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
     margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
+
   &:hover {
-    box-shadow: libs.$HOVERED_BOX_SHADOW;
+    box-shadow: $HOVERED_BOX_SHADOW;
 
     cursor: grabbing;
   }
@@ -28,12 +29,13 @@
   }
 
   &.dark {
-    background-color: libs.$GRAY-700;
-    box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.4);
+    background-color: $GRAY-700;
+    box-shadow: 0px 0px 12px rgba($GRAY-900, 0.4);
 
-    color: libs.$GRAY-50;
+    color: $GRAY-50;
+
     &:hover {
-      box-shadow: 0px 0px 12px rgba(libs.$GRAY-900, 0.8);
+      box-shadow: 0px 0px 12px rgba($GRAY-900, 0.8);
     }
   }
 
@@ -53,20 +55,22 @@
   &.float-direction-from-top {
     &.holding,
     &.opened {
-      @include libs.fade-in-top(0.4s);
+      @include fade-in-top(0.4s);
     }
+
     &.closing {
-      @include libs.fade-out-top(0.4s);
+      @include fade-out-top(0.4s);
     }
   }
 
   &.float-direction-from-bottom {
     &.holding,
     &.opened {
-      @include libs.fade-in-bottom(0.4s);
+      @include fade-in-bottom(0.4s);
     }
+
     &.closing {
-      @include libs.fade-out-bottom(0.4s);
+      @include fade-out-bottom(0.4s);
     }
   }
 }
@@ -85,24 +89,24 @@
   min-width: 1.3em;
   padding: 0 0.6em;
 
-  background-color: libs.$GRAY-200;
+  background-color: $GRAY-200;
 
   color: white;
 
   &.success {
-    background-color: libs.$GREEN-400;
+    background-color: $GREEN-400;
   }
 
   &.fail {
-    background-color: libs.$RED-500;
+    background-color: $RED-500;
   }
 
   &.warning {
-    background-color: libs.$AMBER-500;
+    background-color: $AMBER-500;
   }
 
   &.info {
-    background-color: libs.$BLUE-400;
+    background-color: $BLUE-400;
   }
 
   > svg {

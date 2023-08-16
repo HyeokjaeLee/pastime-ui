@@ -60,7 +60,7 @@ export const SELECT_USED_DECORATORS = [
     <article
       className="story-container"
       style={{
-        height: 650,
+        height: 700,
         alignItems: 'center',
       }}
     >
@@ -110,6 +110,16 @@ export const INPUT_CHILDREN = {
   },
 };
 
+export const INPUT_LABEL = {
+  description: `The label text of the component.\n\n컴포넌트의 라벨 텍스트`,
+  control: 'text',
+  table: {
+    type: {
+      summary: 'string',
+    },
+  },
+};
+
 export const INPUT_REVERSED = {
   description: `Whether to reverse the position of the children.\n\nchildren의 위치를 반전시킬지 여부`,
   control: 'boolean',
@@ -119,4 +129,29 @@ export const INPUT_REVERSED = {
     },
     defaultValue: { summary: false },
   },
+};
+
+export const INNER_STATE_CHANGE_HANDLER = {
+  description: `
+  #### Inner State usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        inputValues.value = e.value;
+      };
+    </code>
+  </pre>
+  #### preventInnerStateChange usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        e.preventInnerStateChange();
+        setValue(e.value);
+      };
+    </code>
+  </pre>
+  Component's Change handler supports inner State, and you can deactivate the inner State by calling the preventInnerStateChange function.
+  
+  컴포넌트의 Change 핸들러는 내부 State를 지원하며, preventInnerStateChange 함수를 호출하여 내부 State를 비활성화할 수 있습니다.`,
+  control: false,
 };

@@ -11,7 +11,7 @@ const meta: Meta<typeof Searchbox> = {
   args: {
     placeholder: 'Searchbox',
     filterByKeyword: true,
-
+    label: 'Searchbox label',
     options: STORY_DUUMMY.STRING_OPTIONS,
 
     validation: (value) => (value ? undefined : 'Value is required'),
@@ -24,9 +24,11 @@ const meta: Meta<typeof Searchbox> = {
       description:
         'It is whether to filter the options by search term.\n\n옵션을 검색어로 필터링할지 여부입니다.',
     },
+    reversed: STORY_META.INPUT_REVERSED,
     options: STORY_META.SELECT_OPTIONS,
     disabled: STORY_META.INPUT_DISABLED,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
+    label: STORY_META.INPUT_LABEL,
     style: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
     float: STORY_META.SELECT_OPTIONS_FLOAT,

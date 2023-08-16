@@ -1,11 +1,11 @@
 import { createContext, useContext, useMemo } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 
 import { useSubscribedState } from '@hooks';
+import type { SubscribedState } from '@hooks';
 
 type Size = 'small' | 'medium' | 'large';
 interface AccordionContextValue {
-  openedState: [boolean, Dispatch<SetStateAction<boolean>>];
+  openedState: SubscribedState<boolean>;
   size?: Size;
 }
 

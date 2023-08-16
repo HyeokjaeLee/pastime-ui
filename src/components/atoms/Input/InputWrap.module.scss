@@ -1,14 +1,15 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 @layer {
   .default-width {
-    width: libs.$INPUT_DEFAULT_WIDTH;
+    width: $INPUT_DEFAULT_WIDTH;
   }
 }
 
 @mixin default-theme($color, $backgroundColor, $borderColor) {
   color: $color;
-  @include libs.border($borderColor, 1px);
+
+  @include border($borderColor, 1px);
 
   &:not(&:has(:disabled)) {
     background-color: $backgroundColor;
@@ -18,7 +19,6 @@
     color: $color;
   }
 }
-
 @mixin disabled-theme($color, $backgroundColor) {
   &:has(:disabled) {
     background-color: $backgroundColor;
@@ -26,27 +26,63 @@
     color: $color;
   }
 }
-
 @mixin focus-border($borderColor) {
   &:not(&:has(:disabled)):has(:focus) {
-    @include libs.border($borderColor, 2px);
+    @include border($borderColor, 2px);
   }
 }
-
 @mixin hover-border($borderColor) {
   &:not(&:has(:disabled)):hover {
-    @include libs.border($borderColor, 1px);
+    @include border($borderColor, 1px);
   }
 }
-
 @mixin size($paddingX, $height) {
   height: $height;
   padding: 0 $paddingX;
 }
 
+.label {
+  margin: {
+    top: 0.5em;
+    right: 1em;
+    bottom: 0;
+    left: 1em;
+  }
+  color: $COOL-GRAY-400;
+  font-size: small;
+}
+
 .input-wrap {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: $BORDER-RADIUS-MD;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
+
+  @include default-theme($GRAY-700, white, $COOL-GRAY-200);
+  @include disabled-theme($GRAY-300, $GRAY-50);
+  @include hover-border($COOL-GRAY-300);
+  @include focus-border($COOL-GRAY-400);
+
+  &.dark {
+    @include default-theme($GRAY-50, $GRAY-700, $COOL-GRAY-600);
+    @include disabled-theme($GRAY-500, $GRAY-600);
+    @include hover-border($COOL-GRAY-500);
+    @include focus-border($COOL-GRAY-400);
+  }
+
+  &.error {
+    @include border($ROSE-500, 2.2px);
+  }
+}
+
+.input-wrap-content {
+  position: relative;
   display: flex;
   gap: 0.8em;
   align-items: center;
@@ -54,54 +90,38 @@
 
   box-sizing: border-box;
   width: 100%;
-  border-radius: libs.$BORDER-RADIUS-MD;
 
   &.reversed {
     flex-direction: row-reverse;
   }
 
-  transition: box-shadow 0.3s, background-color 0.3s;
-
-  @include default-theme(libs.$GRAY-700, white, libs.$COOL-GRAY-200);
-  @include disabled-theme(libs.$GRAY-300, libs.$GRAY-50);
-  @include hover-border(libs.$COOL-GRAY-300);
-  @include focus-border(libs.$COOL-GRAY-400);
-
-  &.dark {
-    @include default-theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-600);
-    @include disabled-theme(libs.$GRAY-500, libs.$GRAY-600);
-    @include hover-border(libs.$COOL-GRAY-500);
-    @include focus-border(libs.$COOL-GRAY-400);
-  }
-
   //*Size
   &.size-small {
-    @include size(14px, 32px);
-  }
-  &.size-medium {
-    @include size(16px, 40px);
-  }
-  &.size-large {
-    @include size(18px, 48px);
-  }
-  &.size-fit-content {
-    @include size(0, fit-content);
+    @include size(12px, 32px);
   }
 
-  &.error {
-    @include libs.border(libs.$ROSE-500, 2.2px);
+  &.size-medium {
+    @include size(14px, 40px);
+  }
+
+  &.size-large {
+    @include size(16px, 48px);
+  }
+
+  &.size-fit-content {
+    @include size(0, fit-content);
   }
 }
 
 .validation-message {
-  @include libs.shake-horizontal(0.9s);
+  @include shake-horizontal(0.9s);
   z-index: 0;
 
   margin: 0;
   padding: 0;
   padding-left: 0.4em;
 
-  color: libs.$ROSE-500;
+  color: $ROSE-500;
   font-size: small;
 }
 
