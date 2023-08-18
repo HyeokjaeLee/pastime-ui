@@ -6,12 +6,7 @@ import {
   useValidationMessage,
 } from '@hooks';
 import type { ValidateHandler } from '@hooks';
-import type {
-  HTMLTagProps,
-  InnerStateChangeEventHandler,
-  InputDisabled,
-  Size,
-} from '@types';
+import type { HTMLTagProps, InnerStateChangeEventHandler, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -20,10 +15,9 @@ interface TextareaProps
   extends Pick<InputWrapProps, 'className' | 'style' | 'label' | 'reversed'>,
     Omit<
       HTMLTagProps<'textarea'>,
-      'resize' | 'disabled' | 'className' | 'style' | 'rows' | 'onChange'
+      'resize' | 'className' | 'style' | 'rows' | 'onChange'
     > {
   size?: Size;
-  disabled?: InputDisabled;
   value?: string;
   onChange?: InnerStateChangeEventHandler<string>;
   children?: React.ReactNode;
@@ -33,7 +27,6 @@ interface TextareaProps
 export const Textarea = ({
   //* Textarea props
   size = 'medium',
-  disabled,
   value,
   onChange,
   children,
@@ -46,17 +39,19 @@ export const Textarea = ({
   reversed,
 
   //* HTML textarea props
-  id,
+  onInvalid,
   ...restTextareaProps
 }: TextareaProps) => {
   const { textareaRef, handleTextareaHeight } = useTextareaDynamicHeight();
   const [textareaValue, setTextareaValue, preventInnerStateChange] =
     useSubscribedState(value);
 
-  const { validationMessage, validateValue } = useValidationMessage({
+  const { required, id } = restTextareaProps;
+
+  const { validationMessage, validateOnChange } = useValidationMessage({
     validateHandler: validation,
     value: textareaValue,
-    id,
+    key: id,
   });
 
   return (
@@ -64,9 +59,9 @@ export const Textarea = ({
       size="fit-content"
       className={className}
       style={style}
-      readonly={disabled === 'readonly'}
       validationMessage={validationMessage}
       label={label}
+      required={required}
     >
       <div
         className={cleanClassName(
@@ -79,8 +74,8 @@ export const Textarea = ({
           {...restTextareaProps}
           value={textareaValue}
           rows={1}
-          disabled={!!disabled}
           className={styles.textarea}
+          required={required}
           ref={textareaRef}
           onChange={({ target }) => {
             const { value } = target;
@@ -89,8 +84,12 @@ export const Textarea = ({
               preventInnerStateChange,
             });
             setTextareaValue(value);
-            validateValue(value);
+            validateOnChange?.(value);
             handleTextareaHeight(target);
+          }}
+          onInvalid={(e) => {
+            e.preventDefault();
+            onInvalid?.(e);
           }}
         />
         {children ? <div className={styles.decoration}>{children}</div> : null}

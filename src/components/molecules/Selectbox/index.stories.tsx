@@ -20,6 +20,8 @@ const meta: Meta<typeof Selectbox> = {
     multiple: STORY_META.SELECT_MULTIPLE,
     children: STORY_META.INPUT_CHILDREN,
     label: STORY_META.INPUT_LABEL,
+    readOnly: STORY_META.INPUT_READONLY,
+    required: STORY_META.INPUT_REQUIRED,
   },
   decorators: STORY_META.SELECT_USED_DECORATORS,
   args: {

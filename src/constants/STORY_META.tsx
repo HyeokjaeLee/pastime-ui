@@ -131,6 +131,28 @@ export const INPUT_REVERSED = {
   },
 };
 
+export const INPUT_REQUIRED = {
+  description: `Whether the input is required or not.\n\n입력이 필수인지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const INPUT_READONLY = {
+  description: `Whether the input is readonly or not.\n\n입력이 읽기전용인지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
 export const INNER_STATE_CHANGE_HANDLER = {
   description: `
   #### Inner State usage example

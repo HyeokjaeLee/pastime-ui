@@ -22,7 +22,6 @@ export interface InputProps
   type?: InputType;
   value?: number | string;
   onChange?: (event: InputChangeEvent) => void;
-
   ref?: React.ForwardedRef<HTMLInputElement>;
 }
 
@@ -40,6 +39,7 @@ export const Input = Object.assign(
         className,
         onFocus,
         onBlur,
+        onInvalid,
         ...restInputProps
       },
       ref,
@@ -75,6 +75,10 @@ export const Input = Object.assign(
               !value && styles.empty
             } ${className}`,
           )}
+          onInvalid={(e) => {
+            e.preventDefault();
+            onInvalid?.(e);
+          }}
           onChange={({ target: { value } }) => {
             const convertedValue = convertChangeHandlerParam(value);
 

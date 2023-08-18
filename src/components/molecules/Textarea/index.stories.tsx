@@ -24,6 +24,8 @@ const meta: Meta<typeof Textarea> = {
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
     label: STORY_META.INPUT_LABEL,
+    readOnly: STORY_META.INPUT_READONLY,
+    required: STORY_META.INPUT_REQUIRED,
   },
 };
 

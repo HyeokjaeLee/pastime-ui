@@ -7,18 +7,18 @@ import styles from './InputWrap.module.scss';
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
   size?: Size | 'fit-content';
   validationMessage?: string;
-  readonly?: boolean;
   reversed?: boolean;
   label?: string;
+  required?: boolean;
 };
 
 export const InputWrap = ({
   //* Input.Wrap props
   size = 'medium',
   validationMessage,
-  readonly = false,
   reversed = false,
   label,
+  required = false,
 
   //* HTML div props
   children,
@@ -39,10 +39,18 @@ export const InputWrap = ({
         className={cleanClassName(
           `${styles['input-wrap']} ${isDarkMode && styles.dark} ${
             validationMessage && styles.error
-          } ${readonly && styles.readonly}`,
+          }`,
         )}
       >
-        {label ? <p className={styles.label}>{label}</p> : null}
+        {label ? (
+          <p
+            className={cleanClassName(
+              `${styles.label} ${required && styles.required}`,
+            )}
+          >
+            {label}
+          </p>
+        ) : null}
         <div
           className={cleanClassName(
             `${styles['input-wrap-content']} ${styles[`size-${size}`]} ${

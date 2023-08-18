@@ -14,10 +14,6 @@
   &:not(&:has(:disabled)) {
     background-color: $backgroundColor;
   }
-
-  &:has(:disabled).readonly {
-    color: $color;
-  }
 }
 @mixin disabled-theme($color, $backgroundColor) {
   &:has(:disabled) {
@@ -134,4 +130,10 @@
   &.show {
     padding-top: 6px;
   }
+}
+
+.required::after {
+  content: ' *';
+
+  color: $ROSE-500;
 }

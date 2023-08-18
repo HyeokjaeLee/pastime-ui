@@ -13,7 +13,6 @@ const meta: Meta<typeof Searchbox> = {
     filterByKeyword: true,
     label: 'Searchbox label',
     options: STORY_DUUMMY.STRING_OPTIONS,
-
     validation: (value) => (value ? undefined : 'Value is required'),
   },
 
@@ -33,6 +32,8 @@ const meta: Meta<typeof Searchbox> = {
     size: STORY_META.SIZE,
     float: STORY_META.SELECT_OPTIONS_FLOAT,
     children: STORY_META.INPUT_CHILDREN,
+    required: STORY_META.INPUT_REQUIRED,
+    readOnly: STORY_META.INPUT_READONLY,
   },
 };
 
@@ -41,9 +42,3 @@ export default meta;
 type Story = StoryObj<typeof Searchbox>;
 
 export const Default: Story = {};
-
-export const WithValidation: Story = {
-  args: {
-    validation: (value) => value,
-  },
-};

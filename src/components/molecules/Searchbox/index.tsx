@@ -13,20 +13,14 @@ import {
   useFilteredSearchOptions,
 } from '@hooks';
 import type { ValidateHandler, UseFilteredSearchOptionsParams } from '@hooks';
-import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, Size } from '@types';
 
 import styles from './index.module.scss';
 
 export interface SearchboxProps
   extends Omit<
       InputProps,
-      | 'value'
-      | 'onChange'
-      | 'type'
-      | 'onSelect'
-      | 'className'
-      | 'style'
-      | 'disabled'
+      'value' | 'onChange' | 'type' | 'onSelect' | 'className' | 'style'
     >,
     Pick<InputWrapProps, 'reversed' | 'style' | 'className' | 'label'>,
     Pick<SelectProps<string, false, false>, 'float'>,
@@ -36,7 +30,6 @@ export interface SearchboxProps
   value?: string;
   onChange?: InnerStateChangeEventHandler<string>;
   children?: React.ReactNode;
-  disabled?: InputDisabled;
 }
 
 type SearchboxFocusEvent = React.FocusEvent<
@@ -53,7 +46,6 @@ export const Searchbox = ({
   value,
   onChange,
   children = <Search size="1.5em" strokeWidth="2px" />,
-  disabled,
 
   //* Input.Wrap props
   className,
@@ -67,12 +59,18 @@ export const Searchbox = ({
   //* Input props
   onClick,
   onFocus,
-  id,
-  name,
   onBlur,
   ...restInputProps
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
+
+  const { readOnly, required, id } = restInputProps;
+
+  const setOpenedIfEnabled: typeof setOpened = (value) => {
+    if (readOnly) return;
+    setOpened(value);
+  };
+
   const [inputValue, setInputValue, preventInnerStateChange] =
     useSubscribedState(value);
 
@@ -82,8 +80,8 @@ export const Searchbox = ({
     inputValue,
   });
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    id,
+  const { validationMessage, validateOnChange } = useValidationMessage({
+    key: id,
     value: inputValue,
     validateHandler: validation,
   });
@@ -93,7 +91,7 @@ export const Searchbox = ({
 
     const { value } = event;
     setInputValue(value);
-    validateValue(value);
+    validateOnChange?.(value);
   };
 
   let isRefocus = false;
@@ -108,16 +106,13 @@ export const Searchbox = ({
       label={label}
       style={style}
       reversed={reversed}
-      readonly={disabled === 'readonly'}
+      required={required}
     >
       <Input
         {...restInputProps}
         ref={inputRef}
-        disabled={!!disabled}
-        id={id}
-        name={name}
         onChange={({ value }) => {
-          setOpened(true);
+          setOpenedIfEnabled(true);
           handleChange({ value, preventInnerStateChange });
         }}
         onFocus={(e) => {
@@ -125,12 +120,12 @@ export const Searchbox = ({
           else onFocus?.(e);
         }}
         onClick={(e) => {
-          setOpened(true);
+          setOpenedIfEnabled(true);
           onClick?.(e);
         }}
         onBlur={(e: SearchboxFocusEvent) => {
           if (e.relatedTarget?.name !== 'select-option-item') {
-            setOpened(false);
+            setOpenedIfEnabled(false);
             onBlur?.(e);
           }
         }}
@@ -150,7 +145,7 @@ export const Searchbox = ({
 
           isRefocus = true;
           inputRef.current?.focus();
-          setOpened(false);
+          setOpenedIfEnabled(false);
         }}
         float={float}
       />

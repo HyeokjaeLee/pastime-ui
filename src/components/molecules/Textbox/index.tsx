@@ -2,7 +2,7 @@ import type { InputProps, InputWrapProps } from '@components/atoms';
 import { Input } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 import type { ValidateHandler, InputType } from '@hooks';
-import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 export interface TextboxProps
   extends Omit<
       InputProps,
-      'className' | 'size' | 'style' | 'disabled' | 'value' | 'onChange'
+      'className' | 'size' | 'style' | 'value' | 'onChange'
     >,
     Pick<InputWrapProps, 'className' | 'style' | 'reversed' | 'label'> {
   value?: string;
@@ -19,7 +19,6 @@ export interface TextboxProps
   children?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
   size?: Size;
-  disabled?: InputDisabled;
 }
 
 export const Textbox = ({
@@ -30,7 +29,6 @@ export const Textbox = ({
   children,
   type,
   size,
-  disabled,
 
   //* Input.Wrap props
   className,
@@ -39,16 +37,17 @@ export const Textbox = ({
   label,
 
   //* Input props
-  id,
-  name,
   ...restInputProps
 }: TextboxProps) => {
   const [inputValue, setInputValue, preventInnerStateChange] =
     useSubscribedState(value);
-  const { validationMessage, validateValue } = useValidationMessage({
+
+  const { id } = restInputProps;
+
+  const { validationMessage, validateOnChange } = useValidationMessage({
     validateHandler: validation,
     value: inputValue,
-    id,
+    key: id,
   });
 
   return (
@@ -57,24 +56,20 @@ export const Textbox = ({
       validationMessage={validationMessage}
       className={className}
       style={style}
-      readonly={disabled === 'readonly'}
       reversed={reversed}
       label={label}
     >
       <Input
         {...restInputProps}
-        disabled={!!disabled}
         type={type}
         value={inputValue}
-        id={id}
-        name={name}
         onChange={({ value }) => {
           onChange?.({
             value,
             preventInnerStateChange,
           });
           setInputValue(value);
-          validateValue(value);
+          validateOnChange?.(value);
         }}
       />
       {children ? (

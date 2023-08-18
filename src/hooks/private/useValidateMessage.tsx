@@ -14,43 +14,28 @@ interface UseValidationMessageParams<TValue> {
   key: string | undefined;
   value: TValue;
   validateHandler: ValidateHandler<TValue> | undefined;
-  requiredValidationMessage: string | undefined;
 }
 
 export const useValidationMessage = <TValue,>({
   key,
   value,
   validateHandler,
-  requiredValidationMessage,
 }: UseValidationMessageParams<TValue>) => {
   const { validationMap } = useValidationContext();
 
   const [validationMessage, setValidationMessage] = useState<string>();
 
   const getValidationMessage: ValidateHandler<TValue> | null = useMemo(() => {
-    if (!validateHandler && !requiredValidationMessage) return null;
+    if (!validateHandler) return null;
 
-    const getRequiredMessageToDisplay = (value: TValue) =>
-      (((Array.isArray(value) && !value.length) || !value) &&
-        requiredValidationMessage) ||
-      null;
+    return isAsyncFunction(validateHandler)
+      ? async (value) => {
+          const validationMessage = await validateHandler(value);
 
-    if (validateHandler && isAsyncFunction(validateHandler)) {
-      return async (value) => {
-        const validationMessage =
-          getRequiredMessageToDisplay(value) || (await validateHandler(value));
-
-        return validationMessage;
-      };
-    }
-
-    return (value) => {
-      const validationMessage =
-        getRequiredMessageToDisplay(value) || validateHandler?.(value);
-
-      return validationMessage;
-    };
-  }, [requiredValidationMessage, validateHandler]);
+          return validationMessage;
+        }
+      : (value) => validateHandler?.(value);
+  }, [validateHandler]);
 
   useEffect(() => {
     if (validationMap && key && getValidationMessage) {

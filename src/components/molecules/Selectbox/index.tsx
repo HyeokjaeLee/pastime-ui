@@ -13,7 +13,7 @@ import {
   useValidationMessage,
   useClosableOnClickOpeningState,
 } from '@hooks';
-import { InnerStateChangeEventHandler, InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -24,20 +24,13 @@ export interface SelectboxProps<
   TCancelable extends boolean = true,
 > extends Omit<
       InputProps,
-      | 'style'
-      | 'className'
-      | 'onChange'
-      | 'value'
-      | 'multiple'
-      | 'type'
-      | 'disabled'
+      'style' | 'className' | 'onChange' | 'value' | 'multiple' | 'type'
     >,
     Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>,
     Pick<
       SelectProps<TValidOptionValue, TMultiple, TCancelable>,
       'options' | 'float' | 'value' | 'multiple' | 'cancelable'
     > {
-  disabled?: InputDisabled;
   size?: Size;
   validation?: ValidateHandler<
     SelectProps<TValidOptionValue, TMultiple, TCancelable>['value']
@@ -54,7 +47,6 @@ export const Selectbox = <
   TCancelable extends boolean = true,
 >({
   //* Selectbox props
-  disabled,
   size,
   validation,
   children,
@@ -75,12 +67,12 @@ export const Selectbox = <
 
   //* Input props
   onClick,
-  placeholder,
-  id,
   ...restInputProps
 }: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => {
   const [selectedValue, setSelectedValue, preventInnerStateChange] =
     useSubscribedState(value);
+
+  const { disabled, id, readOnly, required } = restInputProps;
 
   const selectedOption = multiple
     ? options?.filter(({ value }) =>
@@ -92,16 +84,21 @@ export const Selectbox = <
     ? selectedOption.map(({ label }) => label).join(', ')
     : selectedOption?.label;
 
-  const { validationMessage, validateValue } = useValidationMessage({
+  const { validationMessage, validateOnChange } = useValidationMessage({
     validateHandler: validation,
     value: selectedValue,
-    id,
+    key: id,
   });
 
   const {
     openingState: [opened, setOpened],
     setClosableOnClick,
   } = useClosableOnClickOpeningState();
+
+  const setOpenedIfEnabled: typeof setOpened = (value) => {
+    if (readOnly) return;
+    setOpened(value);
+  };
 
   const decoration = children ?? (
     <ChevronDown
@@ -120,22 +117,19 @@ export const Selectbox = <
       style={style}
       className={className}
       reversed={reversed}
-      readonly={disabled === 'readonly'}
       label={label}
+      required={required}
       onMouseEnter={() => setClosableOnClick(false)}
       onMouseLeave={() => setClosableOnClick(true)}
     >
       <Input
         {...restInputProps}
-        id={id}
         type="button"
         onClick={(e) => {
           onClick?.(e);
-          setOpened((prev) => !prev);
+          setOpenedIfEnabled((prev) => !prev);
         }}
         value={displayedValue}
-        disabled={!!disabled}
-        placeholder={placeholder}
       />
       {decoration ? (
         <div className={styles.decoration}>{decoration}</div>
@@ -153,8 +147,8 @@ export const Selectbox = <
             preventInnerStateChange,
           });
           setSelectedValue(value);
-          validateValue(value);
-          setOpened(false);
+          validateOnChange?.(value);
+          setOpenedIfEnabled(false);
         }}
       />
     </Input.Wrap>

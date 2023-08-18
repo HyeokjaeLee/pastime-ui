@@ -36,6 +36,11 @@ export default {
       return label;
     }),
 
+    required: cloneDeepWith(STORY_META.INPUT_REQUIRED, (required) => {
+      required.table.category = CATEGORY.INPUT_WRAP;
+      return required;
+    }),
+
     validationMessage: {
       description: 'The validation message to display.\n\n유효성 검사 메시지',
 
@@ -95,11 +100,13 @@ export const Default: Story = {
   }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
+    const { required } = args;
     return (
       <Input.Wrap
         validationMessage={validationMessage}
         size={size}
         label={label}
+        required={required}
       >
         <Input
           {...args}
