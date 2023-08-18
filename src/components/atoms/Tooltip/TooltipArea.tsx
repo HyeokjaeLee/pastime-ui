@@ -8,7 +8,7 @@ import styles from './TooltipArea.module.scss';
 export type TooltipAreaProps = HTMLTagProps<'div'>;
 
 export const TooltipArea = ({
-  children,
+  //* HTML div props
   className,
   onMouseMove,
   onMouseLeave,
@@ -34,8 +34,6 @@ export const TooltipArea = ({
         dispatchLocation(e);
         onMouseMove?.(e);
       }}
-    >
-      {children}
-    </div>
+    />
   );
 };

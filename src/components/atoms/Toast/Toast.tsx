@@ -22,6 +22,7 @@ export interface ToastProps {
 }
 
 export const Toast = ({
+  //* Toast props
   icon = 'success',
   children,
   space = false,

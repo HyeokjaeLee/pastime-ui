@@ -5,7 +5,11 @@ import styles from './index.module.scss';
 
 export type SkeletonProps = Omit<HTMLTagProps<'div'>, 'children'>;
 
-export const Skeleton = ({ className, ...restDivProps }: SkeletonProps) => (
+export const Skeleton = ({
+  //* HTML div props
+  className,
+  ...restDivProps
+}: SkeletonProps) => (
   <div
     {...restDivProps}
     className={cleanClassName(`${styles.skeleton} ${className}`)}
