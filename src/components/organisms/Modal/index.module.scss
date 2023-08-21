@@ -1,10 +1,18 @@
 @use 'src/styles/libs' as *;
 
-.modal-container {
+@mixin container {
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal-container {
+  @include container;
+
   align-items: center;
   justify-content: center;
 
@@ -13,12 +21,9 @@
   &.closing {
     @include fade-out(0.2s);
   }
-
-  width: 100vw;
-  height: 100vh;
 }
 
-.background-layer {
+@mixin background-layer {
   position: absolute;
   z-index: -1;
 
@@ -30,6 +35,10 @@
 
     background-color: rgba($COOL-GRAY-800, 0.5);
   }
+}
+
+.background-layer {
+  @include background-layer;
 }
 
 @layer {

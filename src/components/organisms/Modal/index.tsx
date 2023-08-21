@@ -1,7 +1,11 @@
 import { createPortal } from 'react-dom';
 
 import { ModalContextProvider } from '@contexts/ModalContext';
-import { useOpeningTransitionState, OPENING_TRANSITION } from '@hooks';
+import {
+  useOpeningTransitionState,
+  OPENING_TRANSITION,
+  usePreventBackgroundScroll,
+} from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -18,6 +22,7 @@ export interface ModalProps extends HTMLTagProps<'article'> {
   blurredBackground?: boolean;
   opened?: boolean;
   onClose?: (e: ModalCloseEvent) => void;
+  backgroundScroll?: boolean;
 }
 
 export const Modal = Object.assign(
@@ -27,6 +32,7 @@ export const Modal = Object.assign(
     blurredBackground = true,
     opened = false,
     onClose,
+    backgroundScroll = false,
 
     //* HTML article props
     className,
@@ -45,6 +51,11 @@ export const Modal = Object.assign(
       onClose?.({ preventDefaultClose });
       setOpeningTransition(false);
     };
+
+    usePreventBackgroundScroll({
+      backgroundScroll,
+      isPrevent: !!openingTransition,
+    });
 
     return openingTransition ? (
       createPortal(

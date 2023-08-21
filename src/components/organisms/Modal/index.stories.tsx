@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { STORY_DUUMMY, STORY_META } from '@constants';
+import { STORY_META } from '@constants';
 import { cloneDeepWith } from '@utils';
 
 import { Modal, ModalHeaderProps, ModalProps } from '.';
