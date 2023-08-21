@@ -25,7 +25,7 @@ export const Modal = Object.assign(
     //* Modal props
     zIndex = 100,
     blurredBackground = true,
-    opened = true,
+    opened = false,
     onClose,
 
     //* HTML article props

@@ -37,6 +37,7 @@
     display: flex;
     flex-direction: column;
 
+    box-sizing: border-box;
     width: fit-content;
     min-width: 300px;
     max-width: calc(100vw - 1rem);
@@ -47,5 +48,8 @@
     border-radius: $BORDER-RADIUS-MD;
 
     background-color: white;
+    box-shadow: $BOX_SHADOW;
+
+    white-space: pre-wrap;
   }
 }

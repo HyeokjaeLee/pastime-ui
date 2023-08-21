@@ -1,6 +1,28 @@
-.story-container {
+@mixin common-container-style {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   align-items: flex-end;
+}
+
+.story-container {
+  @include common-container-style;
+}
+
+.select-used-container {
+  @include common-container-style;
+  align-items: center;
+
+  height: 700px;
+}
+
+.overflow-component-container {
+  @include common-container-style;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 90vh;
+
+  transform: scale(1);
 }
