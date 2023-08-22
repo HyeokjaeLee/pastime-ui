@@ -200,3 +200,40 @@ export const MODAL_CLOSE_HANDLER = {
   control: false,
   table: {},
 };
+
+export const MODAL_BACKGROUND_SCROLL = {
+  description: `Whether to allow background scrolling when the component is opened.\n\n컴포넌트가 열려있을 때, 백그라운드 스크롤을 허용할지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const MODAL_Z_INDEX = {
+  description: `The z-index of the component, including the background layer.\n\n백그라운드 레이어를 포함한 컴포넌트의 z-index`,
+  control: 'number',
+  table: {
+    defaultValue: { summary: 100 },
+    type: {
+      summary: 'number',
+    },
+  },
+};
+
+export const MODAL_CLOSE_BUTTON = {
+  description: `Whether to display the close button.\n\n닫기 버튼을 표시할지 여부`,
+  table: {
+    defaultValue: { summary: false },
+    type: { summary: 'boolean' },
+  },
+};
+
+export const MODAL_BACKGROUND_BLUR = {
+  description: `Whether to blur the background layer.\n\n백그라운드 레이어를 흐리게 할지 여부`,
+  table: {
+    defaultValue: { summary: true },
+  },
+};

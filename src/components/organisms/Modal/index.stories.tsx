@@ -31,25 +31,28 @@ const meta: Meta<ModalMetaProps> = {
       opened.table.category = CATEGORY.MODAL;
       return opened;
     }),
-    zIndex: {
-      description: `The z-index of the modal, including the background layer.\n\n백그라운드 레이어를 포함한 모달의 z-index`,
-      control: 'number',
-      table: {
-        defaultValue: { summary: 100 },
-        category: CATEGORY.MODAL,
-      },
-    },
+    zIndex: cloneDeepWith(STORY_META.MODAL_Z_INDEX, (zIndex) => {
+      zIndex.table.category = CATEGORY.MODAL;
+      return zIndex;
+    }),
     onClose: cloneDeepWith(STORY_META.MODAL_CLOSE_HANDLER, (onClose) => {
       onClose.table.category = CATEGORY.MODAL;
       return onClose;
     }),
-    blurredBackground: {
-      description: `Whether to blur the background layer.\n\n백그라운드 레이어를 흐리게 할지 여부`,
-      table: {
-        defaultValue: { summary: true },
-        category: CATEGORY.MODAL,
+    blurredBackground: cloneDeepWith(
+      STORY_META.MODAL_BACKGROUND_BLUR,
+      (blurredBackground) => {
+        blurredBackground.table.category = CATEGORY.MODAL;
+        return blurredBackground;
       },
-    },
+    ),
+    backgroundScroll: cloneDeepWith(
+      STORY_META.MODAL_BACKGROUND_SCROLL,
+      (backgroundScroll) => {
+        backgroundScroll.table.category = CATEGORY.MODAL;
+        return backgroundScroll;
+      },
+    ),
 
     //* Modal.Header
     headerChildren: {
@@ -60,14 +63,10 @@ const meta: Meta<ModalMetaProps> = {
         category: CATEGORY.MODAL_HEADER,
       },
     },
-    closeButton: {
-      description: `Whether to display the close button.\n\n닫기 버튼을 표시할지 여부`,
-      table: {
-        defaultValue: { summary: false },
-        type: { summary: 'boolean' },
-        category: CATEGORY.MODAL_HEADER,
-      },
-    },
+    closeButton: cloneDeepWith(STORY_META.MODAL_CLOSE_BUTTON, (closeButton) => {
+      closeButton.table.category = CATEGORY.MODAL_HEADER;
+      return closeButton;
+    }),
   },
   args: {
     headerChildren: 'Modal Header',

@@ -11,8 +11,8 @@ interface DrawerMetaProps
   headerChildren: React.ReactNode;
 }
 enum CATEGORY {
-  MODAL = 'Drawer',
-  MODAL_HEADER = 'Drawer.Header',
+  DRAWER = 'Drawer',
+  DRAWER_HEADER = 'Drawer.Header',
 }
 
 const meta: Meta<DrawerMetaProps> = {
@@ -21,35 +21,49 @@ const meta: Meta<DrawerMetaProps> = {
   argTypes: {
     //* Drawer
     children: {
-      description: `The content of the modal.\n\n모달의 내용`,
+      description: `The content of the drawer.\n\nDrawer의 내용`,
       table: {
         type: { summary: 'ReactNode' },
-        category: CATEGORY.MODAL,
+        category: CATEGORY.DRAWER,
       },
     },
     opened: cloneDeepWith(STORY_META.OPENED, (opened) => {
-      opened.table.category = CATEGORY.MODAL;
+      opened.table.category = CATEGORY.DRAWER;
       return opened;
     }),
-    zIndex: {
-      description: `The z-index of the modal, including the background layer.\n\n백그라운드 레이어를 포함한 모달의 z-index`,
-      control: 'number',
-      table: {
-        defaultValue: { summary: 100 },
-        category: CATEGORY.MODAL,
-      },
-    },
+    zIndex: cloneDeepWith(STORY_META.MODAL_Z_INDEX, (zIndex) => {
+      zIndex.table.category = CATEGORY.DRAWER;
+      return zIndex;
+    }),
     onClose: cloneDeepWith(STORY_META.MODAL_CLOSE_HANDLER, (onClose) => {
-      onClose.table.category = CATEGORY.MODAL;
+      onClose.table.category = CATEGORY.DRAWER;
       return onClose;
     }),
-    blurredBackground: {
-      description: `Whether to blur the background layer.\n\n백그라운드 레이어를 흐리게 할지 여부`,
+    blurredBackground: cloneDeepWith(
+      STORY_META.MODAL_BACKGROUND_BLUR,
+      (blurredBackground) => {
+        blurredBackground.table.category = CATEGORY.DRAWER;
+        return blurredBackground;
+      },
+    ),
+    drawerDirection: {
+      description: `The direction of the drawer.\n\nDrawer의 방향`,
       table: {
-        defaultValue: { summary: true },
-        category: CATEGORY.MODAL,
+        category: CATEGORY.DRAWER,
+        defaultValue: { summary: 'right' },
+      },
+      control: {
+        type: 'select',
+        options: ['bottom', 'top', 'left', 'right'],
       },
     },
+    backgroundScroll: cloneDeepWith(
+      STORY_META.MODAL_BACKGROUND_SCROLL,
+      (backgroundScroll) => {
+        backgroundScroll.table.category = CATEGORY.DRAWER;
+        return backgroundScroll;
+      },
+    ),
 
     //* Drawer.Header
     headerChildren: {
@@ -57,17 +71,13 @@ const meta: Meta<DrawerMetaProps> = {
       description: `The content to display on the left inside the component.\n\n컴포넌트 내부 좌측에 표시할 내용`,
       table: {
         type: { summary: 'ReactNode' },
-        category: CATEGORY.MODAL_HEADER,
+        category: CATEGORY.DRAWER_HEADER,
       },
     },
-    closeButton: {
-      description: `Whether to display the close button.\n\n닫기 버튼을 표시할지 여부`,
-      table: {
-        defaultValue: { summary: false },
-        type: { summary: 'boolean' },
-        category: CATEGORY.MODAL_HEADER,
-      },
-    },
+    closeButton: cloneDeepWith(STORY_META.MODAL_CLOSE_BUTTON, (closeButton) => {
+      closeButton.table.category = CATEGORY.DRAWER_HEADER;
+      return closeButton;
+    }),
   },
   args: {
     headerChildren: 'Drawer Header',
