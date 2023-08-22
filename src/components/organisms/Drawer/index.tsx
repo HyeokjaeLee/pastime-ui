@@ -5,6 +5,7 @@ import {
   useOpeningTransitionState,
   OPENING_TRANSITION,
   usePreventBackgroundScroll,
+  useDarkMode,
 } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -55,6 +56,8 @@ export const Drawer = Object.assign(
     const closingClassName =
       openingTransition === OPENING_TRANSITION.CLOSING && styles.closing;
 
+    const { isDarkMode } = useDarkMode();
+
     return openingTransition ? (
       createPortal(
         <div
@@ -74,7 +77,9 @@ export const Drawer = Object.assign(
           <article
             {...restArticleProps}
             className={cleanClassName(
-              `${styles.drawer} ${styles[drawerDirection]} ${closingClassName} ${className}`,
+              `${styles.drawer} ${styles[drawerDirection]} ${
+                isDarkMode && styles.dark
+              } ${closingClassName} ${className}`,
             )}
           >
             <ModalContextProvider onClose={handleClose}>
