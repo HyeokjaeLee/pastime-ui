@@ -1,0 +1,30 @@
+@mixin scale-up-center($duration: 0.3s, $delay: 0s) {
+  -webkit-animation: scale-up-center $duration
+    cubic-bezier(0.39, 0.575, 0.565, 1) $delay both;
+  animation: scale-up-center $duration cubic-bezier(0.39, 0.575, 0.565, 1)
+    $delay both;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

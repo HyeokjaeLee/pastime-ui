@@ -1,0 +1,72 @@
+@mixin shake-horizontal($duration: 1s, $delay: 0s) {
+  -webkit-animation: shake-horizontal $duration
+    cubic-bezier(0.455, 0.03, 0.515, 0.955) $delay both;
+  animation: shake-horizontal $duration cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    $delay both;
+}
+
+@-webkit-keyframes shake-horizontal {
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+
+  80% {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+
+  90% {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes shake-horizontal {
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+
+  80% {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+
+  90% {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+}

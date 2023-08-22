@@ -1,0 +1,38 @@
+@mixin slide-in-bottom($duration: 0.3s, $delay: 0s) {
+  -webkit-animation: slide-in-bottom $duration
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) $delay both;
+  animation: slide-in-bottom $duration cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    $delay both;
+}
+
+@-webkit-keyframes slide-in-bottom {
+  0% {
+    opacity: 0;
+
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    opacity: 0;
+
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}

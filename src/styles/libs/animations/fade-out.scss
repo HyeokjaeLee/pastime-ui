@@ -1,0 +1,24 @@
+@mixin fade-out($duration: 0.5s, $delay: 0s) {
+  -webkit-animation: fade-out $duration ease-out $delay both;
+  animation: fade-out $duration ease-out $delay both;
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
