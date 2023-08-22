@@ -4,10 +4,12 @@ interface ValidateResult {
     invalidElementIds: string[];
 }
 interface ValidateOptions {
-    scrollToFirstInvalid?: boolean;
+    scroll?: boolean;
 }
 export declare const useValidate: () => {
-    validate: ({ scrollToFirstInvalid }: ValidateOptions) => ValidateResult;
+    validationMap: Map<string, () => import('../../contexts/ValidationContext').ValidationResult | Promise<import('../../contexts/ValidationContext').ValidationResult>>;
+    validate: ({ scroll }: ValidateOptions) => ValidateResult;
+    validateAsync: ({ scroll, }: ValidateOptions) => Promise<ValidateResult>;
 };
-export declare const validationObserver: <T extends object>(Component: ComponentType<T>) => (props: T) => JSX.Element;
+export declare const validationObserver: <T extends object>(Component: ComponentType<T>) => (props: T) => import("react/jsx-runtime").JSX.Element;
 export {};

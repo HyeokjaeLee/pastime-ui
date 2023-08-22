@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ToastOption } from '@contexts/ToastContext';
+import { ToastOption } from '../../../contexts/ToastContext';
 import { ToastProviderProps } from '.';
 type ToastTestButtonProps = Partial<ToastOption>;
 type MetaProps = ToastTestButtonProps & ToastProviderProps;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export type ButtonIconDirection = 'left' | 'right';
 interface UseButtonLoadingParams {
     loading: boolean;
@@ -6,15 +5,15 @@ interface UseButtonLoadingParams {
     childrenType: 'icon' | 'text' | 'both';
 }
 export declare const useButtonLoading: ({ loading, iconDirection, childrenType, }: UseButtonLoadingParams) => {
-    iconLoadingSpinner: JSX.Element;
+    iconLoadingSpinner: import("react/jsx-runtime").JSX.Element;
     leftLoadingSpinner?: undefined;
     rightLoadingSpinner?: undefined;
 } | {
-    leftLoadingSpinner: JSX.Element;
+    leftLoadingSpinner: import("react/jsx-runtime").JSX.Element;
     iconLoadingSpinner?: undefined;
     rightLoadingSpinner?: undefined;
 } | {
-    rightLoadingSpinner: JSX.Element;
+    rightLoadingSpinner: import("react/jsx-runtime").JSX.Element;
     iconLoadingSpinner?: undefined;
     leftLoadingSpinner?: undefined;
 } | {

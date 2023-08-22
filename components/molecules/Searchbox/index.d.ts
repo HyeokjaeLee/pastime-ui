@@ -1,17 +1,12 @@
 /// <reference types="react" />
-import type { ValidateHandler } from '@hooks';
-import { InputDisabled } from '@types';
 import type { InputProps, InputWrapProps, SelectProps } from '../../atoms';
-export interface SearchboxProps extends Omit<InputProps, 'size' | 'value' | 'onChange' | 'type' | 'onSelect' | 'className' | 'style' | 'disabled'>, Pick<InputWrapProps, 'size' | 'reversed' | 'style' | 'className'>, Pick<SelectProps<string, false>, 'float'> {
-    filterByKeyword?: boolean;
+import type { ValidateHandler, UseFilteredSearchOptionsParams } from '../../../hooks';
+import { InnerStateChangeEventHandler, Size } from '@types';
+export interface SearchboxProps extends Omit<InputProps, 'value' | 'onChange' | 'type' | 'onSelect' | 'className' | 'style'>, Pick<InputWrapProps, 'reversed' | 'style' | 'className' | 'label'>, Pick<SelectProps<string, false, false>, 'float'>, Pick<UseFilteredSearchOptionsParams, 'filterByKeyword' | 'options'> {
+    size?: Size;
     validation?: ValidateHandler<SearchboxProps['value']>;
-    options?: string[];
     value?: string;
-    onChange?: (value: string) => void;
-    onSelect?: (value: string) => {
-        preventDefault?: boolean;
-    } | void;
+    onChange?: InnerStateChangeEventHandler<string>;
     children?: React.ReactNode;
-    disabled?: InputDisabled;
 }
-export declare const Searchbox: ({ filterByKeyword, validation, options, value, onSelect, children, disabled, size, className, style, reversed, float, onChange, onClick, onFocus, id, name, onBlur, ...restInputProps }: SearchboxProps) => JSX.Element;
+export declare const Searchbox: ({ size, filterByKeyword, validation, options, value, onChange, children, className, style, reversed, label, float, onClick, onFocus, onBlur, ...restInputProps }: SearchboxProps) => import("react/jsx-runtime").JSX.Element;

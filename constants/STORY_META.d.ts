@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const HIDDEN: {
     table: {
         disable: boolean;
@@ -53,7 +52,7 @@ export declare const SELECT_OPTIONS_FLOAT: {
         };
     };
 };
-export declare const SELECT_USED_DECORATORS: ((Story: any) => JSX.Element)[];
+export declare const SELECT_USED_DECORATORS: ((Story: any) => import("react/jsx-runtime").JSX.Element)[];
 export declare const VALIDATION: {
     control: boolean;
     description: string;
@@ -91,6 +90,15 @@ export declare const INPUT_CHILDREN: {
         };
     };
 };
+export declare const INPUT_LABEL: {
+    description: string;
+    control: string;
+    table: {
+        type: {
+            summary: string;
+        };
+    };
+};
 export declare const INPUT_REVERSED: {
     description: string;
     control: string;
@@ -98,6 +106,94 @@ export declare const INPUT_REVERSED: {
         type: {
             summary: string;
         };
+        defaultValue: {
+            summary: boolean;
+        };
+    };
+};
+export declare const INPUT_REQUIRED: {
+    description: string;
+    control: string;
+    table: {
+        type: {
+            summary: string;
+        };
+        defaultValue: {
+            summary: boolean;
+        };
+    };
+};
+export declare const INPUT_READONLY: {
+    description: string;
+    control: string;
+    table: {
+        type: {
+            summary: string;
+        };
+        defaultValue: {
+            summary: boolean;
+        };
+    };
+};
+export declare const OPENED: {
+    description: string;
+    control: string;
+    table: {
+        type: {
+            summary: string;
+        };
+        defaultValue: {
+            summary: boolean;
+        };
+    };
+};
+export declare const INNER_STATE_CHANGE_HANDLER: {
+    description: string;
+    control: boolean;
+};
+export declare const MODAL_CLOSE_HANDLER: {
+    description: string;
+    control: boolean;
+    table: {};
+};
+export declare const MODAL_BACKGROUND_SCROLL: {
+    description: string;
+    control: string;
+    table: {
+        type: {
+            summary: string;
+        };
+        defaultValue: {
+            summary: boolean;
+        };
+    };
+};
+export declare const MODAL_Z_INDEX: {
+    description: string;
+    control: string;
+    table: {
+        defaultValue: {
+            summary: number;
+        };
+        type: {
+            summary: string;
+        };
+    };
+};
+export declare const MODAL_CLOSE_BUTTON: {
+    description: string;
+    table: {
+        defaultValue: {
+            summary: boolean;
+        };
+        type: {
+            summary: string;
+        };
+    };
+};
+export declare const MODAL_BACKGROUND_BLUR: {
+    description: string;
+    table: {
         defaultValue: {
             summary: boolean;
         };

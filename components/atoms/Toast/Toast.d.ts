@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { ToastType } from '@contexts/ToastContext';
+import type { ToastType } from '../../../contexts/ToastContext';
 export interface ToastProps {
     icon?: ToastType;
     children: React.ReactNode;
@@ -8,4 +8,4 @@ export interface ToastProps {
     holdTime?: number;
     onDelete?: () => void;
 }
-export declare const Toast: ({ icon, children, space, floatDirection, holdTime, onDelete, }: ToastProps) => JSX.Element;
+export declare const Toast: ({ icon, children, space, floatDirection, holdTime, onDelete, }: ToastProps) => import("react/jsx-runtime").JSX.Element;

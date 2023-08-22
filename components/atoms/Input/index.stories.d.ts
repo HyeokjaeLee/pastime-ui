@@ -1,22 +1,25 @@
 /// <reference types="react" />
 import type { StoryObj } from '@storybook/react';
 import type { InputProps, InputWrapProps } from '.';
-type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed'>;
+type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed' | 'label'>;
 declare enum CATEGORY {
     INPUT = "Input",
     INPUT_WRAP = "Input.Wrap"
 }
 declare const _default: {
     title: string;
-    component: (({ type, value, onChange, placeholder, className, onFocus, onBlur, ...restInputProps }: InputProps) => JSX.Element) & {
-        Wrap: ({ size, validationMessage, readonly, reversed, children, className, ...restDivProps }: InputWrapProps) => JSX.Element;
+    component: import("react").ForwardRefExoticComponent<Omit<InputProps, "ref"> & import("react").RefAttributes<HTMLInputElement>> & {
+        Wrap: ({ size, validationMessage, reversed, label, required, children, className, ...restDivProps }: InputWrapProps) => import("react/jsx-runtime").JSX.Element;
     };
     args: {
         placeholder: string;
         validationMessage: string;
+        label: string;
     };
     argTypes: {
         size: any;
+        label: any;
+        required: any;
         validationMessage: {
             description: string;
             table: {

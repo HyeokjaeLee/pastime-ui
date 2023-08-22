@@ -9,6 +9,6 @@ interface UseOpeningStatusParams {
     openingDuration?: number;
     closingDuration?: number;
 }
-export declare const useOpeningTransitionState: ({ openingTransition, openingDuration, closingDuration, }: UseOpeningStatusParams) => readonly [OPENING_TRANSITION, (status: boolean, runInstantly?: boolean) => void];
+export declare const useOpeningTransitionState: ({ openingTransition, openingDuration, closingDuration, }: UseOpeningStatusParams) => readonly [OPENING_TRANSITION, (status: boolean, runInstantly?: boolean) => void, import("./useSubscribedState").DisableSetter];
 export type OpeningTransitionState = ReturnType<typeof useOpeningTransitionState>;
 export {};

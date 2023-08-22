@@ -1,11 +1,11 @@
 /// <reference types="react" />
-import type { InputProps, SelectProps, InputWrapProps } from '@components/atoms';
-import type { ValidOptionValue, ValidateHandler } from '@hooks';
-import { InputDisabled, Size } from '@types';
-export interface SelectboxProps<TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false> extends Omit<InputProps, 'style' | 'className' | 'onChange' | 'value' | 'multiple' | 'type' | 'disabled'>, Pick<InputWrapProps, 'reversed' | 'className' | 'style'>, Pick<SelectProps<TValidOptionValue, TMultiple>, 'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'cancelable'> {
-    disabled?: InputDisabled;
+import type { InputProps, SelectProps, InputWrapProps, SelectChangeEvent } from '../../atoms';
+import type { ValidOptionValue, ValidateHandler } from '../../../hooks';
+import { InnerStateChangeEventHandler, Size } from '@types';
+export interface SelectboxProps<TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false, TCancelable extends boolean = true> extends Omit<InputProps, 'style' | 'className' | 'onChange' | 'value' | 'multiple' | 'type'>, Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>, Pick<SelectProps<TValidOptionValue, TMultiple, TCancelable>, 'options' | 'float' | 'value' | 'multiple' | 'cancelable'> {
     size?: Size;
-    validation?: ValidateHandler<SelectboxProps<TValidOptionValue, TMultiple>['value']>;
+    validation?: ValidateHandler<SelectProps<TValidOptionValue, TMultiple, TCancelable>['value']>;
     children?: React.ReactNode;
+    onChange?: InnerStateChangeEventHandler<SelectChangeEvent<TValidOptionValue, TMultiple, TCancelable>['value']>;
 }
-export declare const Selectbox: <TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false>({ disabled, size, validation, children, reversed, className, style, options, float, onChange, value, multiple, onClick, placeholder, id, ...restInputProps }: SelectboxProps<TValidOptionValue, TMultiple>) => JSX.Element;
+export declare const Selectbox: <TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false, TCancelable extends boolean = true>({ size, validation, children, reversed, className, style, label, options, float, onChange, value, multiple, cancelable, onClick, ...restInputProps }: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => import("react/jsx-runtime").JSX.Element;

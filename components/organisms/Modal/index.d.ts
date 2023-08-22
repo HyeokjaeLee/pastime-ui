@@ -1,8 +1,15 @@
-/// <reference types="react" />
 import { HTMLTagProps } from '@types';
-interface ModalProps extends HTMLTagProps<'section'> {
-    stackIndex?: 1 | 2 | 3 | 4 | 5;
-    blurredBackground?: boolean;
+export type { ModalHeaderProps } from './ModalHeader';
+interface ModalCloseEvent {
+    preventDefaultClose: () => void;
 }
-export declare const Modal: ({ stackIndex, blurredBackground, className, ...restSectionProps }: ModalProps) => import("react").ReactPortal;
-export {};
+export interface ModalProps extends HTMLTagProps<'article'> {
+    zIndex?: number;
+    blurredBackground?: boolean;
+    opened?: boolean;
+    onClose?: (e: ModalCloseEvent) => void;
+    backgroundScroll?: boolean;
+}
+export declare const Modal: (({ zIndex, blurredBackground, opened, onClose, backgroundScroll, className, children, ...restArticleProps }: ModalProps) => import("react/jsx-runtime").JSX.Element) & {
+    Header: ({ closeButton, className, children, ...restHeaderProps }: import("./ModalHeader").ModalHeaderProps) => import("react/jsx-runtime").JSX.Element;
+};
