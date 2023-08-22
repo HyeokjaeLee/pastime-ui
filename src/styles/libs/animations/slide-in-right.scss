@@ -1,4 +1,4 @@
-@mixin slide-in-right($duration: 1s, $delay: 0s) {
+@mixin slide-in-right($duration: 0.3s, $delay: 0s) {
   -webkit-animation: slide-in-right $duration
     cubic-bezier(0.25, 0.46, 0.45, 0.94) $delay both;
   animation: slide-in-right $duration cubic-bezier(0.25, 0.46, 0.45, 0.94)

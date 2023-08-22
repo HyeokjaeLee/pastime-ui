@@ -1,0 +1,112 @@
+@use 'src/styles/libs' as *;
+@use '../Modal/index.module.scss' as modal;
+
+.drawer-container {
+  @include modal.container;
+
+  &.left {
+    justify-content: flex-start;
+  }
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  &.top {
+    align-items: flex-start;
+  }
+
+  &.bottom {
+    align-items: flex-end;
+  }
+}
+
+.background-layer {
+  @include modal.background-layer;
+  @include fade-in;
+
+  &.closing {
+    @include fade-out;
+  }
+}
+
+.drawer {
+  @layer {
+    &.left,
+    &.right {
+      width: fit-content;
+      height: 100vh;
+    }
+
+    &.left {
+      @include slide-in-left;
+
+      &.closing {
+        @include slide-out-left;
+      }
+
+      border: {
+        top-right-radius: $BORDER-RADIUS-MD;
+        bottom-right-radius: $BORDER-RADIUS-MD;
+      }
+    }
+
+    &.right {
+      @include slide-in-right;
+
+      &.closing {
+        @include slide-out-right;
+      }
+
+      border: {
+        top-left-radius: $BORDER-RADIUS-MD;
+        bottom-left-radius: $BORDER-RADIUS-MD;
+      }
+    }
+
+    &.top,
+    &.bottom {
+      width: 100vw;
+      height: fit-content;
+    }
+
+    &.top {
+      @include slide-in-top;
+
+      &.closing {
+        @include slide-out-top;
+      }
+
+      border: {
+        bottom-left-radius: $BORDER-RADIUS-MD;
+        bottom-right-radius: $BORDER-RADIUS-MD;
+      }
+    }
+
+    &.bottom {
+      @include slide-in-bottom;
+
+      &.closing {
+        @include slide-out-bottom;
+      }
+
+      border: {
+        top-left-radius: $BORDER-RADIUS-MD;
+        top-right-radius: $BORDER-RADIUS-MD;
+      }
+    }
+
+    & {
+      display: flex;
+      flex-direction: column;
+
+      box-sizing: border-box;
+      padding: 10px;
+
+      background-color: white;
+      box-shadow: $BOX_SHADOW;
+
+      white-space: pre-wrap;
+    }
+  }
+}
