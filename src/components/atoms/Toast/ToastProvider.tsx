@@ -14,7 +14,10 @@ export interface ToastProviderProps extends Pick<ToastProps, 'floatDirection'> {
 }
 
 export const ToastProvider = ({
+  //* Toast.Provider props
   children,
+
+  //* Toast props
   floatDirection = 'from-top',
 }: ToastProviderProps) => {
   const [toastOptionList, setToastOptionList] = useState<ToastOption[]>([]);

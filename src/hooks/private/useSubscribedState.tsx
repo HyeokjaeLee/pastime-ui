@@ -1,21 +1,28 @@
 import { isEqual } from 'lodash-es';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useMountedEffect } from './useMountedEffect';
 
+type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export type DisableSetter = () => void;
+
+/**
+ * @returns [value, setter, disableSetter]
+ * @disableSetter setter를 사용하지 못하게 만드는 함수입니다. (setter이전에 호출되어야 합니다.)
+ */
 export function useSubscribedState<T>(
   subscribedState: T | (() => T),
   dependencyList?: React.DependencyList,
-) {
-  const state = useState(subscribedState);
+): [T, Setter<T>, DisableSetter] {
+  const [value, setValue] = useState(subscribedState);
 
   const subscribedValue =
     subscribedState instanceof Function ? subscribedState() : subscribedState;
 
   useMountedEffect(() => {
     const subscribedValueType = typeof subscribedValue;
-    const [value, setValue] = state;
 
     switch (subscribedValueType) {
       case 'object':
@@ -27,5 +34,21 @@ export function useSubscribedState<T>(
     }
   }, dependencyList || [subscribedValue]);
 
-  return state;
+  let isSetterDisabled = false;
+
+  const {
+    current: [setter, disableSetter],
+  } = useRef([
+    ((newValue) => {
+      if (!isSetterDisabled) setValue(newValue);
+    }) satisfies Setter<T>,
+
+    () => {
+      isSetterDisabled = true;
+    },
+  ]);
+
+  return [value, setter, disableSetter];
 }
+
+export type SubscribedState<T> = ReturnType<typeof useSubscribedState<T>>;

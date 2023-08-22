@@ -1,0 +1,11 @@
+@use 'src/styles/libs' as *;
+
+.header {
+  @layer {
+    & {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}

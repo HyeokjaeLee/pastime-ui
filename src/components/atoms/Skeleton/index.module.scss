@@ -1,11 +1,12 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .skeleton {
   position: relative;
   overflow: hidden;
 
-  background-color: rgba(libs.$COOL-GRAY-300, 0.8);
-  @include libs.fade-in(0.2s);
+  background-color: rgba($COOL-GRAY-300, 0.8);
+
+  @include fade-in(0.2s);
 
   @layer {
     & {
@@ -31,8 +32,8 @@
   width: 50%;
   height: 100%;
 
-  background-color: rgba(libs.$COOL-GRAY-100, 0.4);
-  box-shadow: 0 0 30px 30px rgba(libs.$COOL-GRAY-100, 0.3);
+  background-color: rgba($COOL-GRAY-100, 0.4);
+  box-shadow: 0 0 30px 30px rgba($COOL-GRAY-100, 0.3);
 
   transform: skewX(-20deg);
 }
@@ -41,9 +42,11 @@
   0% {
     transform: translateX(-150%);
   }
+
   50% {
     transform: translateX(-60%);
   }
+
   100% {
     transform: translate(150%);
   }

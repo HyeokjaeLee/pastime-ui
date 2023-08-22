@@ -1,3 +1,3 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
-@include libs.input-decoration;
+@include input-decoration;

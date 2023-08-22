@@ -17,7 +17,9 @@ type HTMLTags =
   | 'button'
   | 'div'
   | 'input'
-  | 'textarea';
+  | 'textarea'
+  | 'header'
+  | 'article';
 
 type CleanedTagProps<TAttributes extends HTMLAttributes<infer TElement>> = Omit<
   DetailedHTMLProps<TAttributes, TElement>,

@@ -1,0 +1,38 @@
+@mixin fade-in-bottom($duration: 0.3s, $delay: 0s) {
+  -webkit-animation: fade-in-bottom $duration
+    cubic-bezier(0.39, 0.575, 0.565, 1) $delay both;
+  animation: fade-in-bottom $duration cubic-bezier(0.39, 0.575, 0.565, 1) $delay
+    both;
+}
+
+@-webkit-keyframes fade-in-bottom {
+  0% {
+    opacity: 0;
+
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-bottom {
+  0% {
+    opacity: 0;
+
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}

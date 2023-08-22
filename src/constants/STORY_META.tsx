@@ -57,13 +57,7 @@ export const SELECT_OPTIONS_FLOAT = {
 export const SELECT_USED_DECORATORS = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (Story: any) => (
-    <article
-      className="story-container"
-      style={{
-        height: 650,
-        alignItems: 'center',
-      }}
-    >
+    <article className="select-used-container">
       <Story />
     </article>
   ),
@@ -110,6 +104,16 @@ export const INPUT_CHILDREN = {
   },
 };
 
+export const INPUT_LABEL = {
+  description: `The label text of the component.\n\n컴포넌트의 라벨 텍스트`,
+  control: 'text',
+  table: {
+    type: {
+      summary: 'string',
+    },
+  },
+};
+
 export const INPUT_REVERSED = {
   description: `Whether to reverse the position of the children.\n\nchildren의 위치를 반전시킬지 여부`,
   control: 'boolean',
@@ -118,5 +122,118 @@ export const INPUT_REVERSED = {
       summary: 'boolean',
     },
     defaultValue: { summary: false },
+  },
+};
+
+export const INPUT_REQUIRED = {
+  description: `Whether the input is required or not.\n\n입력이 필수인지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const INPUT_READONLY = {
+  description: `Whether the input is readonly or not.\n\n입력이 읽기전용인지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const OPENED = {
+  description: `Whether the component is opened or not.\n\n컴포넌트가 열려있는지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const INNER_STATE_CHANGE_HANDLER = {
+  description: `
+  #### Inner State usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        inputValues.value = e.value;
+      };
+    </code>
+  </pre>
+  #### preventInnerStateChange usage example
+  <pre>
+    <code>
+      const handleChange = (e) => {
+        e.preventInnerStateChange();
+        setValue(e.value);
+      };
+    </code>
+  </pre>
+  Component's Change handler supports inner State, and you can deactivate the inner State by calling the preventInnerStateChange function.
+  
+  컴포넌트의 Change 핸들러는 내부 State를 지원하며, preventInnerStateChange 함수를 호출하여 내부 State를 비활성화할 수 있습니다.`,
+  control: false,
+};
+
+export const MODAL_CLOSE_HANDLER = {
+  description: `
+  #### preventDefaultClose usage example
+  <pre>
+    <code>
+      const handleClose = (e) => {
+        e.preventDefaultClose();
+        setOpened(false);
+      };
+    </code>
+  </pre>
+  Component's Close handler supports inner State, and you can deactivate the inner State by calling the preventDefaultClose function.
+  
+  컴포넌트의 Close 핸들러는 내부 State를 지원하며, preventDefaultClose 함수를 호출하여 내부 State를 비활성화할 수 있습니다.`,
+  control: false,
+  table: {},
+};
+
+export const MODAL_BACKGROUND_SCROLL = {
+  description: `Whether to allow background scrolling when the component is opened.\n\n컴포넌트가 열려있을 때, 백그라운드 스크롤을 허용할지 여부`,
+  control: 'boolean',
+  table: {
+    type: {
+      summary: 'boolean',
+    },
+    defaultValue: { summary: false },
+  },
+};
+
+export const MODAL_Z_INDEX = {
+  description: `The z-index of the component, including the background layer.\n\n백그라운드 레이어를 포함한 컴포넌트의 z-index`,
+  control: 'number',
+  table: {
+    defaultValue: { summary: 100 },
+    type: {
+      summary: 'number',
+    },
+  },
+};
+
+export const MODAL_CLOSE_BUTTON = {
+  description: `Whether to display the close button.\n\n닫기 버튼을 표시할지 여부`,
+  table: {
+    defaultValue: { summary: false },
+    type: { summary: 'boolean' },
+  },
+};
+
+export const MODAL_BACKGROUND_BLUR = {
+  description: `Whether to blur the background layer.\n\n백그라운드 레이어를 흐리게 할지 여부`,
+  table: {
+    defaultValue: { summary: true },
   },
 };

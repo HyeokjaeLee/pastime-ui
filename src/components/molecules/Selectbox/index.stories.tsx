@@ -15,15 +15,19 @@ const meta: Meta<typeof Selectbox> = {
     reversed: STORY_META.INPUT_REVERSED,
     disabled: STORY_META.INPUT_DISABLED,
     cancelable: STORY_META.SELECT_CANCELABLE,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
     validation: STORY_META.VALIDATION,
     multiple: STORY_META.SELECT_MULTIPLE,
     children: STORY_META.INPUT_CHILDREN,
+    label: STORY_META.INPUT_LABEL,
+    readOnly: STORY_META.INPUT_READONLY,
+    required: STORY_META.INPUT_REQUIRED,
   },
   decorators: STORY_META.SELECT_USED_DECORATORS,
   args: {
     placeholder: 'Selectbox',
     options: STORY_DUUMMY.OPTIONS,
+    label: 'Selectbox label',
   },
 };
 

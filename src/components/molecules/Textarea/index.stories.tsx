@@ -10,17 +10,22 @@ const meta: Meta<typeof Textarea> = {
   args: {
     size: 'medium',
     placeholder: 'Textarea',
+    label: 'Textarea label',
   },
   argTypes: {
     value: {
       control: 'text',
     },
+    reversed: STORY_META.INPUT_REVERSED,
     disabled: STORY_META.INPUT_DISABLED,
     children: STORY_META.INPUT_CHILDREN,
     placeholder: STORY_META.INPUT_PLACEHOLDER,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
+    label: STORY_META.INPUT_LABEL,
+    readOnly: STORY_META.INPUT_READONLY,
+    required: STORY_META.INPUT_REQUIRED,
   },
 };
 

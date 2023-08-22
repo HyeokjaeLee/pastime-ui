@@ -4,6 +4,7 @@ import type {
   InputProps,
   SelectProps,
   InputWrapProps,
+  SelectChangeEvent,
 } from '@components/atoms';
 import { Select, Input } from '@components/atoms';
 import type { ValidOptionValue, ValidateHandler } from '@hooks';
@@ -12,7 +13,7 @@ import {
   useValidationMessage,
   useClosableOnClickOpeningState,
 } from '@hooks';
-import { InputDisabled, Size } from '@types';
+import { InnerStateChangeEventHandler, Size } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -20,35 +21,32 @@ import styles from './index.module.scss';
 export interface SelectboxProps<
   TValidOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 > extends Omit<
       InputProps,
-      | 'style'
-      | 'className'
-      | 'onChange'
-      | 'value'
-      | 'multiple'
-      | 'type'
-      | 'disabled'
+      'style' | 'className' | 'onChange' | 'value' | 'multiple' | 'type'
     >,
-    Pick<InputWrapProps, 'reversed' | 'className' | 'style'>,
+    Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>,
     Pick<
-      SelectProps<TValidOptionValue, TMultiple>,
-      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'cancelable'
+      SelectProps<TValidOptionValue, TMultiple, TCancelable>,
+      'options' | 'float' | 'value' | 'multiple' | 'cancelable'
     > {
-  disabled?: InputDisabled;
   size?: Size;
   validation?: ValidateHandler<
-    SelectboxProps<TValidOptionValue, TMultiple>['value']
+    SelectProps<TValidOptionValue, TMultiple, TCancelable>['value']
   >;
   children?: React.ReactNode;
+  onChange?: InnerStateChangeEventHandler<
+    SelectChangeEvent<TValidOptionValue, TMultiple, TCancelable>['value']
+  >;
 }
 
 export const Selectbox = <
   TValidOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = true,
 >({
   //* Selectbox props
-  disabled,
   size,
   validation,
   children,
@@ -57,6 +55,7 @@ export const Selectbox = <
   reversed,
   className,
   style,
+  label,
 
   //* Select props
   options,
@@ -64,14 +63,16 @@ export const Selectbox = <
   onChange,
   value,
   multiple,
+  cancelable,
 
   //* Input props
   onClick,
-  placeholder,
-  id,
   ...restInputProps
-}: SelectboxProps<TValidOptionValue, TMultiple>) => {
-  const [selectedValue, setSelectedValue] = useSubscribedState(value);
+}: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => {
+  const [selectedValue, setSelectedValue, preventInnerStateChange] =
+    useSubscribedState(value);
+
+  const { disabled, id, readOnly, required } = restInputProps;
 
   const selectedOption = multiple
     ? options?.filter(({ value }) =>
@@ -83,10 +84,10 @@ export const Selectbox = <
     ? selectedOption.map(({ label }) => label).join(', ')
     : selectedOption?.label;
 
-  const { validationMessage, validateValue } = useValidationMessage({
+  const { validationMessage, validateOnChange } = useValidationMessage({
     validateHandler: validation,
     value: selectedValue,
-    id,
+    key: id,
   });
 
   const {
@@ -94,11 +95,13 @@ export const Selectbox = <
     setClosableOnClick,
   } = useClosableOnClickOpeningState();
 
-  const changeOpened = () => setOpened((prev) => !prev);
+  const setOpenedIfEnabled: typeof setOpened = (value) => {
+    if (readOnly) return;
+    setOpened(value);
+  };
 
   const decoration = children ?? (
     <ChevronDown
-      onClick={disabled ? undefined : () => changeOpened()}
       className={cleanClassName(
         `${styles['selectbox-icon']} ${
           (float === 'top' ? !opened : opened) && styles.reversed
@@ -114,21 +117,19 @@ export const Selectbox = <
       style={style}
       className={className}
       reversed={reversed}
-      readonly={disabled === 'readonly'}
+      label={label}
+      required={required}
       onMouseEnter={() => setClosableOnClick(false)}
       onMouseLeave={() => setClosableOnClick(true)}
     >
       <Input
         {...restInputProps}
-        id={id}
         type="button"
         onClick={(e) => {
           onClick?.(e);
-          changeOpened();
+          setOpenedIfEnabled((prev) => !prev);
         }}
         value={displayedValue}
-        disabled={!!disabled}
-        placeholder={placeholder}
       />
       {decoration ? (
         <div className={styles.decoration}>{decoration}</div>
@@ -138,12 +139,16 @@ export const Selectbox = <
         options={options}
         multiple={multiple}
         value={selectedValue}
+        cancelable={cancelable}
         float={float}
-        onChange={(value) => {
+        onChange={({ value }) => {
+          onChange?.({
+            value,
+            preventInnerStateChange,
+          });
           setSelectedValue(value);
-          validateValue(value);
-          onChange?.(value);
-          setOpened(false);
+          validateOnChange?.(value);
+          setOpenedIfEnabled(false);
         }}
       />
     </Input.Wrap>

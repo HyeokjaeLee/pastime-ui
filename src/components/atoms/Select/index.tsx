@@ -6,7 +6,6 @@ import {
   useIndexForSelect,
   useOpeningTransitionState,
   OPENING_TRANSITION,
-  useMountedEffect,
 } from '@hooks';
 import type { ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
@@ -14,9 +13,22 @@ import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
+export interface SelectChangeEvent<
+  TOptionValue extends ValidOptionValue,
+  TMultiple extends boolean,
+  TCancelable extends boolean,
+> {
+  value: TMultiple extends true
+    ? TOptionValue[]
+    : TCancelable extends true
+    ? TOptionValue | undefined
+    : TOptionValue;
+}
+
 export type SelectProps<
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = false,
 > = Omit<HTMLTagProps<'section'>, 'value' | 'onChange' | 'onKeyDown'> & {
   opened?: boolean;
   options?: {
@@ -25,42 +37,41 @@ export type SelectProps<
     decoration?: React.ReactNode;
   }[];
   multiple?: TMultiple;
-  value?: TMultiple extends true ? TOptionValue[] : TOptionValue;
-  onChange?: (value: SelectProps<TOptionValue, TMultiple>['value']) => void;
+  cancelable?: TCancelable;
+  value?: TMultiple extends true ? TOptionValue[] : TOptionValue | undefined;
+  onChange?: (
+    event: SelectChangeEvent<TOptionValue, TMultiple, TCancelable>,
+  ) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
-  cancelable?: boolean;
 };
 
 export const Select = <
   TOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
+  TCancelable extends boolean = false,
 >({
   //* Select props
   opened = false,
   options,
   multiple = false as TMultiple,
+  cancelable = false as TCancelable,
   value: selectedValue,
   onChange,
   onKeyDown,
   float = 'bottom',
-  cancelable = true,
 
   //* HTML section props
   className,
   ...restSectionProps
-}: SelectProps<TOptionValue, TMultiple>) => {
-  const [openingTransition, setOpeningTransition] = useOpeningTransitionState({
-    openingTransition:
-      opened === true ? OPENING_TRANSITION.OPENED : OPENING_TRANSITION.CLOSED,
+}: SelectProps<TOptionValue, TMultiple, TCancelable>) => {
+  const [openingTransition] = useOpeningTransitionState({
+    openingTransition: opened
+      ? OPENING_TRANSITION.OPENED
+      : OPENING_TRANSITION.CLOSED,
     openingDuration: 200,
     closingDuration: 200,
   });
-
-  useMountedEffect(
-    () => setOpeningTransition(opened),
-    [opened, setOpeningTransition],
-  );
 
   const { isDarkMode } = useDarkMode();
 
@@ -111,35 +122,43 @@ export const Select = <
                 )}
                 onClick={() => {
                   if (multiple) {
-                    let valuesForSelect = (selectedValue ??
-                      []) as TOptionValue[];
+                    type MultipleSelectProps = SelectProps<
+                      TOptionValue,
+                      true,
+                      TCancelable
+                    >;
+                    let valuesForSelect =
+                      (selectedValue as MultipleSelectProps['value']) ?? [];
 
-                    const handleChange = onChange as
-                      | ((values: TOptionValue[]) => void)
-                      | undefined;
+                    const handleChange =
+                      onChange as MultipleSelectProps['onChange'];
 
                     if (cancelable) {
                       valuesForSelect = isSelected
-                        ? valuesForSelect.filter(
+                        ? valuesForSelect?.filter(
                             (selectedValue) => selectedValue !== value,
                           )
                         : [...valuesForSelect, value];
                     }
 
-                    handleChange?.(valuesForSelect);
+                    handleChange?.({
+                      value: valuesForSelect,
+                    });
                   } else {
-                    const handleChange = onChange as
-                      | ((value?: TOptionValue) => void)
-                      | undefined;
+                    type SingleSelectProps = SelectProps<
+                      TOptionValue,
+                      false,
+                      TCancelable
+                    >;
+                    const handleChange =
+                      onChange as SingleSelectProps['onChange'];
 
-                    handleChange?.(
-                      isSelected && cancelable ? undefined : value,
-                    );
+                    handleChange?.({
+                      value: isSelected && cancelable ? undefined : value,
+                    } as SelectChangeEvent<TOptionValue, false, TCancelable>);
                   }
                 }}
-                onMouseEnter={() => {
-                  setIndexForSelect(index);
-                }}
+                onMouseEnter={() => setIndexForSelect(index)}
               >
                 {decoration ? <div>{decoration}</div> : null}
                 <div>{label}</div>

@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 @mixin theme($color, $backgroundColor, $borderColor) {
   border: 1px solid $borderColor;
@@ -14,9 +14,9 @@
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-MD;
 
-  box-shadow: libs.$BOX_SHADOW;
+  box-shadow: $BOX_SHADOW;
 
   font-size: inherit;
 
@@ -38,16 +38,17 @@
   }
 
   &.opening {
-    @include libs.fade-in(0.2s);
-  }
-  &.closing {
-    @include libs.fade-out(0.2s);
+    @include fade-in(0.2s);
   }
 
-  @include theme(libs.$GRAY-700, white, libs.$COOL-GRAY-100);
+  &.closing {
+    @include fade-out(0.2s);
+  }
+
+  @include theme($GRAY-700, white, $COOL-GRAY-100);
 
   &.dark {
-    @include theme(libs.$GRAY-50, libs.$GRAY-700, libs.$COOL-GRAY-700);
+    @include theme($GRAY-50, $GRAY-700, $COOL-GRAY-700);
   }
 }
 
@@ -82,7 +83,7 @@
   max-width: 100%;
   padding: 0.7em 0.8em;
   border: 0;
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-MD;
 
   background-color: transparent;
   outline: none;
@@ -90,13 +91,14 @@
   color: inherit;
   font-weight: 300;
   font-size: 0.8em;
+  font-family: inherit;
   text-align: start;
   white-space: pre-wrap;
 
   cursor: pointer;
 
   &.hovered {
-    background-color: libs.$INDIGO-600;
+    background-color: $INDIGO-600;
 
     color: white;
   }
@@ -107,6 +109,7 @@
   margin-left: auto;
 
   visibility: hidden;
+
   &.show {
     visibility: visible;
   }

@@ -7,16 +7,18 @@ import styles from './InputWrap.module.scss';
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
   size?: Size | 'fit-content';
   validationMessage?: string;
-  readonly?: boolean;
   reversed?: boolean;
+  label?: string;
+  required?: boolean;
 };
 
 export const InputWrap = ({
   //* Input.Wrap props
   size = 'medium',
   validationMessage,
-  readonly = false,
   reversed = false,
+  label,
+  required = false,
 
   //* HTML div props
   children,
@@ -33,17 +35,32 @@ export const InputWrap = ({
       {...restDivProps}
       className={cleanClassName(`${styles['default-width']} ${className}`)}
     >
-      <div
+      <label
         className={cleanClassName(
           `${styles['input-wrap']} ${isDarkMode && styles.dark} ${
             validationMessage && styles.error
-          } ${styles[`size-${size}`]} ${readonly && styles.readonly} ${
-            reversed && styles.reversed
           }`,
         )}
       >
-        {children}
-      </div>
+        {label ? (
+          <p
+            className={cleanClassName(
+              `${styles.label} ${required && styles.required}`,
+            )}
+          >
+            {label}
+          </p>
+        ) : null}
+        <div
+          className={cleanClassName(
+            `${styles['input-wrap-content']} ${styles[`size-${size}`]} ${
+              reversed && styles.reversed
+            }`,
+          )}
+        >
+          {children}
+        </div>
+      </label>
       <div
         className={cleanClassName(
           `${styles['validation-message-wrap']} ${

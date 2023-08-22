@@ -12,17 +12,22 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'Textbox',
     value: '',
+    label: 'Textbox label',
   },
   argTypes: {
     value: {
       control: 'text',
     },
+    reversed: STORY_META.INPUT_REVERSED,
     placeholder: STORY_META.INPUT_PLACEHOLDER,
     children: STORY_META.INPUT_CHILDREN,
-    onChange: STORY_META.HIDDEN,
+    onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
     size: STORY_META.SIZE,
     validation: STORY_META.VALIDATION,
     disabled: STORY_META.INPUT_DISABLED,
+    label: STORY_META.INPUT_LABEL,
+    readOnly: STORY_META.INPUT_READONLY,
+    required: STORY_META.INPUT_REQUIRED,
   },
   decorators: [
     (Story) => (
@@ -39,7 +44,7 @@ type Story = StoryObj<typeof Textbox>;
 
 export const Default: Story = {};
 
-export const WithUnit: Story = {
+export const WithChildren: Story = {
   args: {
     children: '원',
     type: 'large-number',

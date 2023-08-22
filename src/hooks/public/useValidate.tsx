@@ -1,4 +1,4 @@
-import { useCallback, ComponentType } from 'react';
+import { ComponentType, useRef } from 'react';
 
 import {
   ValidationContextProvider,
@@ -11,30 +11,21 @@ interface ValidateResult {
 }
 
 interface ValidateOptions {
-  scrollToFirstInvalid?: boolean;
+  scroll?: boolean;
 }
 
 export const useValidate = () => {
   const { validationMap } = useValidationContext();
 
-  const validate = useCallback(
-    ({ scrollToFirstInvalid }: ValidateOptions) => {
-      const validateResult: ValidateResult = {
-        isValid: true,
-        invalidElementIds: [],
-      };
+  const { current } = useRef(
+    (() => {
+      const scrollToFirstInvalid = (
+        invalidElementIds: string[],
+        enable = true,
+      ) => {
+        if (!enable || invalidElementIds.length > 0) return;
 
-      if (!validationMap) throw new Error('validationMap is not defined');
-
-      validationMap.forEach((validateValue, id) => {
-        if (validateValue()) {
-          validateResult.isValid = false;
-          validateResult.invalidElementIds.push(id);
-        }
-      });
-
-      if (scrollToFirstInvalid && !validateResult.isValid) {
-        const [firstInvalidElementId] = validateResult.invalidElementIds;
+        const [firstInvalidElementId] = invalidElementIds;
 
         const firstInvalidElement = document.getElementById(
           firstInvalidElementId,
@@ -44,16 +35,58 @@ export const useValidate = () => {
           behavior: 'smooth',
           block: 'center',
         });
-      }
+      };
 
-      return validateResult;
-    },
-    [validationMap],
+      if (!validationMap) throw new Error('validationMap is not defined');
+
+      return {
+        validationMap,
+
+        validate: ({ scroll }: ValidateOptions): ValidateResult => {
+          const invalidElementIds: string[] = [];
+
+          validationMap.forEach((validate, key) => {
+            const validationMessage = validate();
+            if (validationMessage) invalidElementIds.push(key);
+          });
+
+          scrollToFirstInvalid(invalidElementIds, scroll);
+
+          return {
+            isValid: invalidElementIds.length === 0,
+            invalidElementIds,
+          };
+        },
+
+        validateAsync: async ({
+          scroll,
+        }: ValidateOptions): Promise<ValidateResult> => {
+          const validatedelEmentIds: string[] = [];
+
+          const validationMessages = await Promise.all(
+            Array.from(validationMap).map(([key, validate]) => {
+              validatedelEmentIds.push(key);
+
+              return validate();
+            }),
+          );
+
+          const invalidElementIds = validatedelEmentIds.filter(
+            (_, index) => validationMessages[index],
+          );
+
+          scrollToFirstInvalid(invalidElementIds, scroll);
+
+          return {
+            isValid: invalidElementIds.length === 0,
+            invalidElementIds,
+          };
+        },
+      };
+    })(),
   );
 
-  return {
-    validate,
-  };
+  return current;
 };
 
 export const validationObserver =

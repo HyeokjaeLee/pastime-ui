@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { useSubscribedState } from './useSubscribedState';
 
 export enum OPENING_TRANSITION {
   OPENING = 1,
@@ -18,7 +20,8 @@ export const useOpeningTransitionState = ({
   openingDuration,
   closingDuration,
 }: UseOpeningStatusParams) => {
-  const [status, setStatus] = useState(openingTransition);
+  const [status, setStatus, preventInnerStateChange] =
+    useSubscribedState(openingTransition);
 
   useEffect(() => {
     switch (status) {
@@ -41,7 +44,7 @@ export const useOpeningTransitionState = ({
     }
   }, [closingDuration, openingDuration, setStatus, status]);
 
-  const { current: setOpeningTransition } = useRef(
+  const { current } = useRef([
     (status: boolean, runInstantly?: boolean) => {
       if (status) {
         if (openingDuration && !runInstantly)
@@ -51,9 +54,10 @@ export const useOpeningTransitionState = ({
         setStatus(OPENING_TRANSITION.CLOSING);
       else setStatus(OPENING_TRANSITION.CLOSED);
     },
-  );
+    preventInnerStateChange,
+  ] as const);
 
-  return [status, setOpeningTransition] as const;
+  return [status, ...current] as const;
 };
 
 export type OpeningTransitionState = ReturnType<

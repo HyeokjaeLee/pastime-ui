@@ -7,6 +7,16 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import react from '@vitejs/plugin-react-swc';
 
+const ALIAS_NAME_LIST = [
+  'components',
+  'utils',
+  'hooks',
+  'contexts',
+  'constants',
+  'styles',
+  'plugins',
+];
+
 export default defineConfig({
   plugins: [
     react(),
@@ -46,5 +56,11 @@ export default defineConfig({
         },
       },
     },
+  },
+  resolve: {
+    alias: ALIAS_NAME_LIST.reduce((acc, name) => {
+      acc[`@${name}`] = path.resolve(__dirname, `src/${name}`);
+      return acc;
+    }, {} as Record<string, string>),
   },
 });

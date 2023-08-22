@@ -1,25 +1,26 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .accordian-container {
   overflow: hidden;
 
-  border: 1px solid libs.$COOL-GRAY-300;
-  border-radius: libs.$BORDER-RADIUS-MD;
+  border: 1px solid $COOL-GRAY-300;
+  border-radius: $BORDER-RADIUS-MD;
 
   background-color: white;
 
-  color: libs.$GRAY-700;
+  color: $GRAY-700;
+
   @layer {
     & {
-      width: libs.$INPUT_DEFAULT_WIDTH;
+      width: $INPUT_DEFAULT_WIDTH;
     }
   }
 }
 
 .dark {
-  border: 1px solid libs.$COOL-GRAY-500;
+  border: 1px solid $COOL-GRAY-500;
 
-  background-color: libs.$GRAY-700;
+  background-color: $GRAY-700;
 
-  color: libs.$GRAY-50;
+  color: $GRAY-50;
 }

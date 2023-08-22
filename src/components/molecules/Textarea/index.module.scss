@@ -1,6 +1,6 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
-@include libs.input-decoration;
+@include input-decoration;
 
 .textarea-wrap {
   position: relative;
@@ -12,15 +12,22 @@
   width: 100%;
   height: fit-content;
   padding: 0;
+
+  &.reversed {
+    flex-direction: row-reverse;
+  }
+
   //*Size
   &.size-small {
-    margin: 4px 14px;
+    margin: 4px 12px;
   }
+
   &.size-medium {
-    margin: 8px 16px;
+    margin: 8px 14px;
   }
+
   &.size-large {
-    margin: 12px 18px;
+    margin: 12px 16px;
   }
 }
 
@@ -44,6 +51,6 @@
   transition: height 0.3s;
 
   &::placeholder {
-    color: rgba(libs.$BLUE-GRAY-300, 0.5);
+    color: rgba($BLUE-GRAY-300, 0.5);
   }
 }

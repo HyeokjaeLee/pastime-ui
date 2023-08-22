@@ -13,7 +13,7 @@ export interface TooltipContentProps
 }
 
 export const TooltipContent = ({
-  //* TooltipContent props
+  //* Tooltip.Content props
   style,
 
   //* HTML div props

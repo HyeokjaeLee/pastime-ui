@@ -1,0 +1,46 @@
+@mixin scale-out-top($duration: 0.5s, $delay: 0s) {
+  -webkit-animation: scale-out-top $duration
+    cubic-bezier(0.55, 0.085, 0.68, 0.53) $delay both;
+  animation: scale-out-top $duration cubic-bezier(0.55, 0.085, 0.68, 0.53)
+    $delay both;
+}
+
+@-webkit-keyframes scale-out-top {
+  0% {
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+}
+
+@keyframes scale-out-top {
+  0% {
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+
+  100% {
+    opacity: 1;
+
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+}

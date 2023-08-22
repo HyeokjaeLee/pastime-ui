@@ -1,5 +1,5 @@
 import { useSubscribedState } from '@hooks';
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps, InnerStateChangeEventHandler } from '@types';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -8,18 +8,18 @@ export interface SwitchProps
   extends Pick<HTMLTagProps<'div'>, 'className' | 'style'>,
     Omit<
       HTMLTagProps<'input'>,
-      'value' | 'onChange' | 'size' | 'checked' | 'type' | 'style'
+      'onChange' | 'size' | 'type' | 'style' | 'checked' | 'value'
     > {
   size?: 'small' | 'medium' | 'large';
-  onChange?: (checked: boolean) => void;
   value?: boolean;
+  onChange?: InnerStateChangeEventHandler<boolean>;
 }
 
 export const Switch = ({
   //* Switch props
   size = 'medium',
-  value = false,
   onChange,
+  value = false,
 
   //* HTML div props
   className,
@@ -28,7 +28,8 @@ export const Switch = ({
   //* HTML input props
   ...restInputProps
 }: SwitchProps) => {
-  const [turned, setTurned] = useSubscribedState(value);
+  const [turned, setTurned, preventInnerStateChange] =
+    useSubscribedState(value);
 
   const sizeClassName = styles[`size-${size}`];
   const turnedClassName = turned ? styles.on : styles.off;
@@ -48,9 +49,13 @@ export const Switch = ({
         type="checkbox"
         className={styles['switch-input']}
         checked={turned}
-        onChange={({ target: { checked } }) => {
-          setTurned(checked);
-          onChange?.(checked);
+        onChange={({ target: { checked: value } }) => {
+          onChange?.({
+            value,
+            preventInnerStateChange,
+          });
+
+          setTurned(value);
         }}
       />
     </div>

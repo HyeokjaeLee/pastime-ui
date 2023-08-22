@@ -1,19 +1,23 @@
-import { useCallback, useState, useEffect } from 'react';
+import { debounce } from 'lodash-es';
+
+import { useState, useEffect, useMemo } from 'react';
 
 import { useValidationContext } from '@contexts/ValidationContext';
+import type { ValidationResult } from '@contexts/ValidationContext';
+import { isAsyncFunction, isSyncFunction } from '@utils';
 
-export type ValidateHandler<TValue> =
-  | ((value: TValue) => string | undefined)
-  | undefined;
+export type ValidateHandler<TValue> = (
+  value: TValue,
+) => ValidationResult | Promise<ValidationResult>;
 
 interface UseValidationMessageParams<TValue> {
-  id?: string;
+  key: string | undefined;
   value: TValue;
-  validateHandler: ValidateHandler<TValue>;
+  validateHandler: ValidateHandler<TValue> | undefined;
 }
 
 export const useValidationMessage = <TValue,>({
-  id,
+  key,
   value,
   validateHandler,
 }: UseValidationMessageParams<TValue>) => {
@@ -21,27 +25,53 @@ export const useValidationMessage = <TValue,>({
 
   const [validationMessage, setValidationMessage] = useState<string>();
 
-  const validateValue = useCallback(
-    (value: TValue) => setValidationMessage(validateHandler?.(value)),
-    [validateHandler],
-  );
+  const getValidationMessage: ValidateHandler<TValue> | null = useMemo(() => {
+    if (!validateHandler) return null;
+
+    return isAsyncFunction(validateHandler)
+      ? async (value) => {
+          const validationMessage = await validateHandler(value);
+
+          return validationMessage;
+        }
+      : (value) => validateHandler?.(value);
+  }, [validateHandler]);
 
   useEffect(() => {
-    if (validationMap && id && validateHandler) {
-      validationMap.set(id, () => {
-        const validationMessage = validateHandler(value);
+    if (validationMap && key && getValidationMessage) {
+      const setAndReturnValidationMessage = (
+        validationMessage: ValidationResult,
+      ) => {
         setValidationMessage(validationMessage);
         return validationMessage;
-      });
+      };
+
+      validationMap.set(
+        key,
+        isSyncFunction(getValidationMessage)
+          ? () => setAndReturnValidationMessage(getValidationMessage(value))
+          : async () =>
+              setAndReturnValidationMessage(await getValidationMessage(value)),
+      );
 
       return () => {
-        validationMap.delete(id);
+        validationMap.delete(key);
       };
     }
-  }, [id, validateHandler, validationMap, value]);
+  }, [getValidationMessage, key, validationMap, value]);
+
+  const validateOnChange = useMemo(() => {
+    if (getValidationMessage) {
+      return debounce(
+        async (value: TValue) =>
+          setValidationMessage(await getValidationMessage(value)),
+        100,
+      );
+    }
+  }, [getValidationMessage]);
 
   return {
     validationMessage,
-    validateValue,
+    validateOnChange,
   };
 };

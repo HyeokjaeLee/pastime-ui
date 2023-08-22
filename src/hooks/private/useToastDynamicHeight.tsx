@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 
-import { useMountedEffect } from './useMountedEffect';
+import { useMountedLayoutEffect } from './useMountedLayoutEffect';
 
 export const useToastDynamicHeight = (hasSpace: boolean) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [height, setHeight] = useState<React.CSSProperties>();
 
-  useMountedEffect(
+  useMountedLayoutEffect(
     () =>
       setHeight(() => {
         if (ref.current) {

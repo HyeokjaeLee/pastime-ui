@@ -9,7 +9,7 @@ import { Input } from '.';
 import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed'>;
+  Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed' | 'label'>;
 
 enum CATEGORY {
   INPUT = 'Input',
@@ -22,12 +22,23 @@ export default {
   args: {
     placeholder: 'Input',
     validationMessage: '',
+    label: 'Input label',
   },
   argTypes: {
     //* Input.Wrap
     size: cloneDeepWith(STORY_META.SIZE, (size) => {
       size.table.category = CATEGORY.INPUT_WRAP;
       return size;
+    }),
+
+    label: cloneDeepWith(STORY_META.INPUT_LABEL, (label) => {
+      label.table.category = CATEGORY.INPUT_WRAP;
+      return label;
+    }),
+
+    required: cloneDeepWith(STORY_META.INPUT_REQUIRED, (required) => {
+      required.table.category = CATEGORY.INPUT_WRAP;
+      return required;
     }),
 
     validationMessage: {
@@ -80,6 +91,7 @@ export const Default: Story = {
     validationMessage,
     //* Input.Wrap
     size,
+    label,
 
     //* Input
     value,
@@ -88,14 +100,20 @@ export const Default: Story = {
   }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputValue, setInputValue] = useSubscribedState(value);
+    const { required } = args;
     return (
-      <Input.Wrap validationMessage={validationMessage} size={size}>
+      <Input.Wrap
+        validationMessage={validationMessage}
+        size={size}
+        label={label}
+        required={required}
+      >
         <Input
           {...args}
           value={inputValue}
-          onChange={(value) => {
-            setInputValue(value);
-            onChange?.(value);
+          onChange={(e) => {
+            setInputValue(e.value);
+            onChange?.(e);
           }}
         />
       </Input.Wrap>
