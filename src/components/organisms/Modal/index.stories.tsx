@@ -72,7 +72,7 @@ const meta: Meta<ModalMetaProps> = {
     headerChildren: 'Modal Header',
     closeButton: false,
     zIndex: 100,
-    opened: false,
+    opened: true,
     children: "Modal's children",
     blurredBackground: true,
   },

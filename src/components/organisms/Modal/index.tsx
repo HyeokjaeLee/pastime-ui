@@ -5,6 +5,7 @@ import {
   useOpeningTransitionState,
   OPENING_TRANSITION,
   usePreventBackgroundScroll,
+  useDarkMode,
 } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
@@ -57,6 +58,8 @@ export const Modal = Object.assign(
       isPrevent: !!openingTransition,
     });
 
+    const { isDarkMode } = useDarkMode();
+
     return openingTransition ? (
       createPortal(
         <div
@@ -77,7 +80,9 @@ export const Modal = Object.assign(
           />
           <article
             {...restArticleProps}
-            className={cleanClassName(`${styles.modal} ${className}`)}
+            className={cleanClassName(
+              `${styles.modal} ${isDarkMode && styles.dark} ${className}`,
+            )}
           >
             <ModalContextProvider onClose={handleClose}>
               {children}

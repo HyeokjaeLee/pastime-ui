@@ -57,6 +57,12 @@
     border-radius: $BORDER-RADIUS-MD;
 
     background-color: white;
+
+    &.dark {
+      background-color: $COOL-GRAY-800;
+
+      color: $GRAY-50;
+    }
     box-shadow: $BOX_SHADOW;
 
     white-space: pre-wrap;

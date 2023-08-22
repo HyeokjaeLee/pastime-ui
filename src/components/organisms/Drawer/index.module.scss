@@ -104,9 +104,15 @@
       padding: 10px;
 
       background-color: white;
-      box-shadow: $BOX_SHADOW;
+      box-shadow: rgba(99, 99, 99, 0.1) 0px 22px 70px 4px;
 
       white-space: pre-wrap;
+
+      &.dark {
+        background-color: $COOL-GRAY-800;
+
+        color: $GRAY-50;
+      }
     }
   }
 }
