@@ -21,10 +21,11 @@ type HTMLTags =
   | 'header'
   | 'article';
 
-type CleanedTagProps<TAttributes extends HTMLAttributes<infer TElement>> = Omit<
-  DetailedHTMLProps<TAttributes, TElement>,
-  'ref'
->;
+type CleanedTagProps<TAttributes> = TAttributes extends HTMLAttributes<
+  infer TElement
+>
+  ? Omit<DetailedHTMLProps<TAttributes, TElement>, 'ref'>
+  : never;
 
 export type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
   ? CleanedTagProps<HTMLAttributes<HTMLDListElement>>
