@@ -7,6 +7,10 @@ export interface SearchboxProps extends Omit<InputProps, 'value' | 'onChange' | 
     validation?: ValidateHandler<SearchboxProps['value']>;
     value?: string;
     onChange?: InnerStateChangeEventHandler<string>;
+    onSelect?: (event: {
+        value: string;
+        prventDefault: () => void;
+    }) => void;
     children?: React.ReactNode;
 }
-export declare const Searchbox: ({ size, filterByKeyword, validation, options, value, onChange, children, className, style, reversed, label, float, onClick, onFocus, onBlur, ...restInputProps }: SearchboxProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Searchbox: ({ size, filterByKeyword, validation, options, value, onChange, onSelect, children, className, style, reversed, label, float, onClick, onFocus, onBlur, ...restInputProps }: SearchboxProps) => import("react/jsx-runtime").JSX.Element;
