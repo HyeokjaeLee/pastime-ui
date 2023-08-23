@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { InputProps, InputWrapProps } from '../../atoms';
 import type { ValidateHandler, InputType } from '../../../hooks';
-import { InnerStateChangeEventHandler, Size } from '@types';
+import { InnerStateChangeEventHandler, Size } from '../../../types';
 export interface TextboxProps extends Omit<InputProps, 'className' | 'size' | 'style' | 'value' | 'onChange'>, Pick<InputWrapProps, 'className' | 'style' | 'reversed' | 'label'> {
     value?: string;
     onChange?: InnerStateChangeEventHandler<string>;

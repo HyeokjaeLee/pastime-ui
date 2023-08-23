@@ -1,4 +1,4 @@
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps } from '../../../types';
 export interface DrawerHeaderProps extends HTMLTagProps<'header'> {
     closeButton?: boolean;
 }

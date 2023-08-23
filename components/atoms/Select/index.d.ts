@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { ValidOptionValue } from '../../../hooks';
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps } from '../../../types';
 export interface SelectChangeEvent<TOptionValue extends ValidOptionValue, TMultiple extends boolean, TCancelable extends boolean> {
     value: TMultiple extends true ? TOptionValue[] : TCancelable extends true ? TOptionValue | undefined : TOptionValue;
 }

@@ -1,5 +1,5 @@
 import type { ButtonProps } from '../../molecules';
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps } from '../../../types';
 export interface PaginationProps extends Omit<HTMLTagProps<'ul'>, 'onChange'>, Pick<ButtonProps, 'size'> {
     onChange?: (page: number) => void;
     totalItems?: number;

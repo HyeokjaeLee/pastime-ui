@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { InputType } from '../../../hooks';
-import type { HTMLTagProps } from '@types';
+import type { HTMLTagProps } from '../../../types';
 export type { InputWrapProps } from './inputWrap';
 export interface InputChangeEvent {
     value: string;

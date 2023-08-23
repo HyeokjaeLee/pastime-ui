@@ -1,4 +1,4 @@
-import type { HTMLTagProps, Size } from '@types';
+import type { HTMLTagProps, Size } from '../../../types';
 export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
     size?: Size | 'fit-content';
     validationMessage?: string;

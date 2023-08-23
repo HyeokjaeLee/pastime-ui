@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { ButtonIconDirection } from '../../../hooks';
-import type { HTMLTagProps, Size } from '@types';
+import type { HTMLTagProps, Size } from '../../../types';
 type Theme = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'clear' | 'ghost';
 export interface ButtonProps extends HTMLTagProps<'button'> {
     delay?: number;

@@ -1,4 +1,4 @@
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps } from '../../../types';
 export interface ModalHeaderProps extends HTMLTagProps<'header'> {
     closeButton?: boolean;
 }

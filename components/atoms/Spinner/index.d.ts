@@ -1,4 +1,4 @@
-import { HTMLTagProps, Size } from '@types';
+import { HTMLTagProps, Size } from '../../../types';
 export interface SpinnerProps extends Omit<HTMLTagProps<'div'>, 'children' | 'size'> {
     size?: Size;
     sizeTransition?: boolean;

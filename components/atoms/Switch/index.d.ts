@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { HTMLTagProps, InnerStateChangeEventHandler } from '@types';
+import { HTMLTagProps, InnerStateChangeEventHandler } from '../../../types';
 export interface SwitchProps extends Pick<HTMLTagProps<'div'>, 'className' | 'style'>, Omit<HTMLTagProps<'input'>, 'onChange' | 'size' | 'type' | 'style' | 'checked' | 'value'> {
     size?: 'small' | 'medium' | 'large';
     value?: boolean;

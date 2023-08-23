@@ -1,4 +1,4 @@
-import { HTMLTagProps } from '@types';
+import { HTMLTagProps } from '../../../types';
 export type { ModalHeaderProps } from './ModalHeader';
 interface ModalCloseEvent {
     preventDefaultClose: () => void;

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { HTMLTagProps } from '@types';
+import type { HTMLTagProps } from '../../../types';
 export interface TooltipContentProps extends Omit<HTMLTagProps<'div'>, 'styles'> {
     style?: Omit<React.CSSProperties, 'left' | 'top'>;
 }
