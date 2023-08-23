@@ -29,6 +29,7 @@ export interface SearchboxProps
   validation?: ValidateHandler<SearchboxProps['value']>;
   value?: string;
   onChange?: InnerStateChangeEventHandler<string>;
+  onSelect?: (event: { value: string; prventDefault: () => void }) => void;
   children?: React.ReactNode;
 }
 
@@ -45,6 +46,7 @@ export const Searchbox = ({
   options,
   value,
   onChange,
+  onSelect,
   children = <Search size="1.5em" strokeWidth="2px" />,
 
   //* Input.Wrap props
@@ -138,10 +140,21 @@ export const Searchbox = ({
         value={inputValue}
         cancelable={false}
         onChange={({ value }) => {
-          handleChange({
+          let isPrevented = false;
+
+          onSelect?.({
             value,
-            preventInnerStateChange,
+            prventDefault: () => {
+              isPrevented = true;
+            },
           });
+
+          if (!isPrevented) {
+            handleChange({
+              value,
+              preventInnerStateChange,
+            });
+          }
 
           isRefocus = true;
           inputRef.current?.focus();
