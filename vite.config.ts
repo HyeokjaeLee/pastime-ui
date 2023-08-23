@@ -15,7 +15,7 @@ const ALIAS_NAME_LIST = [
   'contexts',
   'constants',
   'styles',
-  'plugins',
+  'types',
 ];
 
 export default defineConfig({
