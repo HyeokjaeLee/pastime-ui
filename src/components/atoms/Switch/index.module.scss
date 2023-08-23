@@ -37,15 +37,19 @@
 }
 
 .switch-ball {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 100%;
 
   background-color: white;
 
+  transition: margin 0.2s linear;
+
   &.off {
     margin-left: 2px;
   }
-
-  transition: margin 0.2s linear;
 
   &.size-small {
     width: 12px;

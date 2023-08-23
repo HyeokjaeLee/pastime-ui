@@ -17,6 +17,17 @@ const meta: Meta<typeof Switch> = {
     value: {
       description: 'Switch의 상태',
     },
+    children: {
+      description: 'Content of the Switch ball.\n\nSwitch ball의 내용',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'ReactNode',
+        },
+      },
+    },
   },
 };
 

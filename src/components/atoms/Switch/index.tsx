@@ -13,6 +13,7 @@ export interface SwitchProps
   size?: 'small' | 'medium' | 'large';
   value?: boolean;
   onChange?: InnerStateChangeEventHandler<boolean>;
+  children?: React.ReactNode;
 }
 
 export const Switch = ({
@@ -20,6 +21,7 @@ export const Switch = ({
   size = 'medium',
   onChange,
   value = false,
+  children,
 
   //* HTML div props
   className,
@@ -43,7 +45,9 @@ export const Switch = ({
     >
       <div
         className={`${styles['switch-ball']} ${sizeClassName} ${turnedClassName}`}
-      />
+      >
+        {children}
+      </div>
       <input
         {...restInputProps}
         type="checkbox"
