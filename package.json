@@ -1,6 +1,6 @@
 {
   "name": "@hyeokjaelee/pastime-ui",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./src/types/global.d.ts",
