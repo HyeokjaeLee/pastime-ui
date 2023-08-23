@@ -21,7 +21,7 @@ After installing the package, import the style file in your React based app.
 
 ```javascript
 //ex: main.tsx (React), _app.tsx (Next.js)
-import '@codestates-engineering/codeship-platform-app-library/style.css';
+import '@hyeokjaelee/pastime-ui/style.css';
 ```
 
 ## 🧩 Features
