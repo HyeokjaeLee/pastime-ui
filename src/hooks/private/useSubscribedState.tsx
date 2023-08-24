@@ -34,17 +34,18 @@ export function useSubscribedState<T>(
     }
   }, dependencyList || [subscribedValue]);
 
-  const isSetterDisabled = useRef(false);
+  const isSetterDisabledRef = useRef(false);
+  const isSetterDisabled = isSetterDisabledRef.current;
 
   const {
     current: [setter, disableSetter],
   } = useRef([
     ((newValue) => {
-      if (!isSetterDisabled.current) setValue(newValue);
+      if (!isSetterDisabled) setValue(newValue);
     }) satisfies Setter<T>,
 
     () => {
-      isSetterDisabled.current = true;
+      isSetterDisabledRef.current = true;
     },
   ]);
 
