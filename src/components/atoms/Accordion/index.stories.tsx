@@ -3,6 +3,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_DUUMMY, STORY_META } from '@constants';
+import { cloneDeepWith } from '@utils';
 
 import { Accordion } from '.';
 
@@ -43,6 +44,13 @@ const meta: Meta<MetaProps> = {
         category: CATEGORY.ACCORDION,
       },
     },
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.ACCORDION;
+        return fixedDarkMode;
+      },
+    ),
 
     //* Accordion.Title
     titleChildren: {

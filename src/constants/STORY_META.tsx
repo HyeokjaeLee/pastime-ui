@@ -237,3 +237,10 @@ export const MODAL_BACKGROUND_BLUR = {
     defaultValue: { summary: true },
   },
 };
+
+export const FIXED_DARK_MODE = {
+  description: `Whether to use the fixed dark mode.\n\n고정된 다크모드를 사용할지 여부`,
+  options: ['light', 'dark'],
+  control: 'radio',
+  table: {},
+};

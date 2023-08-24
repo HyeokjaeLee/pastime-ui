@@ -7,6 +7,7 @@ type Size = 'small' | 'medium' | 'large';
 interface AccordionContextValue {
   openedState: SubscribedState<boolean>;
   size?: Size;
+  isDarkMode: boolean;
 }
 
 const AccordionContext = createContext<AccordionContextValue | undefined>(
@@ -16,22 +17,28 @@ const AccordionContext = createContext<AccordionContextValue | undefined>(
 export interface AccordionContextProviderProps {
   opened?: boolean;
   size?: Size;
+  isDarkMode?: boolean;
   children: React.ReactNode;
 }
 
 export const AccordionContextProvider = ({
-  opened = false,
-  size = 'medium',
+  opened,
+  size,
+  isDarkMode,
   children,
 }: AccordionContextProviderProps) => {
+  if (size === undefined || isDarkMode === undefined || opened === undefined)
+    throw new Error(`size, isDarkMode, opened must be defined.`);
+
   const openedState = useSubscribedState(opened);
 
   const accordionContextValue = useMemo(
     () => ({
       openedState,
       size,
+      isDarkMode,
     }),
-    [openedState, size],
+    [openedState, size, isDarkMode],
   );
 
   return (

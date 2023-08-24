@@ -48,7 +48,7 @@ export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
   }, [isDevicePrefersDarkMode, fixedDarkMode]);
 
   return {
-    isDarkMode: fixedDarkMode ?? isDarkMode,
+    isDarkMode: fixedDarkMode ? fixedDarkMode === 'dark' : isDarkMode,
 
     setDarkMode: (isDarkMode: boolean) => {
       if (isDarkMode) {
