@@ -1,3 +1,4 @@
+import { FixedDarkMode } from '../../../hooks';
 import { HTMLTagProps } from '../../../types';
 export type { ModalHeaderProps } from './ModalHeader';
 interface ModalCloseEvent {
@@ -9,7 +10,8 @@ export interface ModalProps extends HTMLTagProps<'article'> {
     opened?: boolean;
     onClose?: (e: ModalCloseEvent) => void;
     backgroundScroll?: boolean;
+    fixedDarkMode?: FixedDarkMode;
 }
-export declare const Modal: (({ zIndex, blurredBackground, opened, onClose, backgroundScroll, className, children, ...restArticleProps }: ModalProps) => import("react/jsx-runtime").JSX.Element) & {
+export declare const Modal: (({ zIndex, blurredBackground, opened, onClose, backgroundScroll, fixedDarkMode, className, children, ...restArticleProps }: ModalProps) => import("react/jsx-runtime").JSX.Element) & {
     Header: ({ closeButton, className, children, ...restHeaderProps }: import("./ModalHeader").ModalHeaderProps) => import("react/jsx-runtime").JSX.Element;
 };

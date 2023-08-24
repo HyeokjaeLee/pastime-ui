@@ -1,10 +1,9 @@
 /// <reference types="react" />
 import type { ButtonProps } from '../components/molecules';
-interface TabContextProviderProps extends Pick<ButtonProps, 'size'> {
+type TabContextValue = Pick<ButtonProps, 'size' | 'fixedDarkMode'>;
+interface TabContextProviderProps extends TabContextValue {
     children: React.ReactNode;
 }
-export declare const TabContextProvider: ({ size, children, }: TabContextProviderProps) => import("react/jsx-runtime").JSX.Element;
-export declare const useTabContext: () => {
-    size: import("../types").Size | undefined;
-};
+export declare const TabContextProvider: ({ size, fixedDarkMode, children, }: TabContextProviderProps) => import("react/jsx-runtime").JSX.Element;
+export declare const useTabContext: () => TabContextValue;
 export {};

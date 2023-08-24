@@ -12,5 +12,5 @@ export interface InputProps extends Omit<HTMLTagProps<'input'>, 'type' | 'value'
     ref?: React.ForwardedRef<HTMLInputElement>;
 }
 export declare const Input: import("react").ForwardRefExoticComponent<Omit<InputProps, "ref"> & import("react").RefAttributes<HTMLInputElement>> & {
-    Wrap: ({ size, validationMessage, reversed, label, required, children, className, ...restDivProps }: import("./inputWrap").InputWrapProps) => import("react/jsx-runtime").JSX.Element;
+    Wrap: ({ size, validationMessage, reversed, label, required, fixedDarkMode, children, className, ...restDivProps }: import("./inputWrap").InputWrapProps) => import("react/jsx-runtime").JSX.Element;
 };

@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { StoryObj } from '@storybook/react';
 import type { InputProps, InputWrapProps } from '.';
-type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed' | 'label'>;
+type MetaProps = InputProps & Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed' | 'label' | 'fixedDarkMode'>;
 declare enum CATEGORY {
     INPUT = "Input",
     INPUT_WRAP = "Input.Wrap"
@@ -9,7 +9,7 @@ declare enum CATEGORY {
 declare const _default: {
     title: string;
     component: import("react").ForwardRefExoticComponent<Omit<InputProps, "ref"> & import("react").RefAttributes<HTMLInputElement>> & {
-        Wrap: ({ size, validationMessage, reversed, label, required, children, className, ...restDivProps }: InputWrapProps) => import("react/jsx-runtime").JSX.Element;
+        Wrap: ({ size, validationMessage, reversed, label, required, fixedDarkMode, children, className, ...restDivProps }: InputWrapProps) => import("react/jsx-runtime").JSX.Element;
     };
     args: {
         placeholder: string;
@@ -30,6 +30,7 @@ declare const _default: {
             };
         };
         reversed: any;
+        fixedDarkMode: any;
         onChange: {
             table: {
                 disable: boolean;

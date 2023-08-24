@@ -199,3 +199,9 @@ export declare const MODAL_BACKGROUND_BLUR: {
         };
     };
 };
+export declare const FIXED_DARK_MODE: {
+    description: string;
+    options: string[];
+    control: string;
+    table: {};
+};
