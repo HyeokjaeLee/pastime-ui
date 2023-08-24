@@ -53,7 +53,9 @@ export const Switch = ({
         type="checkbox"
         className={styles['switch-input']}
         checked={turned}
-        onChange={({ target: { checked: value } }) => {
+        onChange={({ target: { checked } }) => {
+          const value = !checked;
+
           onChange?.({
             value,
             preventInnerStateChange,
