@@ -1,4 +1,8 @@
-import { useDarkMode, useInputMessageDynamicHeight } from '@hooks';
+import {
+  FixedDarkMode,
+  useDarkMode,
+  useInputMessageDynamicHeight,
+} from '@hooks';
 import type { HTMLTagProps, Size } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -10,6 +14,7 @@ export type InputWrapProps = Omit<HTMLTagProps<'div'>, 'size'> & {
   reversed?: boolean;
   label?: string;
   required?: boolean;
+  fixedDarkMode?: FixedDarkMode;
 };
 
 export const InputWrap = ({
@@ -19,6 +24,7 @@ export const InputWrap = ({
   reversed = false,
   label,
   required = false,
+  fixedDarkMode,
 
   //* HTML div props
   children,
@@ -28,7 +34,7 @@ export const InputWrap = ({
   const { messageRef, messageWrapHeight } =
     useInputMessageDynamicHeight(validationMessage);
 
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode(fixedDarkMode);
 
   return (
     <div

@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom';
 
 import { useTooltipContext } from '@contexts/TooltipContext';
-import { useDarkMode, OPENING_TRANSITION } from '@hooks';
+import { OPENING_TRANSITION } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -26,9 +26,8 @@ export const TooltipContent = ({
   const {
     tooltipState: [openingTransition, setOpeningTransition],
     locationState: [location],
+    isDarkMode,
   } = useTooltipContext();
-
-  const { isDarkMode } = useDarkMode();
 
   const darkModeClassName = isDarkMode && styles.dark;
 

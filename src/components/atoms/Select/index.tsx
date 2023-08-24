@@ -7,7 +7,7 @@ import {
   useOpeningTransitionState,
   OPENING_TRANSITION,
 } from '@hooks';
-import type { ValidOptionValue } from '@hooks';
+import type { FixedDarkMode, ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -44,6 +44,7 @@ export type SelectProps<
   ) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
+  fixedDarkMode?: FixedDarkMode;
 };
 
 export const Select = <
@@ -60,6 +61,7 @@ export const Select = <
   onChange,
   onKeyDown,
   float = 'bottom',
+  fixedDarkMode,
 
   //* HTML section props
   className,
@@ -73,7 +75,7 @@ export const Select = <
     closingDuration: 200,
   });
 
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode(fixedDarkMode);
 
   const optionItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 

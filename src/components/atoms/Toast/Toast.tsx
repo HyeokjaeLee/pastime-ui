@@ -7,6 +7,7 @@ import {
   TOAST_STATE,
   useToastDynamicHeight,
   useDarkMode,
+  FixedDarkMode,
 } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -19,6 +20,7 @@ export interface ToastProps {
   floatDirection?: 'from-top' | 'from-bottom';
   holdTime?: number;
   onDelete?: () => void;
+  fixedDarkMode?: FixedDarkMode;
 }
 
 export const Toast = ({
@@ -29,13 +31,14 @@ export const Toast = ({
   floatDirection = 'from-top',
   holdTime = 5000,
   onDelete,
+  fixedDarkMode,
 }: ToastProps) => {
   const { toastState, hasSpace, holdToast, unholdToast } = useToastState({
     holdTime,
     space,
   });
 
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode(fixedDarkMode);
 
   useEffect(() => {
     if (toastState === TOAST_STATE.DELETED) onDelete?.();

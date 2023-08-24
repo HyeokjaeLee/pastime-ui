@@ -1,7 +1,7 @@
 import type { InputProps, InputWrapProps } from '@components/atoms';
 import { Input } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { ValidateHandler, InputType } from '@hooks';
+import type { ValidateHandler, InputType, FixedDarkMode } from '@hooks';
 import { InnerStateChangeEventHandler, Size } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -19,6 +19,7 @@ export interface TextboxProps
   children?: React.ReactNode;
   type?: Exclude<InputType, 'button'>;
   size?: Size;
+  fixedDarkMode?: FixedDarkMode;
 }
 
 export const Textbox = ({
@@ -29,6 +30,7 @@ export const Textbox = ({
   children,
   type,
   size,
+  fixedDarkMode,
 
   //* Input.Wrap props
   className,
@@ -58,6 +60,7 @@ export const Textbox = ({
       style={style}
       reversed={reversed}
       label={label}
+      fixedDarkMode={fixedDarkMode}
     >
       <Input
         {...restInputProps}

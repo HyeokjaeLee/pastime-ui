@@ -1,11 +1,20 @@
 import { createContext, useContext, useMemo } from 'react';
 
-import { useOpeningTransitionState, useTooltipLocationState } from '@hooks';
-import type { OpeningTransitionState, TooltipLocationState } from '@hooks';
+import {
+  useDarkMode,
+  useOpeningTransitionState,
+  useTooltipLocationState,
+} from '@hooks';
+import type {
+  FixedDarkMode,
+  OpeningTransitionState,
+  TooltipLocationState,
+} from '@hooks';
 
 interface TooltipContextValue {
   locationState: TooltipLocationState;
   tooltipState: OpeningTransitionState;
+  isDarkMode: boolean;
 }
 
 const TooltipContext = createContext<TooltipContextValue | undefined>(
@@ -15,11 +24,13 @@ const TooltipContext = createContext<TooltipContextValue | undefined>(
 export interface TooltipContextProviderProps {
   children?: React.ReactNode;
   mouseEnterDelay?: number;
+  fixedDarkMode?: FixedDarkMode;
 }
 
 export const TooltipContextProvider = ({
   children,
   mouseEnterDelay = 200,
+  fixedDarkMode,
 }: TooltipContextProviderProps) => {
   const tooltipState = useOpeningTransitionState({
     closingDuration: 100,
@@ -28,12 +39,15 @@ export const TooltipContextProvider = ({
 
   const locationState = useTooltipLocationState();
 
+  const { isDarkMode } = useDarkMode(fixedDarkMode);
+
   const tooltipContextValue: TooltipContextValue = useMemo(
     () => ({
       locationState,
       tooltipState,
+      isDarkMode,
     }),
-    [locationState, tooltipState],
+    [locationState, tooltipState, isDarkMode],
   );
 
   return (

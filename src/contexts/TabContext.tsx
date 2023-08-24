@@ -1,21 +1,36 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
 import type { ButtonProps } from '@components/molecules';
 
-const TabContext = createContext<ButtonProps['size']>(undefined);
+type TabContextValue = Pick<ButtonProps, 'size' | 'fixedDarkMode'>;
 
-interface TabContextProviderProps extends Pick<ButtonProps, 'size'> {
+const TabContext = createContext<TabContextValue | undefined>(undefined);
+
+interface TabContextProviderProps extends TabContextValue {
   children: React.ReactNode;
 }
 
 export const TabContextProvider = ({
   size,
+  fixedDarkMode,
   children,
-}: TabContextProviderProps) => (
-  <TabContext.Provider value={size}>{children}</TabContext.Provider>
-);
+}: TabContextProviderProps) => {
+  const value = useMemo(
+    () => ({
+      size,
+      fixedDarkMode,
+    }),
+    [size, fixedDarkMode],
+  );
+
+  return <TabContext.Provider value={value}>{children}</TabContext.Provider>;
+};
 
 export const useTabContext = () => {
-  const size = useContext(TabContext);
-  return { size };
+  const context = useContext(TabContext);
+
+  if (context === undefined)
+    throw new Error('useTabContext must be used within a TabContextProvider');
+
+  return context;
 };

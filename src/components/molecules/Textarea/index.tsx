@@ -12,7 +12,10 @@ import { cleanClassName } from '@utils';
 import styles from './index.module.scss';
 
 interface TextareaProps
-  extends Pick<InputWrapProps, 'className' | 'style' | 'label' | 'reversed'>,
+  extends Pick<
+      InputWrapProps,
+      'className' | 'style' | 'label' | 'reversed' | 'fixedDarkMode'
+    >,
     Omit<
       HTMLTagProps<'textarea'>,
       'resize' | 'className' | 'style' | 'rows' | 'onChange'
@@ -37,6 +40,7 @@ export const Textarea = ({
   style,
   label,
   reversed,
+  fixedDarkMode,
 
   //* HTML textarea props
   onInvalid,
@@ -62,6 +66,7 @@ export const Textarea = ({
       validationMessage={validationMessage}
       label={label}
       required={required}
+      fixedDarkMode={fixedDarkMode}
     >
       <div
         className={cleanClassName(

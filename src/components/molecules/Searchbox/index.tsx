@@ -22,7 +22,10 @@ export interface SearchboxProps
       InputProps,
       'value' | 'onChange' | 'type' | 'onSelect' | 'className' | 'style'
     >,
-    Pick<InputWrapProps, 'reversed' | 'style' | 'className' | 'label'>,
+    Pick<
+      InputWrapProps,
+      'reversed' | 'style' | 'className' | 'label' | 'fixedDarkMode'
+    >,
     Pick<SelectProps<string, false, false>, 'float'>,
     Pick<UseFilteredSearchOptionsParams, 'filterByKeyword' | 'options'> {
   size?: Size;
@@ -54,6 +57,7 @@ export const Searchbox = ({
   style,
   reversed,
   label,
+  fixedDarkMode,
 
   //* Select props
   float,
@@ -109,6 +113,7 @@ export const Searchbox = ({
       style={style}
       reversed={reversed}
       required={required}
+      fixedDarkMode={fixedDarkMode}
     >
       <Input
         {...restInputProps}
@@ -139,6 +144,7 @@ export const Searchbox = ({
         options={filteredOptions}
         value={inputValue}
         cancelable={false}
+        fixedDarkMode={fixedDarkMode}
         onChange={({ value }) => {
           let isPrevented = false;
 

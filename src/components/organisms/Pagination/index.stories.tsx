@@ -25,6 +25,7 @@ const meta: Meta<typeof Pagination> = {
     },
     onChange: STORY_META.HIDDEN,
     size: STORY_META.SIZE,
+    fixedDarkMode: STORY_META.FIXED_DARK_MODE,
   },
   args: {
     page: 1,

@@ -27,6 +27,7 @@ const meta: Meta<typeof Searchbox> = {
     options: STORY_META.SELECT_OPTIONS,
     disabled: STORY_META.INPUT_DISABLED,
     onChange: STORY_META.INNER_STATE_CHANGE_HANDLER,
+    fixedDarkMode: STORY_META.FIXED_DARK_MODE,
     onSelect: {
       description:
         'The Select handler of the component essentially calls the Change handler.\nYou can deactivate the default behavior by calling the preventDefault function.\n\n컴포넌트의 Select 핸들러는 기본적으로 Change 핸들러를 호출합니다.\npreventDefault 함수를 호출해 기본 동작을 비활성화 할 수 있습니다.',

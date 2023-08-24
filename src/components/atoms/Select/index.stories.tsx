@@ -22,6 +22,7 @@ const meta: Meta<typeof Select> = {
     onChange: STORY_META.HIDDEN,
     onKeyDown: STORY_META.HIDDEN,
     cancelable: STORY_META.SELECT_CANCELABLE,
+    fixedDarkMode: STORY_META.FIXED_DARK_MODE,
     value: {
       description: 'The value of the selected option.\n\n선택된 옵션의 값',
     },

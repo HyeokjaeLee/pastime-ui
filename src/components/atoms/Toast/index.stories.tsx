@@ -4,9 +4,10 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '@components/molecules';
-import { STORY_DUUMMY } from '@constants';
+import { STORY_DUUMMY, STORY_META } from '@constants';
 import { ToastOption } from '@contexts/ToastContext';
 import { useToast } from '@hooks';
+import { cloneDeepWith } from '@utils';
 
 import { Toast, ToastProviderProps } from '.';
 
@@ -70,6 +71,13 @@ const meta: Meta<MetaProps> = {
         category: CATEGORY.TOAST_PROVIDER,
       },
     },
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.TOAST_PROVIDER;
+        return fixedDarkMode;
+      },
+    ),
     children: {
       description:
         'You should wrap it around the top-level component of the app.\n\n앱의 최상위 컴포넌트로 감싸주어야 합니다.',

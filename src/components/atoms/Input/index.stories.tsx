@@ -9,7 +9,10 @@ import { Input } from '.';
 import type { InputProps, InputWrapProps } from '.';
 
 type MetaProps = InputProps &
-  Pick<InputWrapProps, 'validationMessage' | 'size' | 'reversed' | 'label'>;
+  Pick<
+    InputWrapProps,
+    'validationMessage' | 'size' | 'reversed' | 'label' | 'fixedDarkMode'
+  >;
 
 enum CATEGORY {
   INPUT = 'Input',
@@ -57,6 +60,14 @@ export default {
       return reversed;
     }),
 
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.INPUT_WRAP;
+        return fixedDarkMode;
+      },
+    ),
+
     //* Input
     onChange: STORY_META.HIDDEN,
 
@@ -87,11 +98,12 @@ type Story = StoryObj<MetaProps>;
 
 export const Default: Story = {
   render: ({
-    //* Input.Container
-    validationMessage,
     //* Input.Wrap
+    validationMessage,
     size,
+    reversed,
     label,
+    fixedDarkMode,
 
     //* Input
     value,
@@ -103,10 +115,14 @@ export const Default: Story = {
     const { required } = args;
     return (
       <Input.Wrap
-        validationMessage={validationMessage}
-        size={size}
-        label={label}
-        required={required}
+        {...{
+          validationMessage,
+          size,
+          reversed,
+          label,
+          required,
+          fixedDarkMode,
+        }}
       >
         <Input
           {...args}

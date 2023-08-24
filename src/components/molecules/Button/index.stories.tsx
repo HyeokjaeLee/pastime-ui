@@ -25,6 +25,7 @@ const meta: Meta<typeof Button> = {
       control: 'number',
       description: `The time (in milliseconds) to disable the button after rendering.\n\n렌더링 후 버튼을 비활성화하는 시간(ms)`,
     },
+    fixedDarkMode: STORY_META.FIXED_DARK_MODE,
 
     children: {
       description: 'The content of the button.\n\n버튼의 내용',

@@ -53,6 +53,13 @@ const meta: Meta<ModalMetaProps> = {
         return backgroundScroll;
       },
     ),
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.MODAL;
+        return fixedDarkMode;
+      },
+    ),
 
     //* Modal.Header
     headerChildren: {

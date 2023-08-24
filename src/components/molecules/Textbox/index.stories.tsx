@@ -28,6 +28,7 @@ const meta: Meta<typeof Textbox> = {
     label: STORY_META.INPUT_LABEL,
     readOnly: STORY_META.INPUT_READONLY,
     required: STORY_META.INPUT_REQUIRED,
+    fixedDarkMode: STORY_META.FIXED_DARK_MODE,
   },
   decorators: [
     (Story) => (

@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 export interface PaginationProps
   extends Omit<HTMLTagProps<'ul'>, 'onChange'>,
-    Pick<ButtonProps, 'size'> {
+    Pick<ButtonProps, 'size' | 'fixedDarkMode'> {
   onChange?: (page: number) => void;
   totalItems?: number;
   pageSize?: number;
@@ -27,6 +27,7 @@ export const Pagination = ({
 
   //* Button props
   size,
+  fixedDarkMode,
 
   //* HTML ul props
   className,
@@ -36,6 +37,7 @@ export const Pagination = ({
     theme: 'clear',
     size,
     shape: 'sharp-corner',
+    fixedDarkMode,
   };
 
   const isPaginationExisted = !!(pageSize && totalItems && page && buttonCount);

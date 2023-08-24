@@ -6,6 +6,7 @@ import {
   OPENING_TRANSITION,
   usePreventBackgroundScroll,
   useDarkMode,
+  FixedDarkMode,
 } from '@hooks';
 import { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
@@ -24,6 +25,7 @@ export interface ModalProps extends HTMLTagProps<'article'> {
   opened?: boolean;
   onClose?: (e: ModalCloseEvent) => void;
   backgroundScroll?: boolean;
+  fixedDarkMode?: FixedDarkMode;
 }
 
 export const Modal = Object.assign(
@@ -34,6 +36,7 @@ export const Modal = Object.assign(
     opened = false,
     onClose,
     backgroundScroll = false,
+    fixedDarkMode,
 
     //* HTML article props
     className,
@@ -58,7 +61,7 @@ export const Modal = Object.assign(
       isPrevent: !!openingTransition,
     });
 
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode } = useDarkMode(fixedDarkMode);
 
     return openingTransition ? (
       createPortal(
