@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_META } from '@constants';
+import { cloneDeepWith } from '@utils';
 
 import { Tab } from '.';
 
@@ -27,13 +28,17 @@ const meta: Meta<MetaProps> = {
     icon: '⚙️',
   },
   argTypes: {
-    size: {
-      ...STORY_META.SIZE,
-      table: {
-        ...STORY_META.SIZE.table,
-        category: CATEGORY.TAB,
+    size: cloneDeepWith(STORY_META.SIZE, (size) => {
+      size.table.category = CATEGORY.TAB;
+      return size;
+    }),
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.TAB;
+        return fixedDarkMode;
       },
-    },
+    ),
     active: {
       description: 'Tab.Item의 선택 여부 \n\n `boolean`',
       type: 'boolean',
