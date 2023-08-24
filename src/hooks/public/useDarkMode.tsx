@@ -5,7 +5,9 @@ enum MODE_TYPE {
   DARK = 'pastime:dark',
 }
 
-export const useDarkMode = () => {
+export type FixedDarkMode = 'light' | 'dark';
+
+export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
   const isDevicePrefersDarkMode = window?.matchMedia(
     '(prefers-color-scheme: dark)',
   ).matches;
@@ -13,6 +15,8 @@ export const useDarkMode = () => {
   const [isDarkMode, setIsDarkMode] = useState(isDevicePrefersDarkMode);
 
   useEffect(() => {
+    if (fixedDarkMode) return;
+
     const html = document?.documentElement;
 
     if (!html) return;
@@ -41,10 +45,10 @@ export const useDarkMode = () => {
     });
 
     return () => darkModeObserver.disconnect();
-  }, [isDevicePrefersDarkMode]);
+  }, [isDevicePrefersDarkMode, fixedDarkMode]);
 
   return {
-    isDarkMode,
+    isDarkMode: fixedDarkMode ?? isDarkMode,
 
     setDarkMode: (isDarkMode: boolean) => {
       if (isDarkMode) {
