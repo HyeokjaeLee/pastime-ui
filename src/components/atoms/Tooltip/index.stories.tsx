@@ -4,6 +4,9 @@ import type { ReactNode } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { STORY_META } from '@constants';
+import { cloneDeepWith } from '@utils';
+
 import { Tooltip } from '.';
 
 import type { TooltipProps } from '.';
@@ -39,6 +42,13 @@ const meta: Meta<TooltipMetaProps> = {
         category: CATEGORY.TOOLTIP,
       },
     },
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.TOOLTIP;
+        return fixedDarkMode;
+      },
+    ),
 
     //* Tooltip.Area
     areaChildren: {

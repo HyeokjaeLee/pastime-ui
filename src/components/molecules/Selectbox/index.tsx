@@ -26,7 +26,10 @@ export interface SelectboxProps<
       InputProps,
       'style' | 'className' | 'onChange' | 'value' | 'multiple' | 'type'
     >,
-    Pick<InputWrapProps, 'reversed' | 'className' | 'style' | 'label'>,
+    Pick<
+      InputWrapProps,
+      'reversed' | 'className' | 'style' | 'label' | 'fixedDarkMode'
+    >,
     Pick<
       SelectProps<TValidOptionValue, TMultiple, TCancelable>,
       'options' | 'float' | 'value' | 'multiple' | 'cancelable'
@@ -56,6 +59,7 @@ export const Selectbox = <
   className,
   style,
   label,
+  fixedDarkMode,
 
   //* Select props
   options,
@@ -121,6 +125,7 @@ export const Selectbox = <
       required={required}
       onMouseEnter={() => setClosableOnClick(false)}
       onMouseLeave={() => setClosableOnClick(true)}
+      fixedDarkMode={fixedDarkMode}
     >
       <Input
         {...restInputProps}
@@ -141,6 +146,7 @@ export const Selectbox = <
         value={selectedValue}
         cancelable={cancelable}
         float={float}
+        fixedDarkMode={fixedDarkMode}
         onChange={({ value }) => {
           onChange?.({
             value,

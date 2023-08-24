@@ -64,6 +64,13 @@ const meta: Meta<DrawerMetaProps> = {
         return backgroundScroll;
       },
     ),
+    fixedDarkMode: cloneDeepWith(
+      STORY_META.FIXED_DARK_MODE,
+      (fixedDarkMode) => {
+        fixedDarkMode.table.category = CATEGORY.DRAWER;
+        return fixedDarkMode;
+      },
+    ),
 
     //* Drawer.Header
     headerChildren: {

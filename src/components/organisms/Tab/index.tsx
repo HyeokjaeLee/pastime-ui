@@ -10,12 +10,13 @@ import styles from './index.module.scss';
 export type { TabItemProps } from './TabItem';
 
 export type TabProps = Omit<HTMLTagProps<'ul'>, 'size' | 'ref'> &
-  Pick<ButtonProps, 'size'>;
+  Pick<ButtonProps, 'size' | 'fixedDarkMode'>;
 
 export const Tab = Object.assign(
   ({
     //* Button props
     size,
+    fixedDarkMode,
 
     //* HTML ul props
     className,
@@ -24,7 +25,7 @@ export const Tab = Object.assign(
   }: TabProps) => {
     const { isOverflowX, ref } = useTabOverflowX();
 
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode } = useDarkMode(fixedDarkMode);
 
     return (
       <ul
@@ -36,7 +37,9 @@ export const Tab = Object.assign(
           } ${className}`,
         )}
       >
-        <TabContextProvider size={size}>{children}</TabContextProvider>
+        <TabContextProvider size={size} fixedDarkMode={fixedDarkMode}>
+          {children}
+        </TabContextProvider>
       </ul>
     );
   },

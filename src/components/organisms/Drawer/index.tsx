@@ -29,6 +29,7 @@ export const Drawer = Object.assign(
     onClose,
     backgroundScroll = false,
     drawerDirection = 'right',
+    fixedDarkMode,
 
     //* HTML article props
     className,
@@ -56,7 +57,7 @@ export const Drawer = Object.assign(
     const closingClassName =
       openingTransition === OPENING_TRANSITION.CLOSING && styles.closing;
 
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode } = useDarkMode(fixedDarkMode);
 
     return openingTransition ? (
       createPortal(

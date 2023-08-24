@@ -1,7 +1,6 @@
 import { useRef, useMemo } from 'react';
 
 import { useAccordionContext } from '@contexts/AccordionContext';
-import { useDarkMode } from '@hooks';
 import type { HTMLTagProps } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -12,7 +11,10 @@ export type AccordionContentsProps = Omit<HTMLTagProps<'dd'>, 'style'> & {
 };
 
 export const AccordionContents = ({
+  //* Accordion.Contents props
   style,
+
+  //* HTML dd props
   children,
   className,
   ...restDdProps
@@ -20,6 +22,7 @@ export const AccordionContents = ({
   const {
     openedState: [opened],
     size,
+    isDarkMode,
   } = useAccordionContext();
   const ref = useRef<HTMLElement>(null);
 
@@ -36,8 +39,6 @@ export const AccordionContents = ({
       height: opened ? current.scrollHeight : 0,
     };
   }, [opened, style]);
-
-  const { isDarkMode } = useDarkMode();
 
   return (
     <dd

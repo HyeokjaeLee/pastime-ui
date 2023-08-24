@@ -237,3 +237,10 @@ export const MODAL_BACKGROUND_BLUR = {
     defaultValue: { summary: true },
   },
 };
+
+export const FIXED_DARK_MODE = {
+  description: `Dark mode to be applied prior to the global dark mode setting.\n\n전역 darkMode 설정보다 우선 적용할 darkMode`,
+  options: ['light', 'dark'],
+  control: 'radio',
+  table: {},
+};

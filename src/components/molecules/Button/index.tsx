@@ -1,5 +1,5 @@
 import { useDarkMode, useButtonDelay, useButtonLoading } from '@hooks';
-import type { ButtonIconDirection } from '@hooks';
+import type { ButtonIconDirection, FixedDarkMode } from '@hooks';
 import type { HTMLTagProps, Size } from '@types';
 import { cleanClassName } from '@utils';
 
@@ -22,6 +22,7 @@ export interface ButtonProps extends HTMLTagProps<'button'> {
   iconDirection?: ButtonIconDirection;
   shape?: 'sharp-corner' | 'rounded' | 'pill';
   loading?: boolean;
+  fixedDarkMode?: FixedDarkMode;
 }
 
 export const Button = ({
@@ -33,6 +34,7 @@ export const Button = ({
   iconDirection = 'left',
   icon,
   loading = false,
+  fixedDarkMode,
 
   //* HTML button props
   type = 'button',
@@ -54,7 +56,7 @@ export const Button = ({
 
   const isDisabled = disabled || isDelayButton;
 
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode(fixedDarkMode);
 
   const { leftLoadingSpinner, rightLoadingSpinner, iconLoadingSpinner } =
     useButtonLoading({

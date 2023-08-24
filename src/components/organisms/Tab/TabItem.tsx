@@ -30,7 +30,7 @@ export const TabItem = ({
   className,
   ...restLiProps
 }: TabItemProps) => {
-  const { size } = useTabContext();
+  const buttonProps = useTabContext();
   return (
     <li
       {...restLiProps}
@@ -41,8 +41,8 @@ export const TabItem = ({
       )}
     >
       <Button
+        {...buttonProps}
         disabled={disabled}
-        size={size}
         onClick={onClick}
         theme="clear"
         className={styles['item-content']}
