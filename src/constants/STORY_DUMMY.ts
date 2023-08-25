@@ -44,19 +44,64 @@ export const VERY_LONG_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscin
   dolor sit amet, consectetur adipiscing elit. Sed luctus est ut enim
   molestie, in condimentum eros aliquet.`;
 
-export const STRING_OPTIONS = Array.from(
-  { length: 10 },
-  (_, index) =>
-    `Test label ${index}${
-      index % 7 === 0
-        ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
-        : ''
-    }`,
-);
+export const STRING_OPTIONS = [
+  'Test label 0',
+  'Test label 1',
+  'Test label 2',
+  'Test label 3',
+  'Test label 4',
+  'Test label 5',
+  'Test label 6',
+  'Test label 7',
+  'Test label 8',
+  'Test label 9',
+  'Test label 10',
+];
 
-export const OPTIONS = Array.from({ length: 10 }, (_, index) => ({
-  label: `Test label ${index}${
-    index % 7 === 0 ? ` is long text: ${LONG_TEXT}` : ''
-  }`,
-  value: `${index}번 옵션이 선택`,
-}));
+export const OPTIONS = [
+  {
+    label: 'Test label 0',
+    value: '0번 옵션이 선택',
+  },
+  {
+    label: 'Test label 1',
+    value: '1번 옵션이 선택',
+  },
+  {
+    label: 'Test label 2',
+    value: '2번 옵션이 선택',
+  },
+  {
+    label: 'Test label 3',
+    value: '3번 옵션이 선택',
+  },
+  {
+    label: 'Test label 4',
+    value: '4번 옵션이 선택',
+  },
+  {
+    label: 'Test label 5',
+    value: `5번 옵션이 선택: ${VERY_LONG_TEXT}`,
+  },
+  {
+    label: 'Test label 6',
+    value: '6번 옵션이 선택',
+  },
+  {
+    label: 'Test label 7',
+    value: '7번 옵션이 선택',
+  },
+
+  {
+    label: 'Test label 8',
+    value: '8번 옵션이 선택',
+  },
+  {
+    label: 'Test label 9',
+    value: '9번 옵션이 선택',
+  },
+  {
+    label: 'Test label 10',
+    value: '10번 옵션이 선택',
+  },
+];
