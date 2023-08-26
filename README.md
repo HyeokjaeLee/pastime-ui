@@ -40,3 +40,5 @@ import '@hyeokjaelee/pastime-ui/style.css';
 For more detailed usage, please check the Storybook.
 
 그외 자세한 사용법은 스토리북을 확인해 주세요.
+
+### [Github](https://github.com/HyeokjaeLee/pastime-ui)
