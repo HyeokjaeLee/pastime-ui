@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 
-export const useTextareaDynamicHeight = () => {
+export const useTextareaDynamicHeight = (
+  ref: React.ForwardedRef<HTMLTextAreaElement> | undefined,
+) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { current: textareaElement } = textareaRef;
@@ -15,7 +17,7 @@ export const useTextareaDynamicHeight = () => {
   };
 
   return {
-    textareaRef,
+    textareaRef: ref || textareaRef,
     handleTextareaHeight,
   };
 };
