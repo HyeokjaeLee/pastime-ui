@@ -12,17 +12,25 @@ export const useButtonDelay = ({ delay, disabled }: UseButtonDelayParams) => {
   );
 
   useEffect(() => {
-    if (!disabled && delay) {
-      flushSync(() => setDelayState('before'));
-
-      setDelayState('delaying');
-
-      const endTimer = setTimeout(() => setDelayState('after'), delay);
-      return () => {
-        clearTimeout(endTimer);
-      };
-    }
+    if (!disabled && delay) setDelayState('before');
   }, [delay, disabled]);
+
+  useEffect(() => {
+    console.log(delayState);
+    switch (delayState) {
+      case 'before': {
+        const delayTimer = setTimeout(() => setDelayState('delaying'));
+        return () => clearTimeout(delayTimer);
+      }
+
+      case 'delaying': {
+        const endTimer = setTimeout(() => setDelayState('after'), delay);
+        return () => {
+          clearTimeout(endTimer);
+        };
+      }
+    }
+  }, [delay, delayState]);
 
   const isDelaying = delayState === 'delaying';
   const isDelayButton = delayState === 'before' || isDelaying;
