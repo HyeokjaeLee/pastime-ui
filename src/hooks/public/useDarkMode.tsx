@@ -8,11 +8,7 @@ enum MODE_TYPE {
 export type FixedDarkMode = 'light' | 'dark';
 
 export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
-  const isDevicePrefersDarkMode = window?.matchMedia(
-    '(prefers-color-scheme: dark)',
-  ).matches;
-
-  const [isDarkMode, setIsDarkMode] = useState(isDevicePrefersDarkMode);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     if (fixedDarkMode) return;
@@ -23,10 +19,12 @@ export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
 
     const setDarkMode = () => {
       const { classList } = html;
+      const isDeviceDarkMode =
+        window?.matchMedia('(prefers-color-scheme: dark)').matches ?? false;
 
       const isDarkMode =
         !classList.contains(MODE_TYPE.LIGHT) &&
-        (classList.contains(MODE_TYPE.DARK) || isDevicePrefersDarkMode);
+        (classList.contains(MODE_TYPE.DARK) || isDeviceDarkMode);
 
       setIsDarkMode(isDarkMode);
     };
@@ -45,7 +43,7 @@ export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
     });
 
     return () => darkModeObserver.disconnect();
-  }, [isDevicePrefersDarkMode, fixedDarkMode]);
+  }, [fixedDarkMode]);
 
   return {
     isDarkMode: fixedDarkMode ? fixedDarkMode === 'dark' : isDarkMode,

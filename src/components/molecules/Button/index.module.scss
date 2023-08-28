@@ -102,56 +102,54 @@
     cursor: not-allowed;
   }
 
-  @layer {
-    //* Size
-    &.size-small {
-      height: 32px;
-
-      &.children-type-icon {
-        width: 32px;
-      }
-    }
-
-    &.size-medium {
-      height: 40px;
-
-      &.children-type-icon {
-        width: 40px;
-      }
-    }
-
-    &.size-large {
-      height: 48px;
-
-      &.children-type-icon {
-        width: 48px;
-      }
-    }
-
-    &.children-type-text {
-      padding: 0 16px;
-    }
+  //* Size
+  &.size-small {
+    height: 32px;
 
     &.children-type-icon {
-      padding: 0;
+      width: 32px;
     }
+  }
 
-    &.children-type-both {
-      padding: 0 10px;
-    }
+  &.size-medium {
+    height: 40px;
 
-    //* Shape
-    &.shape-sharp-corner {
-      border-radius: 0;
+    &.children-type-icon {
+      width: 40px;
     }
+  }
 
-    &.shape-rounded {
-      border-radius: $BORDER-RADIUS-MD;
-    }
+  &.size-large {
+    height: 48px;
 
-    &.shape-pill {
-      border-radius: 99999px;
+    &.children-type-icon {
+      width: 48px;
     }
+  }
+
+  &.children-type-text {
+    padding: 0 16px;
+  }
+
+  &.children-type-icon {
+    padding: 0;
+  }
+
+  &.children-type-both {
+    padding: 0 10px;
+  }
+
+  //* Shape
+  &.shape-sharp-corner {
+    border-radius: 0;
+  }
+
+  &.shape-rounded {
+    border-radius: $BORDER-RADIUS-MD;
+  }
+
+  &.shape-pill {
+    border-radius: 99999px;
   }
 
   //* Icon direction

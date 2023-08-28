@@ -12,8 +12,10 @@ export const useClosableOnClickOpeningState = () => {
         if (closable) setOpened(false);
       };
 
-      window.addEventListener('click', handleClickedOutside);
-      return () => window.removeEventListener('click', handleClickedOutside);
+      if (window) {
+        window.addEventListener('click', handleClickedOutside);
+        return () => window.removeEventListener('click', handleClickedOutside);
+      }
     }
   }, [closable, opened, setOpened]);
 
