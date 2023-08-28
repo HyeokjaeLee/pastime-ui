@@ -44,7 +44,7 @@ export const Textbox = ({
   const [inputValue, setInputValue, preventInnerStateChange] =
     useSubscribedState(value);
 
-  const { id } = restInputProps;
+  const { id, required } = restInputProps;
 
   const { validationMessage, validateOnChange } = useValidationMessage({
     validateHandler: validation,
@@ -61,6 +61,7 @@ export const Textbox = ({
       reversed={reversed}
       label={label}
       fixedDarkMode={fixedDarkMode}
+      required={required}
     >
       <Input
         {...restInputProps}
