@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { flushSync } from 'react-dom';
 
 interface UseButtonDelayParams {
   delay?: number;
@@ -16,7 +15,6 @@ export const useButtonDelay = ({ delay, disabled }: UseButtonDelayParams) => {
   }, [delay, disabled]);
 
   useEffect(() => {
-    console.log(delayState);
     switch (delayState) {
       case 'before': {
         const delayTimer = setTimeout(() => setDelayState('delaying'));
