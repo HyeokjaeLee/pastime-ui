@@ -184,19 +184,7 @@ export const INNER_STATE_CHANGE_HANDLER = {
 };
 
 export const MODAL_CLOSE_HANDLER = {
-  description: `
-  #### preventDefaultClose usage example
-  <pre>
-    <code>
-      const handleClose = (e) => {
-        e.preventDefaultClose();
-        setOpened(false);
-      };
-    </code>
-  </pre>
-  Component's Close handler supports inner State, and you can deactivate the inner State by calling the preventDefaultClose function.
-  
-  컴포넌트의 Close 핸들러는 내부 State를 지원하며, preventDefaultClose 함수를 호출하여 내부 State를 비활성화할 수 있습니다.`,
+  description: `컴포넌트를 닫기 위한 영역을 클릭할때 실행됩니다.\n\nIt is executed when you click the area to close the component.`,
   control: false,
   table: {},
 };

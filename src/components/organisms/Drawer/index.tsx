@@ -2,10 +2,10 @@ import { createPortal } from 'react-dom';
 
 import { ModalContextProvider } from '@contexts/ModalContext';
 import {
-  useOpeningTransitionState,
-  OPENING_TRANSITION,
   usePreventBackgroundScroll,
   useDarkMode,
+  useModalClosing,
+  MODAL_CLOSING_STATE,
 } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -36,26 +36,18 @@ export const Drawer = Object.assign(
     children,
     ...restArticleProps
   }: DrawerProps) => {
-    const [openingTransition, setOpeningTransition, preventDefaultClose] =
-      useOpeningTransitionState({
-        openingTransition: opened
-          ? OPENING_TRANSITION.OPENED
-          : OPENING_TRANSITION.CLOSED,
-        closingDuration: 200,
-      });
+    const openingTransition = useModalClosing({
+      opened,
+      closingDuration: 200,
+    });
 
     usePreventBackgroundScroll({
       backgroundScroll,
       isPrevent: !!openingTransition,
     });
 
-    const handleClose = () => {
-      onClose?.({ preventDefaultClose });
-      setOpeningTransition(false);
-    };
-
     const closingClassName =
-      openingTransition === OPENING_TRANSITION.CLOSING && styles.closing;
+      openingTransition === MODAL_CLOSING_STATE.CLOSING && styles.closing;
 
     const { isDarkMode } = useDarkMode(fixedDarkMode);
 
@@ -73,7 +65,7 @@ export const Drawer = Object.assign(
                 blurredBackground && styles.blurred
               } ${closingClassName} ${drawerDirection}`,
             )}
-            onClick={handleClose}
+            onClick={onClose}
           />
           <article
             {...restArticleProps}
@@ -83,7 +75,7 @@ export const Drawer = Object.assign(
               } ${closingClassName} ${className}`,
             )}
           >
-            <ModalContextProvider onClose={handleClose}>
+            <ModalContextProvider onClose={onClose}>
               {children}
             </ModalContextProvider>
           </article>

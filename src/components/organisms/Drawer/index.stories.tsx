@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_META } from '@constants';
+import { useSubscribedState } from '@hooks';
 import { cloneDeepWith } from '@utils';
 
 import { Drawer, DrawerHeaderProps, DrawerProps } from '.';
@@ -101,10 +102,27 @@ export default meta;
 type Story = StoryObj<DrawerMetaProps>;
 
 export const Default: Story = {
-  render: ({ closeButton, headerChildren, children, ...restDrawerProps }) => (
-    <Drawer {...restDrawerProps}>
-      <Drawer.Header closeButton={closeButton}>{headerChildren}</Drawer.Header>
-      {children}
-    </Drawer>
-  ),
+  render: ({
+    closeButton,
+    headerChildren,
+    children,
+    opened,
+    ...restDrawerProps
+  }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [state, setState] = useSubscribedState(opened);
+
+    return (
+      <Drawer
+        {...restDrawerProps}
+        opened={state}
+        onClose={() => setState(false)}
+      >
+        <Drawer.Header closeButton={closeButton}>
+          {headerChildren}
+        </Drawer.Header>
+        {children}
+      </Drawer>
+    );
+  },
 };

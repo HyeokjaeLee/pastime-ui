@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { STORY_META } from '@constants';
+import { useSubscribedState } from '@hooks';
 import { cloneDeepWith } from '@utils';
 
 import { Modal, ModalHeaderProps, ModalProps } from '.';
@@ -90,10 +91,21 @@ export default meta;
 type Story = StoryObj<ModalMetaProps>;
 
 export const Default: Story = {
-  render: ({ closeButton, headerChildren, children, ...restModalProps }) => (
-    <Modal {...restModalProps}>
-      <Modal.Header closeButton={closeButton}>{headerChildren}</Modal.Header>
-      {children}
-    </Modal>
-  ),
+  render: ({
+    closeButton,
+    headerChildren,
+    children,
+    opened,
+    ...restModalProps
+  }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [state, setState] = useSubscribedState(opened);
+
+    return (
+      <Modal {...restModalProps} opened={state} onClose={() => setState(false)}>
+        <Modal.Header closeButton={closeButton}>{headerChildren}</Modal.Header>
+        {children}
+      </Modal>
+    );
+  },
 };

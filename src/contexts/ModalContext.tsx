@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 interface ModalContextValue {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const ModalContext = createContext<ModalContextValue | undefined>(undefined);
