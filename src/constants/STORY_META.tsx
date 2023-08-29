@@ -66,7 +66,7 @@ export const SELECT_USED_DECORATORS = [
 export const VALIDATION = {
   control: false,
   description:
-    'The `argument` of the function is the input value, and the return value becomes the error message. If `undefined` is returned, it is considered to have passed the validation.\n\n함수의 `argument`는 입력값이며, 리턴값이 에러 메시지가 됩니다. `undefined`를 리턴하면 검증을 통과한 것으로 간주됩니다.',
+    'The argument of the function is the input value, and the return value will be the error message\n\nReturning undefined is considered as passing the validation.\n\nThe component id value is required to use the useValidation hook.\n\n함수의 `argument`는 입력값이며, 리턴값이 에러 메시지가 됩니다. `undefined`를 리턴하면 검증을 통과한 것으로 간주됩니다.\n\n`useValidation` hook을 사용하기 위해선 컴포넌트 `id`값이 필수 입니다.',
 };
 
 export const INPUT_PLACEHOLDER = {
