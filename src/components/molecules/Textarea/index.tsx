@@ -30,7 +30,10 @@ interface TextareaProps
   ref?: React.ForwardedRef<HTMLTextAreaElement>;
 }
 
-forwardRef<HTMLTextAreaElement, Omit<TextareaProps, 'ref'>>(
+export const Textarea = forwardRef<
+  HTMLTextAreaElement,
+  Omit<TextareaProps, 'ref'>
+>(
   (
     {
       //* Textarea props
@@ -112,79 +115,3 @@ forwardRef<HTMLTextAreaElement, Omit<TextareaProps, 'ref'>>(
     );
   },
 );
-
-export const Textarea = ({
-  //* Textarea props
-  size = 'medium',
-  value,
-  onChange,
-  children,
-  validation,
-
-  //* InputWrap props
-  className,
-  style,
-  label,
-  reversed,
-  fixedDarkMode,
-
-  //* HTML textarea props
-  onInvalid,
-  ...restTextareaProps
-}: TextareaProps) => {
-  const { textareaRef, handleTextareaHeight } = useTextareaDynamicHeight();
-  const [textareaValue, setTextareaValue, preventInnerStateChange] =
-    useSubscribedState(value);
-
-  const { required, id } = restTextareaProps;
-
-  const { validationMessage, validateOnChange } = useValidationMessage({
-    validateHandler: validation,
-    value: textareaValue,
-    key: id,
-  });
-
-  return (
-    <Input.Wrap
-      size="fit-content"
-      className={className}
-      style={style}
-      validationMessage={validationMessage}
-      label={label}
-      required={required}
-      fixedDarkMode={fixedDarkMode}
-    >
-      <div
-        className={cleanClassName(
-          `${styles['textarea-wrap']} ${styles[`size-${size}`]} ${
-            reversed && styles.reversed
-          }`,
-        )}
-      >
-        <textarea
-          {...restTextareaProps}
-          value={textareaValue}
-          rows={1}
-          className={styles.textarea}
-          required={required}
-          ref={textareaRef}
-          onChange={({ target }) => {
-            const { value } = target;
-            onChange?.({
-              value,
-              preventInnerStateChange,
-            });
-            setTextareaValue(value);
-            validateOnChange?.(value);
-            handleTextareaHeight(target);
-          }}
-          onInvalid={(e) => {
-            e.preventDefault();
-            onInvalid?.(e);
-          }}
-        />
-        {children ? <div className={styles.decoration}>{children}</div> : null}
-      </div>
-    </Input.Wrap>
-  );
-};
