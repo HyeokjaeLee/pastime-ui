@@ -1,6 +1,6 @@
 /// <reference types="react" />
 interface ModalContextValue {
-    onClose: () => void;
+    onClose?: () => void;
 }
 interface ModalContextProviderProps extends ModalContextValue {
     children: React.ReactNode;

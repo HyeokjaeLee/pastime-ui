@@ -1,14 +1,11 @@
 import { FixedDarkMode } from '../../../hooks';
 import { HTMLTagProps } from '../../../types';
 export type { ModalHeaderProps } from './ModalHeader';
-interface ModalCloseEvent {
-    preventDefaultClose: () => void;
-}
 export interface ModalProps extends HTMLTagProps<'article'> {
     zIndex?: number;
     blurredBackground?: boolean;
     opened?: boolean;
-    onClose?: (e: ModalCloseEvent) => void;
+    onClose?: () => void;
     backgroundScroll?: boolean;
     fixedDarkMode?: FixedDarkMode;
 }
