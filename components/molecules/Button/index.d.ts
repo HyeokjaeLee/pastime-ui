@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { ButtonIconDirection, FixedDarkMode } from '../../../hooks';
 import type { HTMLTagProps, Size } from '../../../types';
-type Theme = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'clear' | 'ghost';
+type Theme = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'clear' | 'ghost' | 'unset';
 export interface ButtonProps extends HTMLTagProps<'button'> {
     delay?: number;
     size?: Size;
