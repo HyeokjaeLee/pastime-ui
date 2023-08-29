@@ -16,7 +16,7 @@
   transition: color 0.3s;
 
   &::placeholder {
-    color: rgba($BLUE-GRAY-300, 0.5);
+    color: $INPUT_PLACEHOLDER_COLOR;
   }
 }
 
@@ -32,6 +32,6 @@
   }
 
   &.empty {
-    color: $GRAY-300;
+    color: $INPUT_PLACEHOLDER_COLOR;
   }
 }

@@ -198,7 +198,7 @@
 
 .secondary {
   @include default-theme($GRAY-50, $BLUE-GRAY-700);
-  @include disable-theme(rgba($GRAY-50, 0.6), $BLUE-GRAY-300);
+  @include disable-theme(rgba($GRAY-100, 0.6), $BLUE-GRAY-300);
   @include hover-theme(white, $BLUE-GRAY-600);
   @include active-theme(white, $BLUE-GRAY-800, $BLUE-GRAY-400);
 }

@@ -12,7 +12,8 @@ type Theme =
   | 'warning'
   | 'danger'
   | 'clear'
-  | 'ghost';
+  | 'ghost'
+  | 'unset';
 
 export interface ButtonProps extends HTMLTagProps<'button'> {
   delay?: number;

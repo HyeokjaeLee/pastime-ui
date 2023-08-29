@@ -51,6 +51,6 @@
   transition: height 0.3s;
 
   &::placeholder {
-    color: rgba($BLUE-GRAY-300, 0.5);
+    color: $INPUT_PLACEHOLDER_COLOR;
   }
 }
