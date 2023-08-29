@@ -8,6 +8,7 @@ interface TextareaProps extends Pick<InputWrapProps, 'className' | 'style' | 'la
     onChange?: InnerStateChangeEventHandler<string>;
     children?: React.ReactNode;
     validation?: ValidateHandler<TextareaProps['value']>;
+    ref?: React.ForwardedRef<HTMLTextAreaElement>;
 }
-export declare const Textarea: ({ size, value, onChange, children, validation, className, style, label, reversed, fixedDarkMode, onInvalid, ...restTextareaProps }: TextareaProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Textarea: import("react").ForwardRefExoticComponent<Omit<TextareaProps, "ref"> & import("react").RefAttributes<HTMLTextAreaElement>>;
 export {};
