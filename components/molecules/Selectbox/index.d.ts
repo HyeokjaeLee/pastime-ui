@@ -8,4 +8,4 @@ export interface SelectboxProps<TValidOptionValue extends ValidOptionValue = Val
     children?: React.ReactNode;
     onChange?: InnerStateChangeEventHandler<SelectChangeEvent<TValidOptionValue, TMultiple, TCancelable>['value']>;
 }
-export declare const Selectbox: <TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false, TCancelable extends boolean = true>({ size, validation, children, reversed, className, style, label, fixedDarkMode, options, float, onChange, value, multiple, cancelable, onClick, ...restInputProps }: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => import("react/jsx-runtime").JSX.Element;
+export declare const Selectbox: <TValidOptionValue extends ValidOptionValue = ValidOptionValue, TMultiple extends boolean = false, TCancelable extends boolean = false>({ size, validation, children, reversed, className, style, label, fixedDarkMode, options, float, onChange, value, multiple, cancelable, onClick, ...restInputProps }: SelectboxProps<TValidOptionValue, TMultiple, TCancelable>) => import("react/jsx-runtime").JSX.Element;
