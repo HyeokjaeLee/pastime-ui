@@ -47,7 +47,7 @@ export interface SelectboxProps<
 export const Selectbox = <
   TValidOptionValue extends ValidOptionValue = ValidOptionValue,
   TMultiple extends boolean = false,
-  TCancelable extends boolean = true,
+  TCancelable extends boolean = false,
 >({
   //* Selectbox props
   size,
