@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import { OPENING_TRANSITION } from './useOpeningTransitionState';
+import { MODAL_CLOSING_STATE } from 'hooks';
 export type ValidOptionValue = string | number;
 interface UseOpenStatusParams {
-    openingTransition: OPENING_TRANSITION;
+    closingTransition: MODAL_CLOSING_STATE;
     options?: {
         label: string;
         value: ValidOptionValue;
@@ -10,5 +10,5 @@ interface UseOpenStatusParams {
     optionItemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
-export declare const useIndexForSelect: ({ openingTransition, options, optionItemRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
+export declare const useIndexForSelect: ({ closingTransition, options, optionItemRefs, onKeyDown, }: UseOpenStatusParams) => [number, import("react").Dispatch<import("react").SetStateAction<number>>];
 export {};
