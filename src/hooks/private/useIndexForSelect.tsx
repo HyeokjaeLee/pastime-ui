@@ -1,15 +1,13 @@
-import { useGetter } from 'hooks';
+import { MODAL_CLOSING_STATE, useGetter } from 'hooks';
 
 import { useState, useEffect } from 'react';
 
 import { INITIAL } from '@constants';
 
-import { OPENING_TRANSITION } from './useOpeningTransitionState';
-
 export type ValidOptionValue = string | number;
 
 interface UseOpenStatusParams {
-  openingTransition: OPENING_TRANSITION;
+  closingTransition: MODAL_CLOSING_STATE;
   options?: {
     label: string;
     value: ValidOptionValue;
@@ -19,7 +17,7 @@ interface UseOpenStatusParams {
 }
 
 export const useIndexForSelect = ({
-  openingTransition,
+  closingTransition,
   options,
   optionItemRefs,
   onKeyDown,
@@ -30,7 +28,7 @@ export const useIndexForSelect = ({
   const getIndexForSelect = useGetter(indexForSelect);
 
   useEffect(() => {
-    if (openingTransition === OPENING_TRANSITION.OPENED && options) {
+    if (closingTransition === MODAL_CLOSING_STATE.OPENED && options) {
       const prevFocusedElement = document.activeElement;
 
       const focusOptionItem = (indexForSelect: number) => {
@@ -85,7 +83,7 @@ export const useIndexForSelect = ({
   }, [
     getIndexForSelect,
     onKeyDown,
-    openingTransition,
+    closingTransition,
     options,
     optionItemRefs,
     setIndexForSelect,

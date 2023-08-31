@@ -4,8 +4,8 @@ import { Check } from 'react-feather';
 import {
   useDarkMode,
   useIndexForSelect,
-  useOpeningTransitionState,
-  OPENING_TRANSITION,
+  useModalClosing,
+  MODAL_CLOSING_STATE,
 } from '@hooks';
 import type { FixedDarkMode, ValidOptionValue } from '@hooks';
 import { HTMLTagProps } from '@types';
@@ -67,11 +67,8 @@ export const Select = <
   className,
   ...restSectionProps
 }: SelectProps<TOptionValue, TMultiple, TCancelable>) => {
-  const [openingTransition] = useOpeningTransitionState({
-    openingTransition: opened
-      ? OPENING_TRANSITION.OPENED
-      : OPENING_TRANSITION.CLOSED,
-    openingDuration: 200,
+  const closingTransition = useModalClosing({
+    opened,
     closingDuration: 200,
   });
 
@@ -80,20 +77,18 @@ export const Select = <
   const optionItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const [indexForSelect, setIndexForSelect] = useIndexForSelect({
-    openingTransition,
+    closingTransition,
     options,
     optionItemRefs,
     onKeyDown,
   });
 
-  return openingTransition && options?.length ? (
+  return closingTransition && options?.length ? (
     <section
       {...restSectionProps}
       className={cleanClassName(
         `${styles.select} ${isDarkMode && styles.dark} ${styles[float]} ${
-          openingTransition === OPENING_TRANSITION.CLOSING && styles.closing
-        } ${
-          openingTransition === OPENING_TRANSITION.OPENING && styles.opening
+          closingTransition === MODAL_CLOSING_STATE.CLOSING && styles.closing
         } ${className}`,
       )}
     >

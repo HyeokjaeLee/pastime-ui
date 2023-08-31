@@ -1,8 +1,16 @@
 @use 'src/styles/libs' as *;
 
-@layer {
-  .default-width {
-    width: $INPUT_DEFAULT_WIDTH;
+.input-wrap {
+  position: relative;
+
+  &.focused {
+    z-index: 1;
+  }
+
+  @layer {
+    & {
+      width: $INPUT_DEFAULT_WIDTH;
+    }
   }
 }
 
@@ -38,19 +46,6 @@
 }
 
 .label {
-  margin: {
-    top: 0.5em;
-    right: 1em;
-    bottom: 0;
-    left: 1em;
-  }
-  color: $COOL-GRAY-400;
-  font-size: smaller;
-}
-
-.input-wrap {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
 
@@ -75,6 +70,17 @@
   &.error {
     @include border($ROSE-500, 2.2px);
   }
+}
+
+.label-text {
+  margin: {
+    top: 0.5em;
+    right: 1em;
+    bottom: 0;
+    left: 1em;
+  }
+  color: $COOL-GRAY-400;
+  font-size: smaller;
 }
 
 .input-wrap-content {
@@ -111,7 +117,6 @@
 
 .validation-message {
   @include shake-horizontal(0.9s);
-  z-index: 0;
 
   margin: 0;
   padding: 0;

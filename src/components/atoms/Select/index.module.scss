@@ -20,10 +20,7 @@
 
   font-size: inherit;
 
-  &.closing,
-  &.opening {
-    cursor: default;
-  }
+  cursor: default;
 
   &.top {
     bottom: 100%;
@@ -37,9 +34,7 @@
     margin-top: 0.5rem;
   }
 
-  &.opening {
-    @include fade-in(0.2s);
-  }
+  @include fade-in(0.2s);
 
   &.closing {
     @include fade-out(0.2s);
