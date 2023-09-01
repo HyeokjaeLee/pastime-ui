@@ -42,7 +42,8 @@ export const useValidate = () => {
       return {
         validationMap,
 
-        validate: ({ scroll }: ValidateOptions): ValidateResult => {
+        validate: (params?: ValidateOptions): ValidateResult => {
+          const { scroll = false } = params || {};
           const invalidElementIds: string[] = [];
 
           validationMap.forEach((validate, key) => {
