@@ -7,8 +7,24 @@ enum MODE_TYPE {
 
 export type FixedDarkMode = 'light' | 'dark';
 
+const checkDarkMode = () => {
+  if (typeof document === 'undefined' || typeof window === 'undefined')
+    return false;
+
+  const { classList } = document.documentElement;
+
+  const isDeviceDarkMode = window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  ).matches;
+
+  return (
+    !classList.contains(MODE_TYPE.LIGHT) &&
+    (classList.contains(MODE_TYPE.DARK) || isDeviceDarkMode)
+  );
+};
+
 export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(checkDarkMode());
 
   useEffect(() => {
     if (fixedDarkMode) return;
@@ -17,23 +33,11 @@ export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
 
     if (!html) return;
 
-    const setDarkMode = () => {
-      const { classList } = html;
-      const isDeviceDarkMode =
-        window?.matchMedia('(prefers-color-scheme: dark)').matches ?? false;
-
-      const isDarkMode =
-        !classList.contains(MODE_TYPE.LIGHT) &&
-        (classList.contains(MODE_TYPE.DARK) || isDeviceDarkMode);
-
-      setIsDarkMode(isDarkMode);
-    };
-
-    setDarkMode();
+    setIsDarkMode(checkDarkMode());
 
     const darkModeObserver = new MutationObserver((mutations) => {
       mutations.forEach(({ attributeName }) => {
-        if (attributeName === 'class') setDarkMode();
+        if (attributeName === 'class') setIsDarkMode(checkDarkMode());
       });
     });
 
@@ -48,7 +52,8 @@ export const useDarkMode = (fixedDarkMode?: FixedDarkMode) => {
   return {
     isDarkMode: fixedDarkMode ? fixedDarkMode === 'dark' : isDarkMode,
 
-    setDarkMode: (isDarkMode: boolean) => {
+    setIsDarkMode: (isDarkMode: boolean) => {
+      setIsDarkMode(isDarkMode);
       if (isDarkMode) {
         document.documentElement.classList.add(MODE_TYPE.DARK);
         document.documentElement.classList.remove(MODE_TYPE.LIGHT);
