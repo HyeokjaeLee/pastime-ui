@@ -4,6 +4,7 @@ import { Preview } from '@storybook/react';
 import React from 'react';
 
 const DARK_MODE_QUERY = 'backgrounds.value:!hex(333333)';
+const DARK_MODE_CLASS = 'dark';
 
 export default {
   parameters: {
@@ -18,11 +19,9 @@ export default {
   decorators: [
     (Story) => {
       if (window.location.href.includes(DARK_MODE_QUERY)) {
-        document.documentElement.classList.add('pastime:dark');
-        document.documentElement.classList.remove('pastime:light');
+        document.documentElement.classList.add(DARK_MODE_CLASS);
       } else {
-        document.documentElement.classList.add('pastime:light');
-        document.documentElement.classList.remove('pastime:dark');
+        document.documentElement.classList.remove(DARK_MODE_CLASS);
       }
 
       return <Story />;
