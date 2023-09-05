@@ -1,0 +1,2 @@
+import{j as t}from"./jsx-runtime-4ca860c5.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";const s="backgrounds.value:!hex(333333)",o="dark",a={parameters:{actions:{argTypesRegex:"^on[A-Z].*"},controls:{matchers:{color:/(background|color)$/i,date:/Date$/}}},decorators:[e=>(window.location.href.includes(s)?document.documentElement.classList.add(o):document.documentElement.classList.remove(o),t.jsx(e,{}))]};export{a as default};
+//# sourceMappingURL=preview-a2bc96e3.js.map
