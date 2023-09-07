@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   FixedDarkMode,
   useDarkMode,
@@ -36,20 +34,14 @@ export const InputWrap = ({
   const { messageRef, messageWrapHeight } =
     useInputMessageDynamicHeight(validationMessage);
 
-  const [isFocused, setIsFocused] = useState(false);
-
   const { isDarkMode } = useDarkMode(fixedDarkMode);
 
   return (
     <div
       {...restDivProps}
-      className={cleanClassName(
-        `${styles['input-wrap']} ${isFocused && styles.focused} ${className}`,
-      )}
+      className={cleanClassName(`${styles['input-wrap']} ${className}`)}
     >
       <label
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         className={cleanClassName(
           `${styles.label} ${isDarkMode && styles.dark} ${
             validationMessage && styles.error

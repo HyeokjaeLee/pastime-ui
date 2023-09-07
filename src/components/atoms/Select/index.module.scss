@@ -10,6 +10,7 @@
 
 .select {
   position: absolute;
+  z-index: 1;
 
   box-sizing: border-box;
   width: 100%;
@@ -37,7 +38,7 @@
   @include fade-in(0.2s);
 
   &.closing {
-    @include fade-out(0.2s);
+    @include fade-out(0.1s);
   }
 
   @include theme($GRAY-700, white, $COOL-GRAY-100);

@@ -69,7 +69,7 @@ export const Select = <
 }: SelectProps<TOptionValue, TMultiple, TCancelable>) => {
   const closingTransition = useModalClosing({
     opened,
-    closingDuration: 200,
+    closingDuration: 100,
   });
 
   const { isDarkMode } = useDarkMode(fixedDarkMode);
