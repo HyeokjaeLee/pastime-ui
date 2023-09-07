@@ -1,4 +1,0 @@
-import{m as a,S as s,d as i}from"./useGetter-398907a8.js";import"./jsx-runtime-4ca860c5.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./index-6831fd36.js";import"./index-8d47fad6.js";import"./index-2801d3c9.js";const S={title:"atoms/Switch",component:a,args:{size:"medium",value:!1},argTypes:{size:s,onChange:i,value:{description:"Switch의 상태"},children:{description:`Content of the Switch ball.
-
-Switch ball의 내용`,control:{type:"text"},table:{type:{summary:"ReactNode"}}}}},t={};var e,o,r;t.parameters={...t.parameters,docs:{...(e=t.parameters)==null?void 0:e.docs,source:{originalSource:"{}",...(r=(o=t.parameters)==null?void 0:o.docs)==null?void 0:r.source}}};const h=["Default"];export{t as Default,h as __namedExportsOrder,S as default};
-//# sourceMappingURL=index.stories-58e84c0c.js.map
