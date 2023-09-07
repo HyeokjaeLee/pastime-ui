@@ -48,6 +48,7 @@
 
   &.dark {
     background-color: $GRAY-800;
+    box-shadow: $DARK_BOX_SHADOW;
   }
 
   @layer {

@@ -30,7 +30,7 @@
 
   &.dark {
     background-color: $GRAY-700;
-    box-shadow: 0px 0px 12px rgba($GRAY-900, 0.4);
+    box-shadow: $DARK_BOX_SHADOW;
 
     color: $GRAY-50;
 

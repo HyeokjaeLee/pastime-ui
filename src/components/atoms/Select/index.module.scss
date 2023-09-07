@@ -45,6 +45,7 @@
 
   &.dark {
     @include theme($GRAY-50, $GRAY-700, $COOL-GRAY-700);
+    box-shadow: $DARK_BOX_SHADOW;
   }
 }
 
