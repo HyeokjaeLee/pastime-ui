@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { cleanClassName } from '@utils';
+
 import styles from './usePreventBackgroundScroll.module.scss';
 
 interface UsePreventBackgroundScrollParams {
@@ -12,11 +14,15 @@ export const usePreventBackgroundScroll = ({
   isPrevent,
 }: UsePreventBackgroundScrollParams) => {
   useEffect(() => {
-    if (!backgroundScroll) {
-      const { classList } = document.body;
-      if (isPrevent) classList.add(styles['fixed-body']);
+    const { classList } = document.body;
+    const classNames = cleanClassName(
+      `${backgroundScroll && styles['fixed-body']} ${styles['body-size']}`,
+    );
 
-      return () => classList.remove(styles['fixed-body']);
+    if (isPrevent && classNames) {
+      classList.add(classNames);
+
+      return () => classList.remove(classNames);
     }
   }, [isPrevent, backgroundScroll]);
 };
