@@ -44,10 +44,6 @@ export const Toast = ({
     if (toastState === TOAST_STATE.DELETED) onDelete?.();
   }, [toastState, onDelete]);
 
-  const isTypeIcon =
-    typeof icon === 'string' &&
-    ['fail', 'success', 'warning', 'info'].includes(icon);
-
   const { dynamicHeight, toastContentRef } = useToastDynamicHeight(hasSpace);
 
   return (
@@ -61,19 +57,15 @@ export const Toast = ({
         } ${hasSpace && styles['has-space']} ${styles[toastState]}`,
       )}
     >
-      <div
-        className={cleanClassName(
-          `${styles['icon-wrap']} ${isTypeIcon && styles[icon]}`,
-        )}
-      >
-        {isTypeIcon
-          ? {
-              success: <CheckCircle />,
-              fail: <XCircle />,
-              warning: <AlertTriangle />,
-              info: <Info />,
-            }[icon]
-          : icon}
+      <div className={cleanClassName(`${styles['icon-wrap']} ${styles[icon]}`)}>
+        {
+          {
+            success: <CheckCircle />,
+            fail: <XCircle />,
+            warning: <AlertTriangle />,
+            info: <Info />,
+          }[icon]
+        }
       </div>
       <div ref={toastContentRef} className={styles['toast-contents-wrap']}>
         {children}

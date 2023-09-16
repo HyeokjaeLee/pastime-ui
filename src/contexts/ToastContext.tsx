@@ -2,12 +2,7 @@
 
 import { createContext, useContext } from 'react';
 
-export type ToastType =
-  | 'fail'
-  | 'success'
-  | 'warning'
-  | 'info'
-  | React.ReactNode;
+export type ToastType = 'fail' | 'success' | 'warning' | 'info';
 
 export interface ToastOption {
   type?: ToastType;
