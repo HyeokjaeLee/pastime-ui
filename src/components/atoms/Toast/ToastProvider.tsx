@@ -1,3 +1,5 @@
+import { debounce } from 'lodash-es';
+
 import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -30,9 +32,13 @@ export const ToastProvider = ({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleToastOptionListReset = useCallback(() => {
-    if (!ref.current?.offsetHeight) setToastOptionList([]);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleToastOptionListReset = useCallback(
+    debounce(() => {
+      if (!ref.current?.offsetHeight) setToastOptionList([]);
+    }, 500),
+    [],
+  );
 
   const isToastExist = !!toastOptionList.length;
 

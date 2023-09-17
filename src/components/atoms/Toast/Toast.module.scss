@@ -5,6 +5,11 @@
   overflow: hidden;
 
   width: fit-content;
+
+  &.temp-width {
+    width: 90vw;
+  }
+
   height: 0;
   border-radius: $BORDER-RADIUS-MD;
 
@@ -12,6 +17,7 @@
   box-shadow: $BOX_SHADOW;
 
   color: $GRAY-700;
+  font-size: 0.85rem;
 
   transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
     margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
@@ -74,11 +80,10 @@
 }
 
 .toast-contents-wrap {
-  box-sizing: content-box;
+  box-sizing: border-box;
   height: fit-content;
-  padding: $INPUT_MEDIUM_PADDING_X 1rem;
+  padding: 0.5rem 1rem;
 
-  font-weight: inherit;
   white-space: pre-line;
 }
 
@@ -87,8 +92,7 @@
   align-items: center;
   justify-content: center;
 
-  min-width: 1.3rem;
-  padding: 0 0.6rem;
+  width: 2.2rem;
 
   background-color: $GRAY-200;
 

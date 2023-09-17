@@ -5,7 +5,7 @@ import type { ToastType } from '@contexts/ToastContext';
 import {
   useToastState,
   TOAST_STATE,
-  useToastDynamicHeight,
+  useToastSize,
   useDarkMode,
   FixedDarkMode,
 } from '@hooks';
@@ -46,18 +46,18 @@ export const Toast = ({
     if (toastState === TOAST_STATE.DELETED) onDelete?.();
   }, [toastState, onDelete]);
 
-  const { dynamicHeight, toastContentRef } = useToastDynamicHeight(hasSpace);
+  const { toastContentRef, height, contentsWidth } = useToastSize(hasSpace);
 
   return (
     <div
-      style={dynamicHeight}
+      style={height}
       onMouseEnter={holdToast}
       onMouseLeave={unholdToast}
       className={cleanClassName(
         `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
           isDarkMode && styles.dark
-        } ${hasSpace && styles['has-space']} ${
-          styles[toastState]
+        } ${hasSpace && styles['has-space']} ${styles[toastState]} ${
+          !contentsWidth && styles['temp-width']
         } ${className}`,
       )}
     >
@@ -71,7 +71,11 @@ export const Toast = ({
           }[icon]
         }
       </div>
-      <div ref={toastContentRef} className={styles['toast-contents-wrap']}>
+      <div
+        ref={toastContentRef}
+        className={styles['toast-contents-wrap']}
+        style={contentsWidth}
+      >
         {children}
       </div>
     </div>

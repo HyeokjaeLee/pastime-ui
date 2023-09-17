@@ -1,11 +1,12 @@
 .toast-container-wrap {
   position: fixed;
+  left: 50%;
   z-index: 999;
   display: flex;
   align-items: center;
   overflow: visible;
 
-  width: 100%;
+  width: 0;
   height: 0;
 
   &.float-direction-from-top {
@@ -28,6 +29,6 @@
   flex-direction: column;
   align-items: center;
 
-  width: fit-content;
+  width: 0;
   height: fit-content;
 }
