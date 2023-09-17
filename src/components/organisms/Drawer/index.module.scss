@@ -35,7 +35,7 @@
     &.left,
     &.right {
       width: fit-content;
-      height: 100vh;
+      height: 100%;
     }
 
     &.left {
@@ -66,7 +66,7 @@
 
     &.top,
     &.bottom {
-      width: 100vw;
+      width: 100%;
       height: fit-content;
     }
 

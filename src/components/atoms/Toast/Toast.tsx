@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { XCircle, AlertTriangle, Info, CheckCircle } from 'react-feather';
 
 import type { ToastType } from '@contexts/ToastContext';
@@ -21,6 +21,7 @@ export interface ToastProps {
   holdTime?: number;
   onDelete?: () => void;
   fixedDarkMode?: FixedDarkMode;
+  className?: React.HTMLAttributes<HTMLDivElement>['className'];
 }
 
 export const Toast = ({
@@ -32,6 +33,7 @@ export const Toast = ({
   holdTime = 5000,
   onDelete,
   fixedDarkMode,
+  className,
 }: ToastProps) => {
   const { toastState, hasSpace, holdToast, unholdToast } = useToastState({
     holdTime,
@@ -44,10 +46,6 @@ export const Toast = ({
     if (toastState === TOAST_STATE.DELETED) onDelete?.();
   }, [toastState, onDelete]);
 
-  const isTypeIcon =
-    typeof icon === 'string' &&
-    ['fail', 'success', 'warning', 'info'].includes(icon);
-
   const { dynamicHeight, toastContentRef } = useToastDynamicHeight(hasSpace);
 
   return (
@@ -58,22 +56,20 @@ export const Toast = ({
       className={cleanClassName(
         `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
           isDarkMode && styles.dark
-        } ${hasSpace && styles['has-space']} ${styles[toastState]}`,
+        } ${hasSpace && styles['has-space']} ${
+          styles[toastState]
+        } ${className}`,
       )}
     >
-      <div
-        className={cleanClassName(
-          `${styles['icon-wrap']} ${isTypeIcon && styles[icon]}`,
-        )}
-      >
-        {isTypeIcon
-          ? {
-              success: <CheckCircle />,
-              fail: <XCircle />,
-              warning: <AlertTriangle />,
-              info: <Info />,
-            }[icon]
-          : icon}
+      <div className={cleanClassName(`${styles['icon-wrap']} ${styles[icon]}`)}>
+        {
+          {
+            success: <CheckCircle />,
+            fail: <XCircle />,
+            warning: <AlertTriangle />,
+            info: <Info />,
+          }[icon]
+        }
       </div>
       <div ref={toastContentRef} className={styles['toast-contents-wrap']}>
         {children}

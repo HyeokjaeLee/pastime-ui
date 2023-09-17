@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 
 import { ModalContextProvider } from '@contexts/ModalContext';
 import {
-  usePreventBackgroundScroll,
+  useBodyPortalStyle,
   useDarkMode,
   useModalClosing,
   MODAL_CLOSING_STATE,
@@ -41,9 +41,9 @@ export const Drawer = Object.assign(
       closingDuration: 200,
     });
 
-    usePreventBackgroundScroll({
+    useBodyPortalStyle({
       backgroundScroll,
-      isPrevent: !!openingTransition,
+      active: !!openingTransition,
     });
 
     const closingClassName =

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { ToastContext } from '@contexts/ToastContext';
 import type { ToastOption } from '@contexts/ToastContext';
+import { useBodyPortalStyle } from '@hooks';
 
 import { Toast } from './Toast';
 import styles from './ToastProvider.module.scss';
@@ -10,7 +11,7 @@ import styles from './ToastProvider.module.scss';
 import type { ToastProps } from './Toast';
 
 export interface ToastProviderProps
-  extends Pick<ToastProps, 'floatDirection' | 'fixedDarkMode'> {
+  extends Pick<ToastProps, 'floatDirection' | 'fixedDarkMode' | 'className'> {
   children?: React.ReactNode;
 }
 
@@ -21,6 +22,7 @@ export const ToastProvider = ({
   //* Toast props
   floatDirection = 'from-top',
   fixedDarkMode,
+  className,
 }: ToastProviderProps) => {
   const [toastOptionList, setToastOptionList] = useState<ToastOption[]>([]);
 
@@ -32,9 +34,16 @@ export const ToastProvider = ({
     if (!ref.current?.offsetHeight) setToastOptionList([]);
   }, []);
 
+  const isToastExist = !!toastOptionList.length;
+
+  useBodyPortalStyle({
+    backgroundScroll: true,
+    active: isToastExist,
+  });
+
   return (
     <>
-      {toastOptionList.length
+      {isToastExist
         ? createPortal(
             <div
               className={`${styles['toast-container-wrap']} ${
@@ -58,6 +67,7 @@ export const ToastProvider = ({
                     icon={toastOption.type}
                     onDelete={handleToastOptionListReset}
                     fixedDarkMode={fixedDarkMode}
+                    className={className}
                   >
                     {toastOption.message}
                   </Toast>
