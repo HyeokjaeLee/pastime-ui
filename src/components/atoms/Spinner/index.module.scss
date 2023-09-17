@@ -13,15 +13,15 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
   display: inline-block;
 
   &.size-small {
-    @include size(28px);
+    @include size($INPUT_SMALL_HEIGHT);
   }
 
   &.size-medium {
-    @include size(36px);
+    @include size($INPUT_MEDIUM_HEIGHT);
   }
 
   &.size-large {
-    @include size(48px);
+    @include size($INPUT_LARGE_HEIGHT);
   }
 
   &.size-zero {

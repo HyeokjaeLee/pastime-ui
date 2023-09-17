@@ -77,7 +77,7 @@ export const Pagination = ({
       <li className={styles['pagination-item-border']}>
         <Button
           {...commonButtonProps}
-          icon={<ChevronLeft />}
+          icon={<ChevronLeft size="1.1rem" />}
           onClick={() => onChange?.(page - 1)}
           disabled={isFirstPage}
         />
@@ -104,7 +104,7 @@ export const Pagination = ({
       <li>
         <Button
           {...commonButtonProps}
-          icon={<ChevronRight />}
+          icon={<ChevronRight size="1.1rem" />}
           onClick={() => onChange?.(page + 1)}
           disabled={isLastPage}
         />

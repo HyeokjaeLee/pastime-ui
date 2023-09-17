@@ -12,7 +12,6 @@
   box-shadow: $BOX_SHADOW;
 
   color: $GRAY-700;
-  font-size: $FONT-SIZE-SM;
 
   transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
     margin 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01);
@@ -24,7 +23,7 @@
   }
 
   &.has-space {
-    margin: 5px 10px;
+    margin: 0.5rem 1rem;
   }
 
   &.dark {
@@ -77,7 +76,7 @@
 .toast-contents-wrap {
   box-sizing: content-box;
   height: fit-content;
-  padding: 0.8em 1em;
+  padding: $INPUT_MEDIUM_PADDING_X 1rem;
 
   font-weight: inherit;
   white-space: pre-line;
@@ -88,8 +87,8 @@
   align-items: center;
   justify-content: center;
 
-  min-width: 1.3em;
-  padding: 0 0.6em;
+  min-width: 1.3rem;
+  padding: 0 0.6rem;
 
   background-color: $GRAY-200;
 
