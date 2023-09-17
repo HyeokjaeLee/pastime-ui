@@ -11,7 +11,6 @@ export const useToastSize = (hasSpace: boolean) => {
     const { current: toastContents } = ref;
     if (toastContents) {
       const { width, height } = toastContents.getBoundingClientRect();
-      console.log(width);
       setContentsWidth({ width });
       setHeight({ height });
     }
