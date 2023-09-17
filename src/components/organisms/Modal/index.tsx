@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { ModalContextProvider } from '@contexts/ModalContext';
 import {
   MODAL_CLOSING_STATE,
-  usePreventBackgroundScroll,
+  useBodyPortalStyle,
   useDarkMode,
   FixedDarkMode,
   useModalClosing,
@@ -45,9 +45,9 @@ export const Modal = Object.assign(
       closingDuration: 200,
     });
 
-    usePreventBackgroundScroll({
+    useBodyPortalStyle({
       backgroundScroll,
-      isPrevent: !!openingTransition,
+      active: !!openingTransition,
     });
 
     const { isDarkMode } = useDarkMode(fixedDarkMode);
