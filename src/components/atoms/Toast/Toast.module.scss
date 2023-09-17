@@ -12,7 +12,6 @@
   box-shadow: $BOX_SHADOW;
 
   color: $GRAY-700;
-  font-weight: normal;
   font-size: $FONT-SIZE-SM;
 
   transition: box-shadow 0.3s, height 0.4s cubic-bezier(0.71, -0.01, 0.39, 1.01),
@@ -79,6 +78,9 @@
   box-sizing: content-box;
   height: fit-content;
   padding: 0.8em 1em;
+
+  font-weight: inherit;
+  white-space: pre-line;
 }
 
 .icon-wrap {

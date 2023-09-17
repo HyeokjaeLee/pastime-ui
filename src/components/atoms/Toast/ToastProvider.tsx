@@ -26,8 +26,6 @@ export const ToastProvider = ({
 }: ToastProviderProps) => {
   const [toastOptionList, setToastOptionList] = useState<ToastOption[]>([]);
 
-  const isToastExist = !!toastOptionList.length;
-
   const [isSpaceHolding, setIsSpaceHolding] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -35,6 +33,8 @@ export const ToastProvider = ({
   const handleToastOptionListReset = useCallback(() => {
     if (!ref.current?.offsetHeight) setToastOptionList([]);
   }, []);
+
+  const isToastExist = !!toastOptionList.length;
 
   useBodyPortalStyle({
     backgroundScroll: true,
