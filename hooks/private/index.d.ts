@@ -18,5 +18,5 @@ export * from './useSpinnerZeroSize';
 export * from './useButtonLoading';
 export * from './useMountedLayoutEffect';
 export * from './useFilteredSearchOptions';
-export * from './usePreventBackgroundScroll';
+export * from './useBodyPortalStyle';
 export * from './useModalClosing';

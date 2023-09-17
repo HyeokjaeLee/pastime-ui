@@ -1,0 +1,2 @@
+import{S as a}from"./index-97f3e2bc.js";import"./jsx-runtime-ffb262ed.js";import"./index-76fb7be0.js";import"./_commonjsHelpers-de833af9.js";const n={title:"atoms/Skeleton",component:a},e={};var t,o,r;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:"{}",...(r=(o=e.parameters)==null?void 0:o.docs)==null?void 0:r.source}}};const i=["Default"];export{e as Default,i as __namedExportsOrder,n as default};
+//# sourceMappingURL=index.stories-1a290806.js.map

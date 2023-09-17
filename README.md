@@ -33,7 +33,7 @@ import '@hyeokjaelee/pastime-ui/style.css';
   사용자의 입력을 받는 컴포넌트들은 자체적으로 유효성 검사와 이를 확인할 수 있는 validationObserver, useValidation등의 편의성 HOC, hook을 지원합니다. 마찬가지로 해당 기능들은 외부 상태값에 영향을 주지 않기 때문에 재렌더링을 최소화 할 수 있습니다.
 
 - It supports dark mode. By default, it follows the device value, and you can change it with the class value of the html tag.<br/><br/>다크모드를 지원합니다. 기본적으로 디바이스 값을 따르며 html 태그의 class값으로 변경할 수 있습니다.<br/><br/>
-  ex: `<html lang="en" class="pastime:dark">` or `<html lang="en" class="pastime:light">`.
+  ex: `<html lang="en" class="dark">` or `<html lang="en" class="light">`.
 
 ### [Storybook](https://hyeokjaelee.github.io/pastime-ui)
 
@@ -42,3 +42,5 @@ For more detailed usage, please check the Storybook.
 그외 자세한 사용법은 스토리북을 확인해 주세요.
 
 ### [Github](https://github.com/HyeokjaeLee/pastime-ui)
+
+![npm](https://img.shields.io/npm/dm/@hyeokjaelee/pastime-ui.svg?style=flat-square&logo=npm&logoColor=white)

@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import type { ToastType } from '../../../contexts/ToastContext';
 import { FixedDarkMode } from '../../../hooks';
 export interface ToastProps {
@@ -9,5 +9,6 @@ export interface ToastProps {
     holdTime?: number;
     onDelete?: () => void;
     fixedDarkMode?: FixedDarkMode;
+    className?: React.HTMLAttributes<HTMLDivElement>['className'];
 }
-export declare const Toast: ({ icon, children, space, floatDirection, holdTime, onDelete, fixedDarkMode, }: ToastProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Toast: ({ icon, children, space, floatDirection, holdTime, onDelete, fixedDarkMode, className, }: ToastProps) => import("react/jsx-runtime").JSX.Element;
