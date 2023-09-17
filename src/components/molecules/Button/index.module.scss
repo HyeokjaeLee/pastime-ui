@@ -74,6 +74,22 @@
     @include border($border, 1px);
   }
 }
+@mixin size($paddingX, $height) {
+  height: $height;
+
+  &.children-type-icon {
+    width: $height;
+    padding: 0;
+  }
+
+  &.children-type-text {
+    padding: 0 $paddingX;
+  }
+
+  &.children-type-both {
+    padding: 0 calc($paddingX / 3 * 2);
+  }
+}
 
 .button {
   cursor: pointer;
@@ -83,7 +99,7 @@
 .delayed-button {
   position: relative;
   display: flex;
-  gap: 8px;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -101,39 +117,15 @@
 
   //* Size
   &.size-small {
-    height: 32px;
-
-    &.children-type-icon {
-      width: 32px;
-    }
+    @include size($INPUT_SMALL_PADDING_X, $INPUT_SMALL_HEIGHT);
   }
 
   &.size-medium {
-    height: 40px;
-
-    &.children-type-icon {
-      width: 40px;
-    }
+    @include size($INPUT_MEDIUM_PADDING_X, $INPUT_MEDIUM_HEIGHT);
   }
 
   &.size-large {
-    height: 48px;
-
-    &.children-type-icon {
-      width: 48px;
-    }
-  }
-
-  &.children-type-text {
-    padding: 0 16px;
-  }
-
-  &.children-type-icon {
-    padding: 0;
-  }
-
-  &.children-type-both {
-    padding: 0 10px;
+    @include size($INPUT_LARGE_PADDING_X, $INPUT_LARGE_HEIGHT);
   }
 
   //* Shape
@@ -227,8 +219,6 @@
 .button-content {
   position: relative;
   z-index: 2;
-
-  margin: 14px 0;
 
   &.icon {
     display: flex;

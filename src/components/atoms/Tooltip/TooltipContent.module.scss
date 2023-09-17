@@ -23,9 +23,9 @@
   width: 0;
   height: 0;
   border: transparent;
-  border-width: 0 7.5px;
+  border-width: 0 0.75rem;
   border-style: solid;
-  border-bottom-width: 5px;
+  border-bottom-width: 0.5rem;
   border-bottom-color: $GRAY-400;
 
   &.dark {
@@ -37,7 +37,7 @@
   position: absolute;
   z-index: 2;
 
-  margin-top: 4px;
+  margin-top: 0.4px;
   border-radius: $BORDER-RADIUS-MD;
 
   background-color: $GRAY-800;
@@ -54,9 +54,8 @@
   @layer {
     & {
       width: fit-content;
-      padding: 8px 10px;
+      padding: $INPUT_SMALL_PADDING_X 1rem;
 
-      font-size: small;
       white-space: pre;
     }
   }

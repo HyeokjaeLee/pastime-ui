@@ -14,7 +14,7 @@
 
   box-sizing: border-box;
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem 1px;
   border-radius: $BORDER-RADIUS-MD;
 
   box-shadow: $BOX_SHADOW;
@@ -54,7 +54,7 @@
   flex-direction: column;
   overflow-y: auto;
 
-  max-height: 300px;
+  max-height: 25rem;
   margin: 0;
   padding: 0;
 
@@ -78,16 +78,16 @@
 
   min-width: 100%;
   max-width: 100%;
-  padding: 0.7em 0.8em;
+  padding: 0.5rem $INPUT_MEDIUM_PADDING_X;
   border: 0;
-  border-radius: $BORDER-RADIUS-MD;
+  border-radius: $BORDER-RADIUS-SM;
 
   background-color: transparent;
   outline: none;
 
   color: inherit;
   font-weight: 300;
-  font-size: 0.9em;
+  font-size: inherit;
   font-family: inherit;
   text-align: start;
   white-space: pre-wrap;

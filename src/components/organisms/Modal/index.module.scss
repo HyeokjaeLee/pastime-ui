@@ -48,12 +48,12 @@
 
     box-sizing: border-box;
     width: fit-content;
-    min-width: 300px;
+    min-width: 30rem;
     max-width: calc(100% - 1rem);
     height: fit-content;
-    min-height: 400px;
+    min-height: 40rem;
     max-height: calc(100% - 1rem);
-    padding: 10px;
+    padding: 1rem;
     border-radius: $BORDER-RADIUS-MD;
 
     background-color: white;

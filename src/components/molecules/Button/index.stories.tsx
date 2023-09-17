@@ -133,7 +133,7 @@ export const Shape: Story = {
 
 export const Icon: Story = {
   args: {
-    icon: <Trash2 />,
+    icon: <Trash2 size="1.2rem" />,
   },
   render: (args) => (
     <>
@@ -166,9 +166,9 @@ export const Loading: Story = {
       <Button {...args} shape="pill" />
       <Button {...args} />
       <Button {...args} shape="sharp-corner" />
-      <Button {...args} icon={<Trash2 />} iconDirection="left" />
-      <Button {...args} icon={<Trash2 />} iconDirection="right" />
-      <Button {...omit(args, 'children')} icon={<Trash2 />} />
+      <Button {...args} icon={<Trash2 size="1.2rem" />} iconDirection="left" />
+      <Button {...args} icon={<Trash2 size="1.2rem" />} iconDirection="right" />
+      <Button {...omit(args, 'children')} icon={<Trash2 size="1.2rem" />} />
     </>
   ),
 };

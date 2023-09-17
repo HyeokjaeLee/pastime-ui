@@ -29,7 +29,12 @@ export const ModalHeader = ({
     >
       <div>{children}</div>
       {closeButton ? (
-        <Button size="small" theme="clear" onClick={onClose} icon={<X />} />
+        <Button
+          size="small"
+          theme="clear"
+          onClick={onClose}
+          icon={<X size="1.2rem" />}
+        />
       ) : null}
     </header>
   );

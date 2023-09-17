@@ -48,15 +48,15 @@
 
 @mixin sizeClasses {
   .size-small {
-    @include size(12px, 32px);
+    @include size($INPUT_SMALL_PADDING_X, $INPUT_SMALL_HEIGHT);
   }
 
   .size-medium {
-    @include size(14px, 40px);
+    @include size($INPUT_MEDIUM_PADDING_X, $INPUT_MEDIUM_HEIGHT);
   }
 
   .size-large {
-    @include size(16px, 48px);
+    @include size($INPUT_LARGE_PADDING_X, $INPUT_LARGE_HEIGHT);
   }
 }
 

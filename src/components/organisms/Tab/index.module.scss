@@ -2,12 +2,12 @@
 
 .tab {
   display: flex;
-  gap: 0.5em;
+  gap: 0.5rem;
   overflow-x: auto;
 
-  margin: 0 1em;
-  padding: 0.5em 0.5em 0;
-  padding-top: 0.5em;
+  margin: 0 1rem;
+  padding: 0.5rem 0.5rem 0;
+  padding-top: 0.5rem;
   border-radius: $BORDER-RADIUS-SM;
 
   list-style: none;
