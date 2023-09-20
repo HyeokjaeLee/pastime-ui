@@ -74,20 +74,33 @@
     @include border($border, 1px);
   }
 }
-@mixin size($paddingX, $height) {
-  height: $height;
+@mixin size($paddingX, $paddingY) {
+  padding: {
+    top: $paddingY;
+    bottom: $paddingY;
+  }
 
   &.children-type-icon {
-    width: $height;
-    padding: 0;
+    padding: {
+      right: $paddingY;
+      left: $paddingY;
+    }
   }
 
   &.children-type-text {
-    padding: 0 $paddingX;
+    padding: {
+      right: $paddingX;
+      left: $paddingX;
+    }
   }
 
   &.children-type-both {
-    padding: 0 calc($paddingX / 3 * 2);
+    $PADDING_X: calc($paddingX / 3 * 2);
+
+    padding: {
+      right: $PADDING_X;
+      left: $PADDING_X;
+    }
   }
 }
 
@@ -109,6 +122,8 @@
 
   outline: none;
 
+  font-size: inherit;
+
   -webkit-text-size-adjust: none;
 
   &:disabled {
@@ -117,15 +132,15 @@
 
   //* Size
   &.size-small {
-    @include size($INPUT_SMALL_PADDING_X, $INPUT_SMALL_HEIGHT);
+    @include size($INPUT_SMALL_PADDING_X, 0.325rem);
   }
 
   &.size-medium {
-    @include size($INPUT_MEDIUM_PADDING_X, $INPUT_MEDIUM_HEIGHT);
+    @include size($INPUT_MEDIUM_PADDING_X, 0.675rem);
   }
 
   &.size-large {
-    @include size($INPUT_LARGE_PADDING_X, $INPUT_LARGE_HEIGHT);
+    @include size($INPUT_LARGE_PADDING_X, 1.175rem);
   }
 
   //* Shape
