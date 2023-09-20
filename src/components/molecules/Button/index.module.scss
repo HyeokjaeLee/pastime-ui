@@ -122,8 +122,6 @@
 
   outline: none;
 
-  font-size: inherit;
-
   -webkit-text-size-adjust: none;
 
   &:disabled {
@@ -132,15 +130,15 @@
 
   //* Size
   &.size-small {
-    @include size($INPUT_SMALL_PADDING_X, 0.325rem);
+    @include size($INPUT_SMALL_PADDING_X, 0.125rem);
   }
 
   &.size-medium {
-    @include size($INPUT_MEDIUM_PADDING_X, 0.675rem);
+    @include size($INPUT_MEDIUM_PADDING_X, 0.475rem);
   }
 
   &.size-large {
-    @include size($INPUT_LARGE_PADDING_X, 1.175rem);
+    @include size($INPUT_LARGE_PADDING_X, 0.975rem);
   }
 
   //* Shape
