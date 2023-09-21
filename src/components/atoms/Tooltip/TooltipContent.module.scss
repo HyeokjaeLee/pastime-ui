@@ -23,7 +23,7 @@
   width: 0;
   height: 0;
   border: transparent;
-  border-width: 0 0.75rem;
+  border-width: 0 0.5rem;
   border-style: solid;
   border-bottom-width: 0.5rem;
   border-bottom-color: $GRAY-400;
@@ -37,7 +37,7 @@
   position: absolute;
   z-index: 2;
 
-  margin-top: 0.4px;
+  margin-top: 0.45rem;
   border-radius: $BORDER-RADIUS-MD;
 
   background-color: $GRAY-800;
