@@ -13,7 +13,7 @@ $BACKGROUND_COLOR: $COOL-GRAY-300;
   display: inline-block;
 
   &.size-small {
-    @include size($INPUT_SMALL_HEIGHT);
+    @include size(1rem);
   }
 
   &.size-medium {
