@@ -77,7 +77,7 @@ export const Pagination = ({
       <li className={styles['pagination-item-border']}>
         <Button
           {...commonButtonProps}
-          icon={<ChevronLeft size="1.1rem" />}
+          icon={<ChevronLeft className={styles['item-size']} />}
           onClick={() => onChange?.(page - 1)}
           disabled={isFirstPage}
         />
@@ -92,11 +92,11 @@ export const Pagination = ({
             }
           : commonButtonProps;
         return (
-          <li key={index} className={styles['pagination-item-border']}>
+          <li key={index} className={`${styles['pagination-item-border']} `}>
             <Button
               {...buttonProps}
               onClick={() => onChange?.(index)}
-              icon={index}
+              icon={<div className={styles['item-size']}>{index}</div>}
             />
           </li>
         );
@@ -104,7 +104,7 @@ export const Pagination = ({
       <li>
         <Button
           {...commonButtonProps}
-          icon={<ChevronRight size="1.1rem" />}
+          icon={<ChevronRight className={styles['item-size']} />}
           onClick={() => onChange?.(page + 1)}
           disabled={isLastPage}
         />
