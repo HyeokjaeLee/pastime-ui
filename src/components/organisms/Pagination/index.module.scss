@@ -5,6 +5,7 @@
   overflow: hidden;
 
   width: fit-content;
+  height: fit-content;
   padding: 0;
   border: 1px solid rgba($GRAY-400, 0.4);
   border-radius: $BORDER-RADIUS-MD;
@@ -20,4 +21,9 @@
 
 .hidden {
   visibility: hidden;
+}
+
+.item-size {
+  width: 1.3em;
+  height: 1.3em;
 }
